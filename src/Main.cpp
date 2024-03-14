@@ -224,10 +224,10 @@ int main(int argc, char ** argv) {
 		{
 			switch (string_to_sem(task)) {
 				case CO:
-					acceptable_arguments = Algorithms::alg_iaq(af);
+					acceptable_arguments = Algorithms::alg_iaq_cred_co(aaf);
 					break;
 				case ST:
-					acceptable_arguments = Algorithms::alg_iaq(af);
+					acceptable_arguments = Algorithms::alg_iaq_cred_st(aaf);
 					break;
 				default:
 					cerr << argv[0] << ": Unsupported semantics\n";
@@ -239,10 +239,10 @@ int main(int argc, char ** argv) {
 		{
 			switch (string_to_sem(task)) {
 				case ST:
-					acceptable_arguments = Algorithms::alg_iaq(af);
+					acceptable_arguments = Algorithms::alg_iaq(aaf);
 					break;
 				case PR:
-					acceptable_arguments = Algorithms::alg_iaq(af);
+					acceptable_arguments = Algorithms::alg_iaq(aaf);
 					break;
 				default:
 					cerr << argv[0] << ": Unsupported semantics\n";

@@ -14,11 +14,9 @@ ExternalSatSolver::ExternalSatSolver(uint32_t number_of_vars, string path_to_sol
     n_vars = number_of_vars;
     model = std::vector<bool>(n_vars+1);
     clauses = std::vector<std::vector<int>>();
-    minimization_clauses = std::vector<std::vector<int>>();
 
     last_clause_closed = true;
     num_clauses = 0;
-    num_minimization_clauses = 0;
     solver_path = path_to_solver;
 }
 
@@ -37,22 +35,11 @@ void ExternalSatSolver::addClause(std::vector<int> & clause) {
     clauses[num_clauses-1].push_back(0);
 }
 
-void ExternalSatSolver::addMinimizationClause(std::vector<int> & clause) {
-    if(!last_clause_closed){
-        // this should not happen
-        printf("Previous clause not closed.");
-        exit(1);
-    }
-    minimization_clauses.push_back(clause);
-    num_minimization_clauses++;
-    minimization_clauses[num_minimization_clauses-1].push_back(0);
-}
-
 int ExternalSatSolver::solve() {
     redi::pstream process(solver_path, redi::pstreams::pstdout | redi::pstreams::pstdin | redi::pstreams::pstderr);
     //TODO properly implement setting the --polar flag
     //redi::pstream process(solver_path + " --polar false");
-    process << "p cnf " << n_vars << " " << (num_clauses+assumptions.size()+num_minimization_clauses) << "\n";
+    process << "p cnf " << n_vars << " " << (num_clauses+assumptions.size()) << "\n";
     //std::cout << "p cnf " << num_vars << " " << (num_clauses+assumptions.size()+num_minimization_clauses) << "\n";
     for(auto const& clause: clauses) {
         for(const int lit: clause){
@@ -61,16 +48,6 @@ int ExternalSatSolver::solve() {
         }
         process << "\n";
         //std::cout << "\n";
-    }
-    if (num_minimization_clauses > 0) {
-        for(auto const& clause: minimization_clauses) {
-            for(const int lit: clause) {
-                process << lit << " ";
-                //std::cout << lit << " ";
-            }
-            process << "\n";
-            //std::cout << "\n";
-        }
     }
     if (!assumptions.empty()) {
         for(const int assumption: assumptions){
@@ -81,8 +58,6 @@ int ExternalSatSolver::solve() {
     
     //std::cout << "-----------------------------------------------" << std::endl;
     assumptions.clear();
-    minimization_clauses.clear();
-    num_minimization_clauses = 0;
     process << redi::peof;
     std::string line;
     model.clear();
@@ -129,7 +104,6 @@ int ExternalSatSolver::solve(const std::vector<int> assumptions) {
 
 void ExternalSatSolver::free() {
     clauses.clear();
-    minimization_clauses.clear();
     assumptions.clear();
     model.clear();
 }

@@ -37,14 +37,12 @@ using namespace std;
 
 AF::AF() : args(0), count(0) {}
 
-void AF::add_argument(string arg)
-{
+void AF::add_argument(string arg) {
 	int_to_arg.push_back(arg);
 	arg_to_int[arg] = args++;
 }
 
-void AF::add_attack(pair<string,string> att)
-{
+void AF::add_attack(pair<string,string> att) {
 	if (arg_to_int.count(att.first) == 0 || arg_to_int.count(att.second) == 0) {
 		return;
 	}
@@ -81,6 +79,10 @@ void AF::initialize_vars() {
 	rejected_var.resize(args);
 	for (uint32_t i = 0; i < args; i++) {
 		rejected_var[i] = ++count;
+	}
+	undecided_var.resize(args);
+	for (uint32_t i = 0; i < args; i++) {
+		undecided_var[i] = ++count;
 	}
 }
 

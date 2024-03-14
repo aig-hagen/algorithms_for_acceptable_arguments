@@ -111,8 +111,8 @@ std::unordered_map<std::pair<uint32_t,uint32_t>,bool> att_exists;
 std::unordered_map<std::pair<uint32_t,uint32_t>,bool> symmetric_attack;
 
 std::vector<int> accepted_var;
-std::vector<int> range_var;
 std::vector<int> rejected_var;
+std::vector<int> undecided_var;
 
 void add_argument(std::string arg);
 void add_attack(std::pair<std::string,std::string> att);

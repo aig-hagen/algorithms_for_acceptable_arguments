@@ -3,7 +3,8 @@
 namespace Algorithms {
 
 // IAQ
-std::vector<std::string> alg_iaq(const AF & af);
+std::vector<std::string> alg_iaq_cred_co(const AF & af);
+std::vector<std::string> alg_iaq_cred_st(const AF & af);
 
 // EEE
 std::vector<std::string> alg_eee(const AF & af);

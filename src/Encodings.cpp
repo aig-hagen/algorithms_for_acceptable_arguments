@@ -4,37 +4,63 @@
 using namespace std;
 
 namespace Encodings {
-/*!
- * The following is largely taken from the mu-toksia solver
- * and is subject to the following licence.
- *
- * 
- * Copyright (c) <2020> <Andreas Niskanen, University of Helsinki>
- * 
- * 
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * 
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * 
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+	void complete(const AF & af, SAT_Solver & solver) {
+		for (uint32_t i = 0; i < af.args; i++) {
+			// basic clauses
+			solver.addClause({ af.accepted_var[i], af.rejected_var[i], af.undecided_var[i]});
+			solver.addClause({ -af.accepted_var[i], -af.rejected_var[i] });
+			solver.addClause({ -af.accepted_var[i], -af.undecided_var[i] });
+			solver.addClause({ -af.rejected_var[i], -af.undecided_var[i] });
+
+			// semantic enconding
+			if (af.unattacked[i]) {
+				// argument is unattacked
+				solver.addClause({ af.accepted_var[i] });
+			} else {
+				vector<int> attackers_in_clause(af.attackers[i].size() + 1);
+				vector<int> attackers_notout_clause(af.attackers[i].size() + 1);
+				for (uint32_t j = 0; j < af.attackers[i].size(); j++) {
+					attackers_in_clause[j] = af.accepted_var[af.attackers[i][j]]
+					attackers_notout_clause[j] = -af.rejected_var[af.attackers[i][j]];
+					solver.addClause({ -af.accepted_var[i], af.rejected_var[af.attackers[i][j]] });
+				}
+				attackers_in_clause[af.attackers[i].size()] = -af.rejected_var[i];
+				solver.addClause(attackers_in_clause);
+				attacker_notout_clause[af.attackers[i].size()] = af.accepted_var[i];
+				solver.addClause(attackers_notout_clause);
+			}	
+		}
+	}
+
+	void stable(const AF & af, SAT_Solver & solver) {
+		for (uint32_t i = 0; i < af.args; i++) {
+			// basic clauses
+			solver.addClause({ af.accepted_var[i], af.rejected_var[i], af.undecided_var[i]});
+			solver.addClause({ -af.accepted_var[i], -af.rejected_var[i] });
+			solver.addClause({ -af.accepted_var[i], -af.undecided_var[i] });
+			solver.addClause({ -af.rejected_var[i], -af.undecided_var[i] });
+			
+			// semantic enconding
+			if (af.unattacked[i]) {
+				// argument is unattacked
+				solver.addClause({ af.accepted_var[i] });
+			} else {
+				solver.addClause({ -af.undecided_var[i] });
+				vector<int> attackers_in_clause(af.attackers[i].size() + 1);
+				vector<int> attackers_notout_clause(af.attackers[i].size() + 1);
+				for (uint32_t j = 0; j < af.attackers[i].size(); j++) {
+					attackers_in_clause[j] = af.accepted_var[af.attackers[i][j]]
+					attackers_notout_clause[j] = -af.rejected_var[af.attackers[i][j]];
+					solver.addClause({ -af.accepted_var[i], af.rejected_var[af.attackers[i][j]] });
+				}
+				attackers_in_clause[af.attackers[i].size()] = -af.rejected_var[i];
+				solver.addClause(attackers_in_clause);
+				attacker_notout_clause[af.attackers[i].size()] = af.accepted_var[i];
+				solver.addClause(attackers_notout_clause);
+			}
+		}
+	}
+
 	void add_rejected_clauses(const AF & af, SAT_Solver & solver) {
 		for (uint32_t i = 0; i < af.args; i++) {
 			vector<int> additional_clause = { -af.rejected_var[i], -af.accepted_var[i] };
