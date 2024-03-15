@@ -29,7 +29,7 @@ hs_err_pid*
 .vscode/
 *.out
 
-build/src/*
+build/
 
 lib/cadical-1.3.1/build/
 lib/cryptominisat-5.11.4/build/
