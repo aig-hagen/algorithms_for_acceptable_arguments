@@ -27,6 +27,9 @@ std::vector<std::string> iaq_cred(const AF & af, semantics sem);
 std::vector<std::string> iaq_skep(const AF & af, semantics sem); 
 #endif
 
+// helper methods
+bool ds_preferred(const AF & af, int arg);
+
 }
 
 #endif

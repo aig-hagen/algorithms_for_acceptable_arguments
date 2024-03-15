@@ -1,66 +1,47 @@
-#include "ExternalSatSolver.h"
-#include "pstream.h"
+#ifndef SAT_CMSAT
 
+#include "ExternalSatSolver.h"
+
+#include <pstream.h>
 #include <iostream>
 
-/*
- * The following is adapted from the fudge argumentation-solver
- * and is subject to the GPL3 licence.
-*/
-ExternalSatSolver::ExternalSatSolver(uint32_t number_of_vars, std::string path_to_solver) {
-    n_vars = number_of_vars;
+
+ExternalSatSolver::ExternalSatSolver(int32_t n_vars, int32_t n_args) {
+    number_of_vars = n_vars;
     model = std::vector<bool>(n_vars+1);
     clauses = std::vector<std::vector<int>>();
-
-    last_clause_closed = true;
-    num_clauses = 0;
-    solver_path = path_to_solver;
+    solver = "./lib/cryptominisat-5.11.4/build/cryptominisat5";
 }
 
-void ExternalSatSolver::assume(int lit) {
+void ExternalSatSolver::assume(int32_t lit) {
     assumptions.push_back(lit);
 }
 
-void ExternalSatSolver::addClause(std::vector<int> & clause) {
-    if(!last_clause_closed){
-        // this should not happen
-        printf("Previous clause not closed.");
-        exit(1);
-    }
+void ExternalSatSolver::add_clause(const std::vector<int32_t> & clause) {
     clauses.push_back(clause);
-    num_clauses++;
-    clauses[num_clauses-1].push_back(0);
+    clauses[clauses.size()-1].push_back(0);
 }
 
 int ExternalSatSolver::solve() {
-    redi::pstream process(solver_path, redi::pstreams::pstdout | redi::pstreams::pstdin | redi::pstreams::pstderr);
-    //TODO properly implement setting the --polar flag
-    //redi::pstream process(solver_path + " --polar false");
-    process << "p cnf " << n_vars << " " << (num_clauses+assumptions.size()) << "\n";
-    //std::cout << "p cnf " << num_vars << " " << (num_clauses+assumptions.size()+num_minimization_clauses) << "\n";
+    redi::pstream process(solver, redi::pstreams::pstdout | redi::pstreams::pstdin | redi::pstreams::pstderr);
+    process << "p cnf " << number_of_vars << " " << (clauses.size()+assumptions.size()) << "\n";
     for(auto const& clause: clauses) {
         for(const int lit: clause){
             process << lit << " ";
-            //std::cout << lit << " ";
         }
         process << "\n";
-        //std::cout << "\n";
     }
     if (!assumptions.empty()) {
         for(const int assumption: assumptions){
             process << assumption << " 0\n";
-            //std::cout << assumption << " 0\n";
         }
     }
-    
-    //std::cout << "-----------------------------------------------" << std::endl;
     assumptions.clear();
+
     process << redi::peof;
     std::string line;
     model.clear();
-    //while (std::getline(process.out(),line)) {
     while (process.peek() != EOF && std::getline(process, line)) {
-        //std::cout << line << std::endl;
         if (line.rfind("c ", 0) == 0) {
             continue;
         }
@@ -92,15 +73,10 @@ int ExternalSatSolver::solve() {
     return 10;
 }
 
-int ExternalSatSolver::solve(const std::vector<int> assumptions) {
+int ExternalSatSolver::solve(const std::vector<int32_t> assumptions) {
     for(auto const& assumption: assumptions) {
         assume(assumption);
     }
     return solve();
 }
-
-void ExternalSatSolver::free() {
-    clauses.clear();
-    assumptions.clear();
-    model.clear();
-}
+#endif

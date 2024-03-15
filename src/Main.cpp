@@ -226,31 +226,25 @@ int main(int argc, char ** argv) {
 	std::vector<std::string> acceptable_arguments;
 	switch (string_to_task(task)) {
 		case EC:
-			#if defined(IAQ)
-			acceptable_arguments = Algorithms::iaq_cred(aaf, string_to_sem(task));
-			#endif
 			#if defined(EEE)
 			acceptable_arguments = Algorithms::eee_cred(aaf, string_to_sem(task));
-			#endif
-			#if defined(SEE)
+			#elif defined(SEE)
 			acceptable_arguments = Algorithms::see_cred(aaf, string_to_sem(task));
-			#endif
-			#if defined(SEEM)
+			#elif defined(SEEM)
 			acceptable_arguments = Algorithms::seem_cred(aaf, string_to_sem(task));
+			#else
+			acceptable_arguments = Algorithms::iaq_cred(aaf, string_to_sem(task));
 			#endif
 			break;
 		case ES:
-			#if defined(IAQ)
-			acceptable_arguments = Algorithms::iaq_skep(aaf, string_to_sem(task));
-			#endif
 			#if defined(EEE)
 			acceptable_arguments = Algorithms::eee_skep(aaf, string_to_sem(task));
-			#endif
-			#if defined(SEE)
+			#elif defined(SEE)
 			acceptable_arguments = Algorithms::see_skep(aaf, string_to_sem(task));
-			#endif
-			#if defined(SEEM)
+			#elif defined(SEEM)
 			acceptable_arguments = Algorithms::seem_skep(aaf, string_to_sem(task));
+			#else
+			acceptable_arguments = Algorithms::iaq_skep(aaf, string_to_sem(task));
 			#endif
 			break;
 		default:

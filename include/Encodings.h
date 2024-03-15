@@ -6,9 +6,12 @@
 #if defined(SAT_CMSAT)
 #include "CryptoMiniSatSolver.h"
 typedef CryptoMiniSatSolver SAT_Solver;
-#else
+#elif defined(SAT_EXTERNAL)
 #include "ExternalSatSolver.h"
 typedef ExternalSatSolver SAT_Solver;
+#else
+#include "CryptoMiniSatSolver.h"
+typedef CryptoMiniSatSolver SAT_Solver;
 #endif
 
 namespace Encodings {

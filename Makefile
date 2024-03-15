@@ -1,9 +1,11 @@
 # Thanks to Job Vranish (https://spin.atomicobject.com/2016/08/26/makefile-c-projects/)
-TARGET_EXEC := solver
+TARGET_EXEC	:= solver
 
-BUILD_DIR := ./build
-SRC_DIRS := ./src
-INC_DIRS := ./include
+BUILD_DIR 	:= ./build
+SRC_DIRS 	:= ./src
+INC_DIRS 	:= ./include
+#INC_DIRS	+= ./lib/cryptominisat-5.11.4/src
+#INC_DIRS	+= ./lib/pstreams-1.0.3
 
 # Find all the C and C++ files we want to compile
 # Note the single quotes around the * expressions. The shell will incorrectly expand these otherwise, but we want to send the * directly to the find command.
@@ -26,11 +28,20 @@ CPPFLAGS := $(INC_FLAGS) -MMD -MP
 
 CPPFLAGS += -Wall -Wno-parentheses -Wno-sign-compare
 
-CPPFLAGS   += -D IAQ
-#CPPFLAGS   += -D EEE
-#CPPFLAGS   += -D SEE
-#CPPFLAGS   += -D SEEM
-#CPPFLAGS   += -D FUDGE
+CPPFLAGS	+= -D REL
+
+# compiler flags for the algorithm to use
+CPPFLAGS    += -D IAQ
+#CPPFLAGS    += -D EEE
+#CPPFLAGS    += -D SEE
+#CPPFLAGS    += -D SEEM
+#CPPFLAGS    += -D FUDGE
+
+# compiler flag for the sat solver to use
+CPPFLAGS	+= -D SAT_CMSAT
+LDFLAGS  += -lcryptominisat5
+#CPPFLAGS	+= -D SAT_EXTERNAL
+
 
 # The final build step.
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
