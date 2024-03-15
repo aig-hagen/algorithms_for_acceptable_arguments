@@ -1,3 +1,6 @@
+#ifndef ENCODINGS_H
+#define ENCODINGS_H
+
 #include "AF.h"
 
 #if defined(SAT_CMSAT)
@@ -9,8 +12,12 @@ typedef ExternalSatSolver SAT_Solver;
 #endif
 
 namespace Encodings {
+    void complete(const AF & af, SAT_Solver & solver);
+    void stable(const AF & af, SAT_Solver & solver);
     void add_rejected_clauses(const AF & af, SAT_Solver & solver);
     void add_conflict_free(const AF & af, SAT_Solver & solver);
     void add_admissible(const AF & af, SAT_Solver & solver);
     void add_complete(const AF & af, SAT_Solver & solver);
 }
+
+#endif

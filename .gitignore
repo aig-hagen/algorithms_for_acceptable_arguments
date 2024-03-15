@@ -24,18 +24,15 @@
 hs_err_pid*
 
 *.o
-taas-fudge-main/
-lib/cadical-1.3.1/build/
-lib/cadical-1.3.1/makefile
+*.d
 
 .vscode/
 *.out
-instances/
-*.csv
-test.dimacs
 
+build/src/*
+
+lib/cadical-1.3.1/build/
 lib/cryptominisat-5.11.4/build/
+lib/cryptominisat-5.11.4/CMakeCache.txt
 check_log.py
-clauses.dimacs
-
-mu-toksia
+Makefile.old

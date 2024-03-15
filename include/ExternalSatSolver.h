@@ -1,6 +1,9 @@
+#ifndef EXTERNALSATSOLVER_H
+#define EXTERNALSATSOLVER_H
+
 #include <vector>
 #include <string>
-#include <cstdint>
+//#include <cstdint>     		// uncomment if boostlibs are not installed
 
 /*
 Class for all kinds of pre-compiled SAT solvers, e.g. cadical, cryptominisat5
@@ -25,3 +28,5 @@ public:
     void free();
     
 };
+
+#endif

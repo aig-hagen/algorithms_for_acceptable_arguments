@@ -33,39 +33,35 @@
 #include <iostream>
 #include "AF.h"
 
-using namespace std;
-
 AF::AF() : args(0), count(0) {}
 
-void AF::add_argument(string arg) {
+void AF::add_argument(std::string arg) {
 	int_to_arg.push_back(arg);
 	arg_to_int[arg] = args++;
 }
 
-void AF::add_attack(pair<string,string> att) {
+void AF::add_attack(std::pair<std::string,std::string> att) {
 	if (arg_to_int.count(att.first) == 0 || arg_to_int.count(att.second) == 0) {
 		return;
 	}
 	uint32_t source = arg_to_int[att.first];
 	uint32_t target = arg_to_int[att.second];
 	attackers[target].push_back(source);
-	attacked[source].push_back(target);
 	unattacked[target] = false;
 	if (source == target) {
 		self_attack[source] = true;
 	}
-	att_exists[make_pair(source, target)] = true;
-	if (att_exists.count(make_pair(target, source)) > 0) {
-		symmetric_attack[make_pair(source, target)] = true;
-		symmetric_attack[make_pair(target, source)] = true;
+	att_exists[std::make_pair(source, target)] = true;
+	if (att_exists.count(std::make_pair(target, source)) > 0) {
+		symmetric_attack[std::make_pair(source, target)] = true;
+		symmetric_attack[std::make_pair(target, source)] = true;
 	} else {
-		symmetric_attack[make_pair(source, target)] = false;
+		symmetric_attack[std::make_pair(source, target)] = false;
 	}
 }
 
 void AF::initialize_attackers() {
 	attackers.resize(args);
-	attacked.resize(args);
 	unattacked.resize(args, true);
 	self_attack.resize(args);
 }
@@ -86,6 +82,6 @@ void AF::initialize_vars() {
 	}
 }
 
-void AF::set_solver_path(string path) {
+void AF::set_solver_path(std::string path) {
 	solver_path = path;
 }

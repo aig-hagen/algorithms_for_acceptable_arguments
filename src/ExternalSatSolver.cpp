@@ -1,16 +1,13 @@
 #include "ExternalSatSolver.h"
-
-#include <iostream>
-
 #include "pstream.h"
 
-using namespace std;
+#include <iostream>
 
 /*
  * The following is adapted from the fudge argumentation-solver
  * and is subject to the GPL3 licence.
 */
-ExternalSatSolver::ExternalSatSolver(uint32_t number_of_vars, string path_to_solver) {
+ExternalSatSolver::ExternalSatSolver(uint32_t number_of_vars, std::string path_to_solver) {
     n_vars = number_of_vars;
     model = std::vector<bool>(n_vars+1);
     clauses = std::vector<std::vector<int>>();

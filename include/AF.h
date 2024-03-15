@@ -1,42 +1,10 @@
-/*!
- * The following is largely taken from the mu-toksia solver
- * and is subject to the following licence.
- * 
- * 
- * Copyright (c) <2020> <Andreas Niskanen, University of Helsinki>
- * 
- * 
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * 
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * 
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
-#ifndef ARGU_FRAMEWORK_H
-#define ARGU_FRAMEWORK_H
+#ifndef AF_H
+#define AF_H
 
 #include <vector>
 #include <unordered_map>
 #include <string>
-#include <cstdint>
+//#include <cstdint>     		// uncomment if boostlibs are not installed
 
 enum task { EC, ES, UNKNOWN_TASK };
 enum semantics { CO, ST, PR, UNKNOWN_SEM };
@@ -103,7 +71,6 @@ uint32_t count;
 std::vector<std::string> int_to_arg;
 std::unordered_map<std::string,uint32_t> arg_to_int;
 
-std::vector<std::vector<uint32_t>> attacked;
 std::vector<std::vector<uint32_t>> attackers;
 std::vector<bool> unattacked;
 std::vector<uint8_t> self_attack;
