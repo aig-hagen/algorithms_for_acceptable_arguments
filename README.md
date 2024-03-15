@@ -8,7 +8,7 @@ Compile via
 Implements the problems [EC-CO,EC-PR,EC-ST,ES-PR,ES-ST] and supports the
 TGF and i23 format for abstract argumentation frameworks.
 
-Works with an external cryptominisat5 solver.
+Currently works with an external cryptominisat5 solver.
 Can be compiled via 
 ```
     make cmsat
