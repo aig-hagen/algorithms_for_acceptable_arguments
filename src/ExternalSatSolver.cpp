@@ -4,13 +4,15 @@
 
 #include <pstream.h>
 #include <iostream>
+#include <fstream>
 
 
 ExternalSatSolver::ExternalSatSolver(int32_t n_vars, int32_t n_args) {
     number_of_vars = n_vars;
     model = std::vector<bool>(n_vars+1);
     clauses = std::vector<std::vector<int>>();
-    solver = "./lib/cryptominisat-5.11.4/build/cryptominisat5";
+    solver = "./lib/cryptominisat-5.11.04/build/cryptominisat5";
+    //solver = "./lib/glucose-syrup-4.1/build/release/bin/glucose";
 }
 
 void ExternalSatSolver::assume(int32_t lit) {
@@ -18,6 +20,15 @@ void ExternalSatSolver::assume(int32_t lit) {
 }
 
 void ExternalSatSolver::add_clause(const std::vector<int32_t> & clause) {
+    /*
+    std::ofstream outfile;
+    outfile.open("out.log", std::ios_base::app);
+    for (uint32_t i = 0; i < clause.size(); i++) {
+        outfile << clause[i] << " ";
+    }
+    outfile << "0\n";
+    outfile.close();
+    */
     clauses.push_back(clause);
     clauses[clauses.size()-1].push_back(0);
 }

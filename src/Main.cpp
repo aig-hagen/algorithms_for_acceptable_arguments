@@ -248,6 +248,7 @@ int main(int argc, char ** argv) {
 			std::cerr << argv[0] << ": Problem not supported!\n";
 			return 1;
 	}
+	std::cout << "OUTPUT: ";
 	print_extension_ee(acceptable_arguments);
 	std::cout << std::endl;
 
