@@ -1,3 +1,5 @@
+#ifndef SAT_CMSAT
+
 #include "ExternalSatSolver.h"
 
 #include <pstream.h>
@@ -77,3 +79,4 @@ int ExternalSatSolver::solve(const std::vector<int32_t> assumptions) {
     }
     return solve();
 }
+#endif

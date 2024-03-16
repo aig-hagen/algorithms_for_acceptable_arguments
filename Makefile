@@ -8,9 +8,9 @@ BUILD_DIR 	:= ./build
 SRC_DIRS 	:= ./src
 INC_DIRS 	:= ./include
 
-#ifeq ($(SAT_SOLVER), external)
+ifeq ($(SAT_SOLVER), external)
 	INC_DIRS	+= ./lib/pstreams-1.0.3
-#endif
+endif
 #INC_DIRS	+= ./lib/cryptominisat-5.11.4/src
 
 # Find all the C and C++ files we want to compile
@@ -37,11 +37,7 @@ CPPFLAGS := $(INC_FLAGS) -MMD -MP
 ##################################################################################################
 ###### CUSTOM ####################################################################################
 ##################################################################################################
-
 CPPFLAGS += -Wall -Wno-parentheses -Wno-sign-compare
-CPPFLAGS	+= -D REL
-
-LDFLAGS  	+= -lcryptominisat5
 
 ifeq ($(SAT_SOLVER), cryptominisat)
 	CPPFLAGS    += -D SAT_CMSAT

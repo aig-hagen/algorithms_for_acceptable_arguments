@@ -36,8 +36,6 @@
 #include <iostream>			//std::cout
 #include <fstream>			//ifstream
 #include <sstream>			//istringstream
-#include <algorithm>
-#include <stack>
 
 static int version_flag = 0;
 static int usage_flag = 0;
@@ -94,8 +92,8 @@ void print_problems() {
 }
 
 int main(int argc, char ** argv) {
-	std::ios_base::sync_with_stdio(false);
-	std::cin.tie(NULL);
+	//std::ios_base::sync_with_stdio(false);
+	//std::cin.tie(NULL);
 	if (argc == 1) {
 		print_version(argv[0]);
 		return 0;
@@ -109,13 +107,12 @@ int main(int argc, char ** argv) {
 		{"p", required_argument, 0, 'p'},
 		{"f", required_argument, 0, 'f'},
 		{"fo", required_argument, 0, 'o'},
-		{"s", required_argument, 0, 's'},
 		{0, 0, 0, 0}
 	};
 
 	int option_index = 0;
 	int opt = 0;
-	std::string task, file, fileformat, query, sat_path;
+	std::string task, file, fileformat, query;
 
 	while ((opt = getopt_long_only(argc, argv, "", longopts, &option_index)) != -1) {
 		switch (opt) {
@@ -129,9 +126,6 @@ int main(int argc, char ** argv) {
 				break;
 			case 'o':
 				fileformat = optarg;
-				break;
-			case 's':
-				sat_path = optarg;
 				break;
 			default:
 				return 1;
@@ -220,8 +214,8 @@ int main(int argc, char ** argv) {
 	input.close();
 
 	aaf.initialize_vars();
-	aaf.set_solver_path(sat_path);
 
+	std::cout << "SOLVING...";
 	std::vector<std::string> acceptable_arguments;
 	switch (string_to_task(task)) {
 		case EC:

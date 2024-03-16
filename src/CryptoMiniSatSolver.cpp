@@ -25,6 +25,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+#ifdef SAT_CMSAT
 
 #include "CryptoMiniSatSolver.h"
 
@@ -105,3 +106,4 @@ bool CryptoMiniSatSolver::get_value(int32_t lit)
 	lbool val = solver.get_model()[var];
 	return (lit > 0) ? val == l_True : val == l_False;
 }
+#endif

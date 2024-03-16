@@ -39,7 +39,6 @@ namespace Algorithms {
             }
             solver.add_clause(complement_clause);
         }
-
         return result;
     }
 
@@ -112,7 +111,6 @@ namespace Algorithms {
                 result.push_back(af.int_to_arg[i-1]);
             }
         }
-
         return result;
     }
 }
