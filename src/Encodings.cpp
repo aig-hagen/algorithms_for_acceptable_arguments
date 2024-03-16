@@ -119,6 +119,7 @@ namespace Encodings {
 		}
 	}
 
+	// somehow doesnt work for skeptical preferred reasoning
 	void add_complete(const AF & af, SAT_Solver & solver) {
 		add_admissible(af, solver);
 		for (uint32_t i = 0; i < af.args; i++) {

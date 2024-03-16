@@ -4,8 +4,8 @@
 namespace Algorithms {
     std::vector<std::string> eee_cred(const AF & af, semantics sem) {
         std::vector<std::string> result;
-        std::vector<bool> included(af.args+1);
-        ExternalSatSolver solver = ExternalSatSolver(af.count, af.solver_path);
+        std::vector<bool> acceptable(af.args+1);
+        SAT_Solver solver = SAT_Solver(af.count, af.args);
 
         if (sem == CO || sem == PR) {
             Encodings::complete(af, solver);
@@ -16,25 +16,25 @@ namespace Algorithms {
             exit(1);
         }
 
-        std::vector<int> complement_clause;
+        std::vector<int32_t> complement_clause;
         complement_clause.reserve(af.args);
         while (true) {
             complement_clause.clear();
             int ret = solver.solve();
             if (ret == 20) break;
 
-            for (uint32_t i = 1; i <= af.args; i++) {
-                if (solver.model[i]) {
-                    if (!included[i]) {
-                        included[i] = true;
+            for (uint32_t i = 1; i <= af.count; i++) {
+                if (i <= af.args && solver.model[i]) {
+                    if (!acceptable[i]) {
+                        acceptable[i] = true;
                         result.push_back(af.int_to_arg[i-1]);
                     }
+                    complement_clause.push_back(-i);
                 } else {
-                    // TODO check correctness
                     complement_clause.push_back(i);
                 }
             }
-            solver.addClause(complement_clause);
+            solver.add_clause(complement_clause);
         }
 
         return result;
@@ -43,31 +43,65 @@ namespace Algorithms {
     std::vector<std::string> eee_skep(const AF & af, semantics sem) {
         std::vector<std::string> result;
         std::vector<bool> included(af.args+1, true);
-        ExternalSatSolver solver = ExternalSatSolver(af.count, af.solver_path);
+        SAT_Solver solver = SAT_Solver(af.count, af.args);
         if (sem == PR) {
-            // TODO implement maximisation
+            SAT_Solver solver = SAT_Solver(af.count, af.args);
             Encodings::complete(af, solver);
+
+            std::vector<int32_t> assumptions;
+            std::vector<int32_t> complement_clause;
+            assumptions.reserve(af.args);
+            complement_clause.reserve(af.args);
+            while (true) {
+                int sat = solver.solve();
+                if (sat == 20) break;
+
+                assumptions.clear();
+                std::vector<bool> visited(af.args);
+                while (true) {
+                    complement_clause.clear();
+                    for (uint32_t i = 1; i <= af.args; i++) {
+                        if (solver.model[i]) {
+                            if (!visited[i]) {
+                                assumptions.push_back(i);
+                                visited[i] = true;
+                            }
+                        } else {
+                            complement_clause.push_back(i);
+                        }
+                    }
+                    solver.add_clause(complement_clause);
+                    int superset_exists = solver.solve(assumptions);
+                    if (superset_exists == 20) break;
+                }
+                for (uint32_t i = 1; i <= af.args; i++) {
+                    included[i] = included[i] && solver.model[i];
+                }
+            }
+
         } else if (sem == ST) {
             Encodings::stable(af, solver);
+            std::vector<int32_t> complement_clause;
+            complement_clause.reserve(af.args);
+            while (true) {
+                int sat = solver.solve();
+                if (sat == 20) break;
+
+                for (uint32_t i = 1; i <= af.count; i++) {
+                    if (i <= af.args) {
+                        included[i] = included[i] && solver.model[i];
+                    }
+                    if (solver.model[i]) {
+                        complement_clause.push_back(-i);
+                    } else {
+                        complement_clause.push_back(i);
+                    }
+                }
+                solver.add_clause(complement_clause);
+            }
         } else {
             std::cerr << sem << ": Unsupported semantics\n";
             exit(1);
-        }
-
-        std::vector<int> complement_clause;
-        complement_clause.reserve(af.args);
-        while (true) {
-            int ret = solver.solve();
-            if (ret == 20) break;
-
-            for (uint32_t i = 1; i <= af.args; i++) {
-                included[i] = included[i] && solver.model[i];
-                if (!solver.model[i]) {
-                    // TODO check correctness
-                    complement_clause.push_back(i);
-                }
-            }
-            solver.addClause(complement_clause);
         }
 
         for (uint32_t i = 1; i <= af.args; i++) {
@@ -79,5 +113,4 @@ namespace Algorithms {
         return result;
     }
 }
-
 #endif

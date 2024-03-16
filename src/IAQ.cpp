@@ -38,7 +38,7 @@ namespace Algorithms {
         } else if (sem == ST) {
             Encodings::stable(af, solver);
             for (uint32_t i = 0; i < af.args; i++) {
-                solver.assume(-af.accepted_var[i]);
+                solver.assume(af.rejected_var[i]);
                 if (solver.solve() == 20) {
                     result.push_back(af.int_to_arg[i]);
                 }

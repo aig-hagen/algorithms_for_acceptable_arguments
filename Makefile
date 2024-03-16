@@ -26,22 +26,38 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 # These files will have .d instead of .o as the output.
 CPPFLAGS := $(INC_FLAGS) -MMD -MP
 
-CPPFLAGS += -Wall -Wno-parentheses -Wno-sign-compare
 
+
+##################################################################################################
+###### CUSTOM ####################################################################################
+##################################################################################################
+CPPFLAGS += -Wall -Wno-parentheses -Wno-sign-compare
 CPPFLAGS	+= -D REL
 
-# compiler flags for the algorithm to use
-CPPFLAGS    += -D IAQ
-#CPPFLAGS    += -D EEE
-#CPPFLAGS    += -D SEE
-#CPPFLAGS    += -D SEEM
-#CPPFLAGS    += -D FUDGE
+ALGORITHM	?= IAQ
+ifeq ($(ALGORITHM), IAQ)
+	CPPFLAGS    += -D IAQ
+else ifeq ($(ALGORITHM), EEE)
+	CPPFLAGS    += -D EEE
+else ifeq ($(ALGORITHM), SEE)
+	CPPFLAGS    += -D SEE
+else ifeq ($(ALGORITHM), SEEM)
+	CPPFLAGS    += -D SEEM
+else ifeq ($(ALGORITHM), FUDGE)
+	CPPFLAGS    += -D FUDGE
+else
+	$(error No algorithm specified.)
+endif
 
-# compiler flag for the sat solver to use
-CPPFLAGS	+= -D SAT_CMSAT
-LDFLAGS  += -lcryptominisat5
-#CPPFLAGS	+= -D SAT_EXTERNAL
 
+SAT_SOLVER	?= cryptominisat
+ifeq ($(SAT_SOLVER), cryptominisat)
+	CPPFLAGS    += -D SAT_CMSAT
+	LDFLAGS  	+= -lcryptominisat5
+else ifeq ($(SAT_SOLVER), external)
+	CPPFLAGS    += -D SAT_EXTERNAL
+endif
+###################################################################################################
 
 # The final build step.
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)

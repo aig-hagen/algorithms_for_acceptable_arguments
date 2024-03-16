@@ -29,6 +29,7 @@ std::vector<std::string> iaq_skep(const AF & af, semantics sem);
 
 // helper methods
 bool ds_preferred(const AF & af, int arg);
+std::vector<std::vector<uint32_t>> ee_preferred(const AF & af);
 
 }
 
