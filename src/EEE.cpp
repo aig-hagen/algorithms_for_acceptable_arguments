@@ -1,10 +1,11 @@
 #if defined(EEE)
+
 #include "Algorithms.h"
 
 namespace Algorithms {
     std::vector<std::string> eee_cred(const AF & af, semantics sem) {
         std::vector<std::string> result;
-        std::vector<bool> acceptable(af.args+1);
+        std::vector<bool> accepted(af.args+1);
         SAT_Solver solver = SAT_Solver(af.count, af.args);
 
         if (sem == CO || sem == PR) {
@@ -16,24 +17,24 @@ namespace Algorithms {
             exit(1);
         }
 
-        std::vector<int32_t> complement_clause;
-        complement_clause.reserve(af.args);
+        std::vector<int32_t> complement_clause(af.count);
         while (true) {
-            complement_clause.clear();
-            int ret = solver.solve();
-            if (ret == 20) break;
+            int sat = solver.solve();
+            if (sat == 20) break;
 
+            complement_clause.clear();
             for (uint32_t i = 1; i <= af.count; i++) {
-                if (i <= af.args && solver.model[i]) {
-                    if (!acceptable[i]) {
-                        acceptable[i] = true;
+                if (solver.model[i]) {
+                    if (i <= af.args && !accepted[i]) {
+                        accepted[i] = true;
                         result.push_back(af.int_to_arg[i-1]);
                     }
-                    complement_clause.push_back(-i);
+                    complement_clause[i-1] = -i;
                 } else {
-                    complement_clause.push_back(i);
+                    complement_clause[i-1] = i;
                 }
             }
+
             solver.add_clause(complement_clause);
         }
 
@@ -82,7 +83,7 @@ namespace Algorithms {
         } else if (sem == ST) {
             Encodings::stable(af, solver);
             std::vector<int32_t> complement_clause;
-            complement_clause.reserve(af.args);
+            complement_clause.reserve(af.count);
             while (true) {
                 int sat = solver.solve();
                 if (sat == 20) break;
@@ -98,6 +99,7 @@ namespace Algorithms {
                     }
                 }
                 solver.add_clause(complement_clause);
+                complement_clause.clear();
             }
         } else {
             std::cerr << sem << ": Unsupported semantics\n";

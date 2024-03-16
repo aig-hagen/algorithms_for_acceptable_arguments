@@ -5,7 +5,7 @@ BUILD_DIR 	:= ./build
 SRC_DIRS 	:= ./src
 INC_DIRS 	:= ./include
 #INC_DIRS	+= ./lib/cryptominisat-5.11.4/src
-#INC_DIRS	+= ./lib/pstreams-1.0.3
+INC_DIRS	+= ./lib/pstreams-1.0.3
 
 # Find all the C and C++ files we want to compile
 # Note the single quotes around the * expressions. The shell will incorrectly expand these otherwise, but we want to send the * directly to the find command.
