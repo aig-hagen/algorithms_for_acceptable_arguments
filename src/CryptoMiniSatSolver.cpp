@@ -26,8 +26,6 @@
  * THE SOFTWARE.
  */
 
-#if defined(SAT_CMSAT)
-
 #include "CryptoMiniSatSolver.h"
 
 using namespace std;
@@ -107,4 +105,3 @@ bool CryptoMiniSatSolver::get_value(int32_t lit)
 	lbool val = solver.get_model()[var];
 	return (lit > 0) ? val == l_True : val == l_False;
 }
-#endif

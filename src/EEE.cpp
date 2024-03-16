@@ -1,40 +1,42 @@
-#if defined(EEE)
-
 #include "Algorithms.h"
+
 
 namespace Algorithms {
     std::vector<std::string> eee_cred(const AF & af, semantics sem) {
         std::vector<std::string> result;
-        std::vector<bool> accepted(af.args+1);
+        
         SAT_Solver solver = SAT_Solver(af.count, af.args);
-
         if (sem == CO || sem == PR) {
             Encodings::complete(af, solver);
         } else if (sem == ST) {
             Encodings::stable(af, solver);
         } else {
-            std::cerr << sem << ": Unsupported semantics\n";
+            //std::cerr << sem << ": Unsupported semantics\n";
             exit(1);
         }
-
-        std::vector<int32_t> complement_clause(af.count);
+        std::vector<bool> accepted(af.args, false);
         while (true) {
             int sat = solver.solve();
             if (sat == 20) break;
 
-            complement_clause.clear();
-            for (uint32_t i = 1; i <= af.count; i++) {
-                if (solver.model[i]) {
-                    if (i <= af.args && !accepted[i]) {
-                        accepted[i] = true;
-                        result.push_back(af.int_to_arg[i-1]);
-                    }
-                    complement_clause[i-1] = -i;
+            std::vector<int32_t> complement_clause;
+            complement_clause.reserve(af.count);
+            for (uint32_t i = 0; i < af.args; i++) {
+                if (solver.model[af.accepted_var[i]]) {
+                    complement_clause.push_back(-af.accepted_var[i]);
                 } else {
-                    complement_clause[i-1] = i;
+                    complement_clause.push_back(af.accepted_var[i]);
+                }
+                if (solver.model[af.rejected_var[i]]) {
+                    complement_clause.push_back(-af.rejected_var[i]);
+                } else {
+                    complement_clause.push_back(af.rejected_var[i]);
+                }
+                if (solver.model[af.accepted_var[i]] && accepted[i] == false) {
+                    accepted[i] = true;
+                    result.push_back(af.int_to_arg[i]);
                 }
             }
-
             solver.add_clause(complement_clause);
         }
 
@@ -46,7 +48,6 @@ namespace Algorithms {
         std::vector<bool> included(af.args+1, true);
         SAT_Solver solver = SAT_Solver(af.count, af.args);
         if (sem == PR) {
-            SAT_Solver solver = SAT_Solver(af.count, af.args);
             Encodings::complete(af, solver);
 
             std::vector<int32_t> assumptions;
@@ -102,7 +103,7 @@ namespace Algorithms {
                 complement_clause.clear();
             }
         } else {
-            std::cerr << sem << ": Unsupported semantics\n";
+            //std::cerr << sem << ": Unsupported semantics\n";
             exit(1);
         }
 
@@ -115,4 +116,3 @@ namespace Algorithms {
         return result;
     }
 }
-#endif

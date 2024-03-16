@@ -1,11 +1,17 @@
 # Thanks to Job Vranish (https://spin.atomicobject.com/2016/08/26/makefile-c-projects/)
 TARGET_EXEC	:= solver
 
+SAT_SOLVER	?= cryptominisat
+ALGORITHM	?= IAQ
+
 BUILD_DIR 	:= ./build
 SRC_DIRS 	:= ./src
 INC_DIRS 	:= ./include
+
+#ifeq ($(SAT_SOLVER), external)
+	INC_DIRS	+= ./lib/pstreams-1.0.3
+#endif
 #INC_DIRS	+= ./lib/cryptominisat-5.11.4/src
-INC_DIRS	+= ./lib/pstreams-1.0.3
 
 # Find all the C and C++ files we want to compile
 # Note the single quotes around the * expressions. The shell will incorrectly expand these otherwise, but we want to send the * directly to the find command.
@@ -31,10 +37,19 @@ CPPFLAGS := $(INC_FLAGS) -MMD -MP
 ##################################################################################################
 ###### CUSTOM ####################################################################################
 ##################################################################################################
+
 CPPFLAGS += -Wall -Wno-parentheses -Wno-sign-compare
 CPPFLAGS	+= -D REL
 
-ALGORITHM	?= IAQ
+LDFLAGS  	+= -lcryptominisat5
+
+ifeq ($(SAT_SOLVER), cryptominisat)
+	CPPFLAGS    += -D SAT_CMSAT
+	LDFLAGS  	+= -lcryptominisat5
+else ifeq ($(SAT_SOLVER), external)
+	CPPFLAGS    += -D SAT_EXTERNAL
+endif
+
 ifeq ($(ALGORITHM), IAQ)
 	CPPFLAGS    += -D IAQ
 else ifeq ($(ALGORITHM), EEE)
@@ -49,14 +64,6 @@ else
 	$(error No algorithm specified.)
 endif
 
-
-SAT_SOLVER	?= cryptominisat
-ifeq ($(SAT_SOLVER), cryptominisat)
-	CPPFLAGS    += -D SAT_CMSAT
-	LDFLAGS  	+= -lcryptominisat5
-else ifeq ($(SAT_SOLVER), external)
-	CPPFLAGS    += -D SAT_EXTERNAL
-endif
 ###################################################################################################
 
 # The final build step.

@@ -1,5 +1,3 @@
-#ifndef SAT_CMSAT
-
 #include <string>
 #include <vector>
 
@@ -24,6 +22,4 @@ public:
     void assume(int32_t lit);
     int solve();
     int solve(const std::vector<int32_t> assumptions);
-    
 };
-#endif

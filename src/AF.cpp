@@ -76,10 +76,10 @@ void AF::initialize_vars() {
 	for (uint32_t i = 0; i < args; i++) {
 		rejected_var[i] = ++count;
 	}
-	undecided_var.resize(args);
-	for (uint32_t i = 0; i < args; i++) {
-		undecided_var[i] = ++count;
-	}
+	//undecided_var.resize(args);
+	//for (uint32_t i = 0; i < args; i++) {
+	//	undecided_var[i] = ++count;
+	//}
 }
 
 void AF::set_solver_path(std::string path) {

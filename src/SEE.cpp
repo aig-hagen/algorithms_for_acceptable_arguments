@@ -1,5 +1,5 @@
-#if defined(SEE)
 #include "Algorithms.h"
+
 
 namespace Algorithms {
     std::vector<std::string> see_cred(const AF & af, semantics sem) {
@@ -11,7 +11,7 @@ namespace Algorithms {
         } else if (sem == ST) {
             Encodings::stable(af, solver);
         } else {
-            std::cerr << sem << ": Unsupported semantics\n";
+            //std::cerr << sem << ": Unsupported semantics\n";
             exit(1);
         }
 
@@ -19,10 +19,10 @@ namespace Algorithms {
         std::vector<int32_t> unvisited_clause;
         unvisited_clause.reserve(af.args);
         while (true) {
-            unvisited_clause.clear();
             int sat = solver.solve();
             if (sat == 20) break;
 
+            unvisited_clause.clear();
             for (uint32_t i = 1; i <= af.args; i++) {
                 if (unvisited[i-1]) {
                     if (solver.model[i]) {
@@ -46,5 +46,3 @@ namespace Algorithms {
         return result;
     }
 }
-
-#endif

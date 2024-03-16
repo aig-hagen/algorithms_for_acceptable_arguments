@@ -1,12 +1,13 @@
-#ifndef ALGORITHMS_H
-#define ALGORITHMS_H
-
 #include "Encodings.h"
-#include <iostream>			//std::cout
+//#include <iostream>			//std::cout
 
 namespace Algorithms {
 
-#if defined(EEE)
+#if defined(IAQ)
+// IAQ
+std::vector<std::string> iaq_cred(const AF & af, semantics sem);
+std::vector<std::string> iaq_skep(const AF & af, semantics sem); 
+#elif defined(EEE)
 // EEE
 std::vector<std::string> eee_cred(const AF & af, semantics sem);
 std::vector<std::string> eee_skep(const AF & af, semantics sem);
@@ -22,15 +23,10 @@ std::vector<std::string> seem_skep(const AF & af, semantics sem);
 // fudge
 std::vector<std::string> fudge_skep(const AF & af);
 #else
-// IAQ
-std::vector<std::string> iaq_cred(const AF & af, semantics sem);
-std::vector<std::string> iaq_skep(const AF & af, semantics sem); 
 #endif
 
 // helper methods
 bool ds_preferred(const AF & af, int arg);
-std::vector<std::vector<uint32_t>> ee_preferred(const AF & af);
+//std::vector<std::vector<uint32_t>> ee_preferred(const AF & af);
 
 }
-
-#endif

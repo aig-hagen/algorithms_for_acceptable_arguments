@@ -1,6 +1,3 @@
-#ifndef ENCODINGS_H
-#define ENCODINGS_H
-
 #include "AF.h"
 
 #if defined(SAT_CMSAT)
@@ -10,8 +7,7 @@ typedef CryptoMiniSatSolver SAT_Solver;
 #include "ExternalSatSolver.h"
 typedef ExternalSatSolver SAT_Solver;
 #else
-#include "CryptoMiniSatSolver.h"
-typedef CryptoMiniSatSolver SAT_Solver;
+#error "No solver defined"
 #endif
 
 namespace Encodings {
@@ -22,5 +18,3 @@ namespace Encodings {
     void add_admissible(const AF & af, SAT_Solver & solver);
     void add_complete(const AF & af, SAT_Solver & solver);
 }
-
-#endif

@@ -1,6 +1,6 @@
 #include "Algorithms.h"						// Header for all Algorithm methods
-
 //#include <algorithm>						// std::find
+
 
 namespace Algorithms {
 	/*mutoksia version of ds-pr*/
@@ -10,29 +10,21 @@ namespace Algorithms {
 
 		std::vector<int32_t> assumptions = { -af.accepted_var[arg] };
 
-		//std::cout << "Checking argument " << af.int_to_arg[arg] << ":" << std::endl;
 		while (true) {
 			int sat = solver.solve(assumptions);
-			if (sat == 20) {
-				//std::cout << "No further model exists" << std::endl;
-				break;
-			}
-			//std::cout << "Found model" << std::endl;
+			if (sat == 20) break;
 
-			std::vector<int32_t> complement_clause;
-			complement_clause.reserve(af.args);
 			std::vector<uint8_t> visited(af.args);
 			std::vector<int32_t> new_assumptions = assumptions;
 			new_assumptions.reserve(af.args);
 
-			//std::cout << "Maximising..." << std::endl;
 			while (true) {
-				complement_clause.clear();
+				std::vector<int32_t> complement_clause;
 				for (int32_t i = 1; i <= af.args; i++) {
 					if (solver.model[i]) {
-						if (!visited[i]) {
+						if (!visited[i-1]) {
 							new_assumptions.push_back(i);
-							visited[i] = 1;
+							visited[i-1] = true;
 						}
 					} else {
 						complement_clause.push_back(i);
@@ -41,25 +33,22 @@ namespace Algorithms {
 				solver.add_clause(complement_clause);
 				int superset_exists = solver.solve(new_assumptions);
 				if (superset_exists == 20) break;
-				//std::cout << "Found Supermodel" << std::endl;
 			}
-			//std::cout << "Maximal Model reached" << std::endl;
 
 			new_assumptions[0] = -new_assumptions[0];
 
 			if (solver.solve(new_assumptions) == 20) {
-				//std::cout << "No Other Model with argument found" << std::endl;
 				return false;
 			}
-			//std::cout << "Model could include argument. Continue..." << std::endl;
 		}
 		return true;
 	}
 
+	/*
 	std::vector<std::vector<uint32_t>> ee_preferred(const AF & af) {
 		std::vector<std::vector<uint32_t>> result;
 		SAT_Solver solver = SAT_Solver(af.count, af.args);
-		Encodings::add_complete(af, solver);
+		Encodings::complete(af, solver);
 
 		std::vector<int32_t> assumptions;
 		std::vector<int32_t> complement_clause;
@@ -97,4 +86,5 @@ namespace Algorithms {
 		}
 		return result;
 	}
+	*/
 }

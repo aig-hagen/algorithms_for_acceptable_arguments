@@ -1,5 +1,5 @@
-#if defined(SEEM)
 #include "Algorithms.h"
+
 
 namespace Algorithms {
     std::vector<std::string> seem_cred(const AF & af, semantics sem) {
@@ -12,5 +12,3 @@ namespace Algorithms {
         return result;
     }
 }
-
-#endif

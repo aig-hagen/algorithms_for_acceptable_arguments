@@ -26,11 +26,6 @@
  * THE SOFTWARE.
  */
 
-#ifndef CM_SATSOLVER_H
-#define CM_SATSOLVER_H
-
-#if defined(SAT_CMSAT)
-
 #include "SATSolver.h"
 #include <cryptominisat5/cryptominisat.h>
 
@@ -54,5 +49,3 @@ public:
 	std::vector<bool> model;
 
 };
-#endif
-#endif

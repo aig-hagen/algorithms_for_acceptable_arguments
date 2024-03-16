@@ -1,10 +1,7 @@
-#ifndef AF_H
-#define AF_H
-
 #include <vector>
 #include <unordered_map>
 #include <string>
-//#include <cstdint>     		// uncomment if boostlibs are not installed
+#include <cstdint>     		// uncomment if boostlibs are not installed
 
 enum task { EC, ES, UNKNOWN_TASK };
 enum semantics { CO, ST, PR, UNKNOWN_SEM };
@@ -79,7 +76,7 @@ std::unordered_map<std::pair<uint32_t,uint32_t>,bool> symmetric_attack;
 
 std::vector<int> accepted_var;
 std::vector<int> rejected_var;
-std::vector<int> undecided_var;
+//std::vector<int> undecided_var;
 
 void add_argument(std::string arg);
 void add_attack(std::pair<std::string,std::string> att);
@@ -90,5 +87,3 @@ void initialize_vars();
 void set_solver_path(std::string path);
 
 };
-
-#endif

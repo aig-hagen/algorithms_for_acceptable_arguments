@@ -1,6 +1,5 @@
-#if defined(IAQ)
-
 #include "Algorithms.h"
+
 
 namespace Algorithms {
     std::vector<std::string> iaq_cred(const AF & af, semantics sem) {
@@ -12,7 +11,7 @@ namespace Algorithms {
         } else if (sem == ST) {
             Encodings::stable(af, solver);
         } else {
-            std::cerr << sem << ": Unsupported semantics\n";
+            //std::cerr << sem << ": Unsupported semantics\n";
             exit(1);
         }
 
@@ -27,8 +26,6 @@ namespace Algorithms {
 
     std::vector<std::string> iaq_skep(const AF & af, semantics sem) {
         std::vector<std::string> result;
-        SAT_Solver solver = SAT_Solver(af.count, af.args);
-        
         if (sem == PR) {
             for (uint32_t i = 0; i < af.args; i++) {
                 if (ds_preferred(af, i)) {
@@ -36,6 +33,7 @@ namespace Algorithms {
                 }
             }
         } else if (sem == ST) {
+            SAT_Solver solver = SAT_Solver(af.count, af.args);
             Encodings::stable(af, solver);
             for (uint32_t i = 0; i < af.args; i++) {
                 solver.assume(af.rejected_var[i]);
@@ -44,10 +42,9 @@ namespace Algorithms {
                 }
             }
         } else {
-            std::cerr << sem << ": Unsupported semantics\n";
+            //std::cerr << sem << ": Unsupported semantics\n";
             exit(1);
         }
         return result;
     }
 }
-#endif
