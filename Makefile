@@ -47,14 +47,19 @@ endif
 
 ifeq ($(ALGORITHM), IAQ)
 	CPPFLAGS    += -D IAQ
+	OUTPUT_DIR	:= ./build/bin/iaq
 else ifeq ($(ALGORITHM), EEE)
 	CPPFLAGS    += -D EEE
+	OUTPUT_DIR	:= ./build/bin/eee
 else ifeq ($(ALGORITHM), SEE)
 	CPPFLAGS    += -D SEE
+	OUTPUT_DIR	:= ./build/bin/see
 else ifeq ($(ALGORITHM), SEEM)
 	CPPFLAGS    += -D SEEM
+	OUTPUT_DIR	:= ./build/bin/seem
 else ifeq ($(ALGORITHM), FUDGE)
 	CPPFLAGS    += -D FUDGE
+	OUTPUT_DIR	:= ./build/bin/fudge
 else
 	$(error No algorithm specified.)
 endif
@@ -62,7 +67,8 @@ endif
 ###################################################################################################
 
 # The final build step.
-$(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
+$(OUTPUT_DIR)/$(TARGET_EXEC): $(OBJS)
+	mkdir -p $(dir $@)
 	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
 
 # Build step for C source
@@ -83,10 +89,36 @@ cmsat:
 	cmake .. && \
 	make
 
-.PHONY: clean
+iaq:
+	$(MAKE) clean-src
+	@echo "Building solver for algorithm: IAQ..."
+	$(MAKE) ALGORITHM=IAQ
+eee:
+	$(MAKE) clean-src
+	@echo "Building solver for algorithm: EEE..."
+	$(MAKE) ALGORITHM=EEE
+see:
+	$(MAKE) clean-src
+	@echo "Building solver for algorithm: SEE..."
+	$(MAKE) ALGORITHM=SEE
+seem:
+	$(MAKE) clean-src
+	@echo "Building solver for algorithm: SEEM..."
+	$(MAKE) ALGORITHM=SEEM
+fudge:
+	$(MAKE) clean-src
+	@echo "Building solver for algorithm: Fudge..."
+	$(MAKE) ALGORITHM=FUDGE
+
+clean-src:
+	@echo "Cleaning source files..."
+	rm -r $(BUILD_DIR)/src
+
 clean:
 	@echo "Cleaning..."
 	rm -r $(BUILD_DIR)
+
+.PHONY: clean clean-src
 
 # Include the .d makefiles. The - at the front suppresses the errors of missing
 # Makefiles. Initially, all the .d files will be missing, and we don't want those

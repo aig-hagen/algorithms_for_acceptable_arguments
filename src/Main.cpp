@@ -234,12 +234,16 @@ int main(int argc, char ** argv) {
 	switch (string_to_task(task)) {
 		case EC:
 			#if defined(IAQ)
+			//std::cout << "Using IAQ..." << std::endl;
 			acceptable_arguments = Algorithms::iaq_cred(aaf, string_to_sem(task));
 			#elif defined(EEE)
+			//std::cout << "Using EEE..." << std::endl;
 			acceptable_arguments = Algorithms::eee_cred(aaf, string_to_sem(task));
 			#elif defined(SEE)
+			//std::cout << "Using SEE..." << std::endl;
 			acceptable_arguments = Algorithms::see_cred(aaf, string_to_sem(task));
 			#elif defined(SEEM)
+			//std::cout << "Using SEEM..." << std::endl;
 			acceptable_arguments = Algorithms::seem_cred(aaf, string_to_sem(task));
 			#else
 			#endif
