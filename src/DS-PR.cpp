@@ -1,13 +1,12 @@
 #include "Algorithms.h"						// Header for all Algorithm methods
 
-//#include <algorithm>						// std::find
 
 namespace Algorithms {
 
 /*mutoksia version of ds-pr*/
 bool ds_preferred(const AF & af, int arg) {
 	SAT_Solver solver = SAT_Solver(af.count, af.args);
-	Encodings::add_complete(af, solver);
+	Encodings::complete(af, solver);
 
 	std::vector<int32_t> assumptions = { -af.accepted_var[arg] };
 
@@ -25,9 +24,9 @@ bool ds_preferred(const AF & af, int arg) {
 			complement_clause.clear();
 			for (int32_t i = 1; i <= af.args; i++) {
 				if (solver.model[i]) {
-					if (!visited[i]) {
+					if (!visited[i-1]) {
 						new_assumptions.push_back(i);
-						visited[i] = 1;
+						visited[i-1] = 1;
 					}
 				} else {
 					complement_clause.push_back(i);

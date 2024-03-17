@@ -5,8 +5,8 @@
 namespace Algorithms {
     std::vector<std::string> iaq_cred(const AF & af, semantics sem) {
         std::vector<std::string> result;
-        SAT_Solver solver = SAT_Solver(af.count, af.args);
 
+        SAT_Solver solver = SAT_Solver(af.count, af.args);
         if (sem == CO || sem == PR) {
             Encodings::complete(af, solver);
         } else if (sem == ST) {
@@ -27,7 +27,6 @@ namespace Algorithms {
 
     std::vector<std::string> iaq_skep(const AF & af, semantics sem) {
         std::vector<std::string> result;
-        SAT_Solver solver = SAT_Solver(af.count, af.args);
         
         if (sem == PR) {
             for (uint32_t i = 0; i < af.args; i++) {
@@ -36,6 +35,7 @@ namespace Algorithms {
                 }
             }
         } else if (sem == ST) {
+            SAT_Solver solver = SAT_Solver(af.count, af.args);
             Encodings::stable(af, solver);
             for (uint32_t i = 0; i < af.args; i++) {
                 solver.assume(-af.accepted_var[i]);

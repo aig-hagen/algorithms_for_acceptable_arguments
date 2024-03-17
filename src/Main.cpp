@@ -90,7 +90,14 @@ void print_formats() {
 }
 
 void print_problems() {
+	#if defined(IAQ) || defined(EEE)
 	std::cout << "[EC-CO,EC-PR,EC-ST,ES-ST,ES-PR]\n";
+	#elif defined(SEE) || defined(SEEM)
+	std::cout << "[EC-CO,EC-PR,EC-ST,ES-ST]\n";
+	#elif defined(FUDGE)
+	std::cout << "[ES-PR]\n";
+	#else
+	#endif
 }
 
 int main(int argc, char ** argv) {
@@ -226,25 +233,27 @@ int main(int argc, char ** argv) {
 	std::vector<std::string> acceptable_arguments;
 	switch (string_to_task(task)) {
 		case EC:
-			#if defined(EEE)
+			#if defined(IAQ)
+			acceptable_arguments = Algorithms::iaq_cred(aaf, string_to_sem(task));
+			#elif defined(EEE)
 			acceptable_arguments = Algorithms::eee_cred(aaf, string_to_sem(task));
 			#elif defined(SEE)
 			acceptable_arguments = Algorithms::see_cred(aaf, string_to_sem(task));
 			#elif defined(SEEM)
 			acceptable_arguments = Algorithms::seem_cred(aaf, string_to_sem(task));
 			#else
-			acceptable_arguments = Algorithms::iaq_cred(aaf, string_to_sem(task));
 			#endif
 			break;
 		case ES:
-			#if defined(EEE)
+			#if defined(IAQ)
+			acceptable_arguments = Algorithms::iaq_skep(aaf, string_to_sem(task));
+			#elif defined(EEE)
 			acceptable_arguments = Algorithms::eee_skep(aaf, string_to_sem(task));
 			#elif defined(SEE)
 			acceptable_arguments = Algorithms::see_skep(aaf, string_to_sem(task));
 			#elif defined(SEEM)
 			acceptable_arguments = Algorithms::seem_skep(aaf, string_to_sem(task));
 			#else
-			acceptable_arguments = Algorithms::iaq_skep(aaf, string_to_sem(task));
 			#endif
 			break;
 		default:
