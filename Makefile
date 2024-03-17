@@ -89,6 +89,13 @@ cmsat:
 	cmake .. && \
 	make
 
+all:
+	$(MAKE) iaq
+	$(MAKE) eee
+	$(MAKE) see
+	$(MAKE) seem
+	$(MAKE) fudge
+
 iaq:
 	$(MAKE) clean-src
 	@echo "Building solver for algorithm: IAQ..."
