@@ -2,7 +2,7 @@
 
 
 EvalMaxSatSolver::EvalMaxSatSolver(int32_t n_vars, int32_t n_args) {
-	decision_vars = n_args;
+	decision_vars = n_vars;
     for (uint32_t i = 0; i < n_vars; i++) {
         solver.newVar();
     }

@@ -1,7 +1,6 @@
 #ifndef EVALMAX_SATSOLVER_H
 #define EVALMAX_SATSOLVER_H
 
-//#include "SATSolver.h"
 #include <EvalMaxSAT/lib/EvalMaxSAT/src/EvalMaxSAT.h>
 
 
