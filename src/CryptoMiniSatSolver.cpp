@@ -37,7 +37,7 @@ using namespace CMSat;
 CryptoMiniSatSolver::CryptoMiniSatSolver(int32_t n_vars, int32_t n_args) {
 	solver.set_num_threads(1);
 	solver.new_vars(n_vars);
-	decision_vars = n_args;
+	decision_vars = n_vars;
 	//solver.set_no_simplify();
 	//solver.set_no_equivalent_lit_replacement();
 	//solver.set_no_bva();
@@ -67,8 +67,8 @@ int CryptoMiniSatSolver::solve() {
 	int sat = solver.solve(&assumptions) == l_True ? 10 : 20;
 	if (sat == 10) {
 		model.clear();
-		for (int32_t i = 1; i <= decision_vars; i++)
-			model[i-1] = (solver.get_model()[i-1] == l_True ? 1 : 0);
+		for (int32_t i = 0; i < decision_vars; i++)
+			model[i] = (solver.get_model()[i] == l_True ? 1 : 0);
 	}
 	assumptions.clear();
 	return sat;
