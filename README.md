@@ -1,7 +1,9 @@
 # algorithms_for_acceptable_arguments v1.0 (03-2024)
 
 Implements several SAT-based algorithms for enumerating credulously/skeptically accepted arguments for abstract argumentation frameworks.
-Supports the following problems: [EC-CO,EC-PR,EC-ST,ES-PR,ES-ST]
+
+Supports the following problems: [`EC-CO`,`EC-PR`,`EC-ST`,`ES-PR`,`ES-ST`]
+
 Supports TGF and i23 format for abstract argumentation frameworks.
 
 ## Dependencies
@@ -12,7 +14,7 @@ Supports TGF and i23 format for abstract argumentation frameworks.
 ## Installation
 
 ### Build and Install Cryptominsat5
-Cryptominisat requires "cmake"
+Cryptominisat requires `cmake`
 ```
   sudo apt-get install build-essential cmake
 ```
@@ -42,10 +44,7 @@ or
     make ALGORITHM=<iaq|eee|see|seem|fudge>
 ```
 
-## Usage
-
-Command-line usage
-------------------
+## Command-line usage
 
 ```
 ./solver.sh <algorithm> -p <task> -f <file> -fo <format>
@@ -66,3 +65,9 @@ Example usage:
 ```
   ./solver.sh iaq -p EC-PR -fo tgf -f <file in TGF format>
 ```
+
+Alternatively, you can also directly call the binary for each algorithm, e.g.
+```
+  ./build/bin/<algorithm>/solver -p EC-PR -fo tgf -f <file in TGF format>
+```
+
