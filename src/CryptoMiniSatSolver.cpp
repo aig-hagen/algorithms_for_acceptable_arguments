@@ -34,8 +34,7 @@ using namespace std;
 using namespace CMSat;
 
 
-CryptoMiniSatSolver::CryptoMiniSatSolver(int32_t n_vars, int32_t n_args)
-{
+CryptoMiniSatSolver::CryptoMiniSatSolver(int32_t n_vars, int32_t n_args) {
 	solver.set_num_threads(1);
 	solver.new_vars(n_vars);
 	decision_vars = n_args;
@@ -43,11 +42,10 @@ CryptoMiniSatSolver::CryptoMiniSatSolver(int32_t n_vars, int32_t n_args)
 	//solver.set_no_equivalent_lit_replacement();
 	//solver.set_no_bva();
 	//solver.set_no_bve();
-	model = std::vector<bool>(n_vars+1);
+	model = std::vector<bool>(n_vars);
 }
 
-void CryptoMiniSatSolver::add_clause(const vector<int32_t> & clause)
-{
+void CryptoMiniSatSolver::add_clause(const vector<int32_t> & clause) {
 	vector<Lit> lits(clause.size());
 	for (uint32_t i = 0; i < clause.size(); i++) {
 		int32_t var = abs(clause[i])-1;
@@ -58,21 +56,19 @@ void CryptoMiniSatSolver::add_clause(const vector<int32_t> & clause)
 	solver.add_clause(lits);
 }
 
-void CryptoMiniSatSolver::assume(int32_t lit)
-{
+void CryptoMiniSatSolver::assume(int32_t lit) {
 	int32_t var = abs(lit)-1;
 	while ((uint32_t)var >= solver.nVars())
 		solver.new_var();
 	assumptions.push_back(Lit(var, lit < 0));
 }
 
-int CryptoMiniSatSolver::solve()
-{
+int CryptoMiniSatSolver::solve() {
 	int sat = solver.solve(&assumptions) == l_True ? 10 : 20;
 	if (sat == 10) {
 		model.clear();
 		for (int32_t i = 1; i <= decision_vars; i++)
-			model[i] = (solver.get_model()[i-1] == l_True ? 1 : 0);
+			model[i-1] = (solver.get_model()[i-1] == l_True ? 1 : 0);
 	}
 	assumptions.clear();
 	return sat;
@@ -85,8 +81,7 @@ int CryptoMiniSatSolver::solve(const std::vector<int32_t> assumptions) {
 	return solve();
 }
 
-bool CryptoMiniSatSolver::propagate(vector<int32_t> & out_lits)
-{
+bool CryptoMiniSatSolver::propagate(vector<int32_t> & out_lits) {
 	solver.set_no_bve();
 	vector<Lit> zero_lits = solver.get_zero_assigned_lits();
 	vector<Lit> implied_lits;
@@ -105,8 +100,7 @@ bool CryptoMiniSatSolver::propagate(vector<int32_t> & out_lits)
 	return sat;
 }
 
-bool CryptoMiniSatSolver::get_value(int32_t lit)
-{
+bool CryptoMiniSatSolver::get_value(int32_t lit) {
 	int32_t var = abs(lit)-1;
 	lbool val = solver.get_model()[var];
 	return (lit > 0) ? val == l_True : val == l_False;

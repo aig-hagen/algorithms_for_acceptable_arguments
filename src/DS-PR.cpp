@@ -22,14 +22,14 @@ bool ds_preferred(const AF & af, int arg) {
 
 		while (true) {
 			complement_clause.clear();
-			for (int32_t i = 1; i <= af.args; i++) {
+			for (int32_t i = 0; i < af.args; i++) {
 				if (solver.model[i]) {
-					if (!visited[i-1]) {
-						new_assumptions.push_back(i);
-						visited[i-1] = 1;
+					if (!visited[i]) {
+						new_assumptions.push_back(af.accepted_var[i]);
+						visited[i] = 1;
 					}
 				} else {
-					complement_clause.push_back(i);
+					complement_clause.push_back(af.accepted_var[i]);
 				}
 			}
 			solver.add_clause(complement_clause);
