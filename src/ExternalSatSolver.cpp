@@ -8,7 +8,7 @@
 
 ExternalSatSolver::ExternalSatSolver(int32_t n_vars, int32_t n_args) {
     number_of_vars = n_vars;
-    model = std::vector<bool>(n_vars+1);
+    model = std::vector<bool>(n_vars);
     clauses = std::vector<std::vector<int>>();
     solver = "./lib/cryptominisat-5.11.4/build/cryptominisat5";
 }
@@ -58,7 +58,7 @@ int ExternalSatSolver::solve() {
                 if (pos == std::string::npos) {
                     pos = line.length();
                 }
-                int var = stoi(line.substr(0, pos));
+                int var = stoi(line.substr(0, pos)-1);
                 if (var > 0) {
                     model[var] = true;
                 } else if (var < 0) {

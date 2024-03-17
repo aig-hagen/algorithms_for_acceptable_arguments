@@ -23,13 +23,13 @@ namespace Algorithms {
             if (sat == 20) break;
 
             unvisited_clause.clear();
-            for (uint32_t i = 1; i <= af.args; i++) {
-                if (unvisited[i-1]) {
+            for (uint32_t i = 0; i < af.args; i++) {
+                if (unvisited[i]) {
                     if (solver.model[i]) {
-                        unvisited[i-1] = false;
-                        result.push_back(af.int_to_arg[i-1]);
+                        unvisited[i] = false;
+                        result.push_back(af.int_to_arg[i]);
                     } else {
-                        unvisited_clause.push_back(i);
+                        unvisited_clause.push_back(af.accepted_var[i]);
                     }
                 }
             }
@@ -40,7 +40,7 @@ namespace Algorithms {
 
     std::vector<std::string> see_skep(const AF & af, semantics sem) {
         std::vector<std::string> result;
-        std::vector<bool> included(af.args+1, true);
+        std::vector<bool> included(af.args, true);
 
         SAT_Solver solver = SAT_Solver(af.count, af.args);
         if (sem == ST) {
@@ -52,11 +52,11 @@ namespace Algorithms {
                 if (sat == 20) break;
 
                 complement_clause.clear();
-                for (uint32_t i = 1; i <= af.args; i++) {
+                for (uint32_t i = 0; i < af.args; i++) {
                     included[i] = included[i] && solver.model[i];
 
                     if (included[i]) {
-                        complement_clause.push_back(af.rejected_var[i-1]);
+                        complement_clause.push_back(af.rejected_var[i]);
                     }
                 }
                 solver.add_clause(complement_clause);
@@ -67,9 +67,9 @@ namespace Algorithms {
             exit(1);
         }
 
-        for (uint32_t i = 1; i <= af.args; i++) {
+        for (uint32_t i = 0; i < af.args; i++) {
             if (included[i]) {
-                result.push_back(af.int_to_arg[i-1]);
+                result.push_back(af.int_to_arg[i]);
             }
         }
         return result;

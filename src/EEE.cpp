@@ -4,7 +4,7 @@
 namespace Algorithms {
     std::vector<std::string> eee_cred(const AF & af, semantics sem) {
         std::vector<std::string> result;
-        std::vector<bool> included(af.args+1);
+        std::vector<bool> included(af.args);
         SAT_Solver solver = SAT_Solver(af.count, af.args);
 
         if (sem == CO || sem == PR) {
@@ -23,15 +23,15 @@ namespace Algorithms {
             int ret = solver.solve();
             if (ret == 20) break;
 
-            for (uint32_t i = 1; i <= af.args; i++) {
+            for (uint32_t i = 0; i < af.args; i++) {
                 if (solver.model[i]) {
                     if (!included[i]) {
                         included[i] = true;
-                        result.push_back(af.int_to_arg[i-1]);
+                        result.push_back(af.int_to_arg[i]);
                     }
                 } else {
                     // TODO check correctness
-                    complement_clause.push_back(i);
+                    complement_clause.push_back(af.accepted_var[i]);
                 }
             }
             solver.add_clause(complement_clause);
@@ -42,7 +42,7 @@ namespace Algorithms {
 
     std::vector<std::string> eee_skep(const AF & af, semantics sem) {
         std::vector<std::string> result;
-        std::vector<bool> included(af.args+1, true);
+        std::vector<bool> included(af.args, true);
         SAT_Solver solver = SAT_Solver(af.count, af.args);
         if (sem == PR) {
             Encodings::complete(af, solver);
@@ -59,21 +59,21 @@ namespace Algorithms {
                 std::vector<bool> visited(af.args);
                 while (true) {
                     complement_clause.clear();
-                    for (uint32_t i = 1; i <= af.args; i++) {
+                    for (uint32_t i = 0; i < af.args; i++) {
                         if (solver.model[i]) {
-                            if (!visited[i-1]) {
-                                assumptions.push_back(i);
-                                visited[i-1] = true;
+                            if (!visited[i]) {
+                                assumptions.push_back(af.accepted_var[i]);
+                                visited[i] = true;
                             }
                         } else {
-                            complement_clause.push_back(i);
+                            complement_clause.push_back(af.accepted_var[i]);
                         }
                     }
                     solver.add_clause(complement_clause);
                     int superset_exists = solver.solve(assumptions);
                     if (superset_exists == 20) break;
                 }
-                for (uint32_t i = 1; i <= af.args; i++) {
+                for (uint32_t i = 0; i < af.args; i++) {
                     included[i] = included[i] && solver.model[i];
                 }
             }
@@ -88,9 +88,9 @@ namespace Algorithms {
 
                 for (uint32_t i = 1; i <= af.count; i++) {
                     if (i <= af.args) {
-                        included[i] = included[i] && solver.model[i];
+                        included[i-1] = included[i-1] && solver.model[i-1];
                     }
-                    if (solver.model[i]) {
+                    if (solver.model[i-1]) {
                         complement_clause.push_back(-i);
                     } else {
                         complement_clause.push_back(i);
@@ -104,9 +104,9 @@ namespace Algorithms {
             exit(1);
         }
 
-        for (uint32_t i = 1; i <= af.args; i++) {
+        for (uint32_t i = 0; i < af.args; i++) {
             if (included[i]) {
-                result.push_back(af.int_to_arg[i-1]);
+                result.push_back(af.int_to_arg[i]);
             }
         }
         return result;
