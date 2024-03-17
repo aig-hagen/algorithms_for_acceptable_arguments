@@ -90,7 +90,8 @@ cmsat:
 	make
 
 all:
-	$(MAKE) iaq
+	@echo "Building solver for algorithm: IAQ..."
+	$(MAKE) ALGORITHM=IAQ
 	$(MAKE) eee
 	$(MAKE) see
 	$(MAKE) seem

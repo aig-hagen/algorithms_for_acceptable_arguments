@@ -177,8 +177,9 @@ int main(int argc, char ** argv) {
 	}
 
 	if (fileformat.empty()) {
-		std::cerr << argv[0] << ": File format must be specified via -fo flag\n";
-		return 1;
+		//std::cerr << argv[0] << ": File format must be specified via -fo flag\n";
+		fileformat = "i23";
+		//return 1;
 	}
 
 	std::ifstream input;
