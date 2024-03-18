@@ -1,4 +1,4 @@
-#ifndef SAT_CMSAT
+#ifdef SAT_EXTERNAL
 
 #include "ExternalSatSolver.h"
 
@@ -10,7 +10,7 @@ ExternalSatSolver::ExternalSatSolver(int32_t n_vars, int32_t n_args) {
     number_of_vars = n_vars;
     model = std::vector<bool>(n_vars);
     clauses = std::vector<std::vector<int>>();
-    solver = "./lib/cryptominisat-5.11.4/build/cryptominisat5";
+    solver = "./lib/cadical/build/cadical";
 }
 
 void ExternalSatSolver::assume(int32_t lit) {
@@ -58,11 +58,11 @@ int ExternalSatSolver::solve() {
                 if (pos == std::string::npos) {
                     pos = line.length();
                 }
-                int var = stoi(line.substr(0, pos)-1);
+                int var = stoi(line.substr(0, pos));
                 if (var > 0) {
-                    model[var] = true;
+                    model[var-1] = true;
                 } else if (var < 0) {
-                    model[-var] = false;
+                    model[1-var] = false;
                 } else {
                     break;
                 }
