@@ -28,6 +28,12 @@ Building cryptominisat
 ```
   make cmsat
 ```
+Cryptominisat must be installed
+```
+  cd lib/cryptominisat-5.11.04/build
+  sudo make install
+  sudo ldconfig
+```
 
 ### Compile and Build Solver
 To compile and build solver for all algorithms use
