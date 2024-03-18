@@ -118,14 +118,18 @@ fudge:
 	$(MAKE) ALGORITHM=FUDGE
 
 clean-src:
-	@echo "Cleaning source files..."
-	rm -r $(BUILD_DIR)/src
+	if [ -d "build/src" ]; then\
+		rm -rf build/src/*;\
+		echo "Cleaned build/src directory.";\
+	else\
+		echo "build/src directory does not exist. Nothing to clean.";\
+	fi
 
 clean:
 	@echo "Cleaning..."
 	rm -r $(BUILD_DIR)
 
-.PHONY: clean clean-src
+.PHONY: all clean clean-src
 
 # Include the .d makefiles. The - at the front suppresses the errors of missing
 # Makefiles. Initially, all the .d files will be missing, and we don't want those
