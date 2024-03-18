@@ -10,6 +10,8 @@ INC_DIRS 	:= ./include
 
 ifeq ($(SAT_SOLVER), external)
 	INC_DIRS	+= ./lib/pstreams-1.0.3
+#else ifeq ($(SAT_SOLVER), cadical)
+#	INC_DIRS	+= ./lib/cadical/src
 endif
 
 #INC_DIRS	+= ./lib/EvalMaxSAT/lib/EvalMaxSAT/src
@@ -45,6 +47,9 @@ CPPFLAGS += -Wall -Wno-parentheses -Wno-sign-compare
 ifeq ($(SAT_SOLVER), cryptominisat)
 	CPPFLAGS    += -D SAT_CMSAT
 	LDFLAGS  	+= -lcryptominisat5
+else ifeq ($(SAT_SOLVER), cadical)
+	CPPFLAGS	+= -D SAT_CADICAL
+	LDFLAGS		+= -lcadical
 else ifeq ($(SAT_SOLVER), external)
 	CPPFLAGS    += -D SAT_EXTERNAL
 endif

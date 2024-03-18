@@ -2,6 +2,8 @@
 
 #include "CadicalSatSolver.h"
 
+#include <iostream>
+
 
 CadicalSatSolver::CadicalSatSolver(int32_t n_vars, int32_t n_args) {
     solver = new CaDiCaL::Solver;
@@ -14,31 +16,29 @@ CadicalSatSolver::CadicalSatSolver(int32_t n_vars, int32_t n_args) {
 }
 
 void CadicalSatSolver::add_clause(const std::vector<int32_t> & clause) {
-	std::vector<Lit> lits(clause.size());
-	for (uint32_t i = 0; i < clause.size(); i++) {
-		int32_t var = abs(clause[i])-1;
-		while ((uint32_t)var >= solver.nVars())
-			solver.new_var();
-		lits[i] = Lit(var, clause[i] < 0);
+	for (int32_t i : clause) {
+		solver->add(i);
 	}
-	solver.add_clause(lits);
+	solver->add(0);
 }
 
 void CadicalSatSolver::assume(int32_t lit) {
-	int32_t var = abs(lit)-1;
-	while ((uint32_t)var >= solver.nVars())
-		solver.new_var();
-	assumptions.push_back(Lit(var, lit < 0));
+	solver->assume(lit);
 }
 
 int CadicalSatSolver::solve() {
-	int sat = solver.solve(&assumptions) == l_True ? 10 : 20;
+	int sat = solver->solve();
+
+	if ( !( (sat == 10) || (sat == 20) ) ) {
+		std::cerr << "Problem" << std::endl;
+		exit(1);
+	}
+
 	if (sat == 10) {
 		model.clear();
-		for (int32_t i = 0; i < decision_vars; i++)
-			model[i] = (solver.get_model()[i] == l_True ? 1 : 0);
+		for (int32_t i = 1; i <= decision_vars; i++)
+			model[i-1] = (solver->val(i) > 0 ? true : false);
 	}
-	assumptions.clear();
 	return sat;
 }
 
@@ -47,13 +47,5 @@ int CadicalSatSolver::solve(const std::vector<int32_t> assumptions) {
 		assume(ass);
 	}
 	return solve();
-}
-
-bool CadicalSatSolver::propagate(std::vector<int32_t> & out_lits) {
-	return false;
-}
-
-bool CadicalSatSolver::get_value(int32_t lit) {
-    return false;
 }
 #endif

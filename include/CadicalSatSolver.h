@@ -1,10 +1,9 @@
-#ifdef SAT_CADICAL
+//#ifdef SAT_CADICAL
 
-#include "SATSolver.h"
-#include <lib/cadical/src/cadical.hpp>
+#include <cadical/cadical.hpp>
 
 
-class CadicalSatSolver : public SATSolver {
+class CadicalSatSolver {
 
 private:
 	CaDiCaL::Solver * solver;
@@ -18,9 +17,6 @@ public:
 	void assume(int32_t lit);
 	int solve();
 	int solve(const std::vector<int32_t> assumptions);
-	bool propagate(std::vector<int32_t> & out_lits);
-	bool get_value(int32_t lit);
 	std::vector<bool> model;
-
 };
 #endif

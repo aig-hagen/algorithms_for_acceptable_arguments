@@ -6,6 +6,9 @@
 #if defined(SAT_CMSAT)
 #include "CryptoMiniSatSolver.h"
 typedef CryptoMiniSatSolver SAT_Solver;
+#elif defined(SAT_CADICAL)
+#include "CadicalSatSolver.h"
+typedef CadicalSatSolver SAT_Solver;
 #elif defined(SAT_EXTERNAL)
 #include "ExternalSatSolver.h"
 typedef ExternalSatSolver SAT_Solver;

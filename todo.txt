@@ -1,3 +1,5 @@
+method for solving without parsing witness
+
 Implement MEthod for complement clause
 ```
 while(true) {
