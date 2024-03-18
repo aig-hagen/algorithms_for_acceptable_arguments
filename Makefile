@@ -118,7 +118,7 @@ fudge:
 	$(MAKE) ALGORITHM=FUDGE
 
 clean-src:
-	if [ -d "build/src" ]; then\
+	@if [ -d "build/src" ]; then\
 		rm -rf build/src/*;\
 		echo "Cleaned build/src directory.";\
 	else\
