@@ -1,3 +1,5 @@
+#ifdef EVALMAX_SATSOLVER_H
+
 #include "EvalMaxSatSolver.h"
 
 
@@ -28,3 +30,4 @@ int EvalMaxSatSolver::solve() {
 	}
 	return sat;
 }
+#endif

@@ -1,3 +1,5 @@
+#ifdef SAT_CADICAL
+
 #include "CadicalSatSolver.h"
 
 
@@ -54,3 +56,4 @@ bool CadicalSatSolver::propagate(std::vector<int32_t> & out_lits) {
 bool CadicalSatSolver::get_value(int32_t lit) {
     return false;
 }
+#endif

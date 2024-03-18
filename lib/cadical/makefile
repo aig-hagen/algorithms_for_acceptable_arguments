@@ -1,4 +1,4 @@
-CADICALBUILD=/home/lars/algorithms_for_acceptable_arguments/lib/cadical/build
+CADICALBUILD=/home/lars/GitHub/algorithms_for_acceptable_arguments/lib/cadical/build
 all:
 	$(MAKE) -C "$(CADICALBUILD)"
 clean:
@@ -11,8 +11,8 @@ clean:
 	  fi; \
 	  rm -rf "$(CADICALBUILD)"; \
 	fi
-	rm -f "/home/lars/algorithms_for_acceptable_arguments/lib/cadical/src/makefile"
-	rm -f "/home/lars/algorithms_for_acceptable_arguments/lib/cadical/makefile"
+	rm -f "/home/lars/GitHub/algorithms_for_acceptable_arguments/lib/cadical/src/makefile"
+	rm -f "/home/lars/GitHub/algorithms_for_acceptable_arguments/lib/cadical/makefile"
 test:
 	$(MAKE) -C "$(CADICALBUILD)" test
 cadical:

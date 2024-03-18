@@ -1,5 +1,4 @@
-#ifndef CM_SATSOLVER_H
-#define CM_SATSOLVER_H
+#ifdef SAT_CADICAL
 
 #include "SATSolver.h"
 #include <lib/cadical/src/cadical.hpp>

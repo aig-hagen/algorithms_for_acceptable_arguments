@@ -36,3 +36,4 @@ lib/cryptominisat-5.11.4/build/
 lib/cryptominisat-5.11.4/CMakeCache.txt
 check_log.py
 src/algorithms_for_acceptable_arguments.code-workspace
+lib/cadical/makefile
