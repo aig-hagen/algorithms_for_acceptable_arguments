@@ -4,7 +4,7 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
-//#include <cstdint>     		// uncomment if boostlibs are not installed
+#include <cstdint>     		// uncomment if boostlibs are not installed
 
 enum task { EC, ES, UNKNOWN_TASK };
 enum semantics { CO, ST, PR, UNKNOWN_SEM };

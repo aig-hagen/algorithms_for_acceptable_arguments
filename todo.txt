@@ -1,0 +1,23 @@
+Implement MEthod for complement clause
+```
+while(true) {
+    lbool ret = solver->solve();
+    if (ret != l_True) {
+        assert(ret == l_False);
+        //All solutions found.
+        exit(0);
+    }
+
+    //Use solution here. print it, for example.
+
+    //Banning found solution
+    vector<Lit> ban_solution;
+    for (uint32_t var = 0; var < solver->nVars(); var++) {
+        if (solver->get_model()[var] != l_Undef) {
+            ban_solution.push_back(
+                Lit(var, (solver->get_model()[var] == l_True)? true : false));
+        }
+    }
+    solver->add_clause(ban_solution);
+}
+```

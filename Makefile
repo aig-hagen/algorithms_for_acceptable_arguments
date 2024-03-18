@@ -12,6 +12,10 @@ ifeq ($(SAT_SOLVER), external)
 	INC_DIRS	+= ./lib/pstreams-1.0.3
 endif
 
+#INC_DIRS	+= ./lib/EvalMaxSAT/lib/EvalMaxSAT/src
+#INC_DIRS	+= ./lib/EvalMaxSAT/lib/MaLib/src
+#LDFLAGS		+= -lz
+
 # Find all the C and C++ files we want to compile
 # Note the single quotes around the * expressions. The shell will incorrectly expand these otherwise, but we want to send the * directly to the find command.
 SRCS := $(shell find $(SRC_DIRS) -name '*.cpp' -or -name '*.c' -or -name '*.s')
@@ -90,7 +94,8 @@ cmsat:
 	make
 
 all:
-	$(MAKE) iaq
+	@echo "Building solver for algorithm: IAQ..."
+	$(MAKE) ALGORITHM=IAQ
 	$(MAKE) eee
 	$(MAKE) see
 	$(MAKE) seem
@@ -118,11 +123,11 @@ fudge:
 	$(MAKE) ALGORITHM=FUDGE
 
 clean-src:
-	@if [ -d "build/src" ]; then\
-		rm -rf build/src/*;\
-		echo "Cleaned build/src directory.";\
-	else\
-		echo "build/src directory does not exist. Nothing to clean.";\
+	@if [ -d "build/src" ]; then \
+		rm -rf build/src/*; \
+		echo "Cleaned build/src directory."; \
+	else \
+		echo "build/src directory does not exist. Nothing to clean."; \
 	fi
 
 clean:

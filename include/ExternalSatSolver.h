@@ -1,4 +1,4 @@
-#ifndef SAT_CMSAT
+#ifdef SAT_EXTERNAL
 
 #include <string>
 #include <vector>
