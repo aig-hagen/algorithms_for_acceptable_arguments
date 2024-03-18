@@ -1,4 +1,4 @@
-#ifdef EVALMAX_SATSOLVER_H
+#ifdef SAT_EVALMAXSAT
 
 #include "EvalMaxSatSolver.h"
 

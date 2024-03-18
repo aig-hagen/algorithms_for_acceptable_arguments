@@ -1,6 +1,6 @@
-//#ifdef SAT_CADICAL
+#ifdef SAT_CADICAL
 
-#include <cadical/cadical.hpp>
+#include <cadical/src/cadical.hpp>
 
 
 class CadicalSatSolver {

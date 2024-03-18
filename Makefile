@@ -7,16 +7,14 @@ ALGORITHM	?= IAQ
 BUILD_DIR 	:= ./build
 SRC_DIRS 	:= ./src
 INC_DIRS 	:= ./include
+INC_DIRS	+= ./lib
 
 ifeq ($(SAT_SOLVER), external)
 	INC_DIRS	+= ./lib/pstreams-1.0.3
-#else ifeq ($(SAT_SOLVER), cadical)
-#	INC_DIRS	+= ./lib/cadical/src
+else ifeq ($(MAXSAT), evalmaxsat)
+	INC_DIRS	+= ./lib/EvalMaxSAT/lib/MaLib/src
+	INC_DIRS	+= ./lib/EvalMaxSAT/lib/cadical/src
 endif
-
-#INC_DIRS	+= ./lib/EvalMaxSAT/lib/EvalMaxSAT/src
-#INC_DIRS	+= ./lib/EvalMaxSAT/lib/MaLib/src
-#LDFLAGS		+= -lz
 
 # Find all the C and C++ files we want to compile
 # Note the single quotes around the * expressions. The shell will incorrectly expand these otherwise, but we want to send the * directly to the find command.
@@ -38,6 +36,7 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 CPPFLAGS := $(INC_FLAGS) -MMD -MP
 
 CPPFLAGS	+= -D REL
+CPPFLAGS	+= -D SAT_EVALMAXSAT
 
 ##################################################################################################
 ###### CUSTOM ####################################################################################
@@ -49,9 +48,14 @@ ifeq ($(SAT_SOLVER), cryptominisat)
 	LDFLAGS  	+= -lcryptominisat5
 else ifeq ($(SAT_SOLVER), cadical)
 	CPPFLAGS	+= -D SAT_CADICAL
-	LDFLAGS		+= -lcadical
+	LDFLAGS		+= lib/cadical/build/libcadical.a
 else ifeq ($(SAT_SOLVER), external)
 	CPPFLAGS    += -D SAT_EXTERNAL
+endif
+ifeq ($(MAXSAT), evalmaxsat)
+	LDFLAGS		+= /usr/local/lib/libEvalMaxSAT.a
+	LDFLAGS		+= ./lib/EvalMaxSAT/build/lib/cadical/libcadical.a
+	LDFLAGS		+= -lz
 endif
 
 ifeq ($(ALGORITHM), IAQ)
