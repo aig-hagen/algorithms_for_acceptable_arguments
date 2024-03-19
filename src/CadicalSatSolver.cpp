@@ -8,10 +8,6 @@
 CadicalSatSolver::CadicalSatSolver(int32_t n_vars, int32_t n_args) {
     solver = new CaDiCaL::Solver;
 	decision_vars = n_vars;
-	//solver.set_no_simplify();
-	//solver.set_no_equivalent_lit_replacement();
-	//solver.set_no_bva();
-	//solver.set_no_bve();
 	model = std::vector<bool>(n_vars);
 }
 
