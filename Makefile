@@ -19,7 +19,6 @@ else ifeq ($(SAT_SOLVER), cadical)
 	INC_DIRS	+= ./$(CADICAL_DIR)/src
 else ifeq ($(SAT_SOLVER), glucose)
 	INC_DIRS	+= ./$(GLUCOSE_DIR)/
-	INC_DIRS	+= ./$(GLUCOSE_DIR)/core
 else ifeq ($(SAT_SOLVER), evalmaxsat)
 	INC_DIRS	+= ./lib/EvalMaxSAT/lib/EvalMaxSAT/src
 	INC_DIRS	+= ./lib/EvalMaxSAT/lib/MaLib/src
@@ -59,7 +58,7 @@ else ifeq ($(SAT_SOLVER), cadical)
 	CPPFLAGS	+= -D SAT_CADICAL
 	LDFLAGS		+= $(CADICAL_DIR)/build/libcadical.a
 else ifeq ($(SAT_SOLVER), glucose)
-	CPPFLAGS	+= -D SAT_GLUCOSE
+	CPPFLAGS	+= -D SAT_GLUCOSE -D INCREMENTAL
 	LDFLAGS  	+= $(GLUCOSE_DIR)/build/libglucosep.a -lz
 else ifeq ($(SAT_SOLVER), external)
 	CPPFLAGS    += -D SAT_EXTERNAL

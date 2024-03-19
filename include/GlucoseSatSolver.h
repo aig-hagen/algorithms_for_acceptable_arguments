@@ -28,7 +28,7 @@
 
 #ifdef SAT_GLUCOSE
 
-#include <Solver.h>
+#include <core/Solver.h>
 #include <vector>
 
 class GlucoseSatSolver {
