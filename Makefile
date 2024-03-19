@@ -8,13 +8,21 @@ BUILD_DIR 	:= ./build
 SRC_DIRS 	:= ./src
 INC_DIRS 	:= ./include
 
-ifeq ($(SAT_SOLVER), external)
+
+ifeq ($(SAT_SOLVER), cryptominisat)
+	INC_DIRS	+= ./lib
+else ifeq ($(SAT_SOLVER), cadical)
+	INC_DIRS	+= ./lib/cadical-1.9.5/src
+else ifeq ($(SAT_SOLVER), glucose)
+	INC_DIRS	+= ./lib/glucose-4.2.1/core
+	INC_DIRS	+= ./lib/glucose-4.2.1/
+else ifeq ($(SAT_SOLVER), evalmaxsat)
+	INC_DIRS	+= ./lib/EvalMaxSAT/lib/EvalMaxSAT/src
+	INC_DIRS	+= ./lib/EvalMaxSAT/lib/MaLib/src
+	INC_DIRS	+= ./lib/EvalMaxSAT/lib/cadical/src
+else ifeq ($(SAT_SOLVER), external)
 	INC_DIRS	+= ./lib/pstreams-1.0.3
 endif
-
-#INC_DIRS	+= ./lib/EvalMaxSAT/lib/EvalMaxSAT/src
-#INC_DIRS	+= ./lib/EvalMaxSAT/lib/MaLib/src
-#LDFLAGS		+= -lz
 
 # Find all the C and C++ files we want to compile
 # Note the single quotes around the * expressions. The shell will incorrectly expand these otherwise, but we want to send the * directly to the find command.
@@ -35,8 +43,6 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 # These files will have .d instead of .o as the output.
 CPPFLAGS := $(INC_FLAGS) -MMD -MP
 
-CPPFLAGS	+= -D REL
-
 ##################################################################################################
 ###### CUSTOM ####################################################################################
 ##################################################################################################
@@ -45,8 +51,21 @@ CPPFLAGS += -Wall -Wno-parentheses -Wno-sign-compare
 ifeq ($(SAT_SOLVER), cryptominisat)
 	CPPFLAGS    += -D SAT_CMSAT
 	LDFLAGS  	+= -lcryptominisat5
+else ifeq ($(SAT_SOLVER), cadical)
+	CPPFLAGS	+= -D SAT_CADICAL
+	LDFLAGS		+= lib/cadical-1.9.5/build/libcadical.a
+else ifeq ($(SAT_SOLVER), glucose)
+	CPPFLAGS	+= -D SAT_GLUCOSE
+	LDFLAGS  	+= lib/glucose-4.2.1/build/libglucosep.a -lz
 else ifeq ($(SAT_SOLVER), external)
 	CPPFLAGS    += -D SAT_EXTERNAL
+endif
+ifeq ($(SAT_SOLVER), evalmaxsat)
+	LDFLAGS		+= /usr/local/lib/libEvalMaxSAT.a
+	LDFLAGS		+= ./lib/EvalMaxSAT/build/lib/cadical/libcadical.a
+	LDFLAGS		+= ./lib/EvalMaxSAT/build/lib/MaLib/libMaLib.a
+	LDFLAGS		+= -lz
+	CPPFLAGS	+= -D SAT_EVALMAXSAT
 endif
 
 ifeq ($(ALGORITHM), IAQ)
@@ -93,13 +112,23 @@ cmsat:
 	cmake .. && \
 	make
 
+cadical:
+	@echo "Compiling CaDiCal..."
+	cd lib/cadical-1.9.5 && \
+	./configure && make
+
+glucose:
+	@echo "Compiling Glucose..."
+	cd lib/glucose-4.2.1 && \
+	mkdir -p build && cd build && \
+	cmake .. && \
+	make glucose-syrup
+
 all:
 	@echo "Building solver for algorithm: IAQ..."
-	$(MAKE) ALGORITHM=IAQ
+	$(MAKE) iaq
 	$(MAKE) eee
 	$(MAKE) see
-	$(MAKE) seem
-	$(MAKE) fudge
 
 iaq:
 	$(MAKE) clean-src

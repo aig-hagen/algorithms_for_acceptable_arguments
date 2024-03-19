@@ -1,4 +1,7 @@
-#ifdef EVALMAX_SATSOLVER_H
+#ifndef EVALMAXSATSOLVER_H
+#define EVALMAXSATSOLVER_H
+
+#ifdef SAT_EVALMAXSAT
 
 #include "EvalMaxSatSolver.h"
 
@@ -11,7 +14,7 @@ EvalMaxSatSolver::EvalMaxSatSolver(int32_t n_vars, int32_t n_args) {
 	model = std::vector<bool>(n_vars);
 }
 
-void EvalMaxSatSolver::add_hard_clause(const std::vector<int32_t> & clause) {
+void EvalMaxSatSolver::add_clause(const std::vector<int32_t> & clause) {
 	solver.addClause(clause);
 }
 
@@ -30,4 +33,5 @@ int EvalMaxSatSolver::solve() {
 	}
 	return sat;
 }
+#endif
 #endif

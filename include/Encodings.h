@@ -6,12 +6,20 @@
 #if defined(SAT_CMSAT)
 #include "CryptoMiniSatSolver.h"
 typedef CryptoMiniSatSolver SAT_Solver;
+#elif defined(SAT_CADICAL)
+#include "CadicalSatSolver.h"
+typedef CadicalSatSolver SAT_Solver;
+#elif defined(SAT_GLUCOSE)
+#include "GlucoseSatSolver.h"
+typedef GlucoseSatSolver SAT_Solver;
+#elif defined(SAT_EVALMAXSAT)
+#include "EvalMaxSatSolver.h"
+typedef EvalMaxSatSolver SAT_Solver;
 #elif defined(SAT_EXTERNAL)
 #include "ExternalSatSolver.h"
 typedef ExternalSatSolver SAT_Solver;
 #else
-#include "CryptoMiniSatSolver.h"
-typedef CryptoMiniSatSolver SAT_Solver;
+#error "No SAT Solver defined"
 #endif
 
 namespace Encodings {
