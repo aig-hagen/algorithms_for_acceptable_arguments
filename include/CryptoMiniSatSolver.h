@@ -32,7 +32,7 @@
 #if defined(SAT_CMSAT)
 
 #include "SATSolver.h"
-#include <cryptominisat5/cryptominisat.h>
+#include <cryptominisat.h>
 
 
 class CryptoMiniSatSolver : public SATSolver {

@@ -14,7 +14,7 @@ INC_DIRS 	:= ./include
 
 
 ifeq ($(SAT_SOLVER), cryptominisat)
-	INC_DIRS	+= ./lib
+	INC_DIRS	+= ./$(CMSAT_DIR)/src
 else ifeq ($(SAT_SOLVER), cadical)
 	INC_DIRS	+= ./$(CADICAL_DIR)/src
 else ifeq ($(SAT_SOLVER), glucose)
@@ -54,7 +54,7 @@ CPPFLAGS += -Wall -Wno-parentheses -Wno-sign-compare
 
 ifeq ($(SAT_SOLVER), cryptominisat)
 	CPPFLAGS    += -D SAT_CMSAT
-	LDFLAGS  	+= -lcryptominisat5
+	LDFLAGS  	+= $(CMSAT_DIR)/build/lib/libcryptominisat5.so
 else ifeq ($(SAT_SOLVER), cadical)
 	CPPFLAGS	+= -D SAT_CADICAL
 	LDFLAGS		+= $(CADICAL_DIR)/build/libcadical.a
@@ -126,7 +126,7 @@ glucose:
 	cd $(GLUCOSE_DIR) && \
 	mkdir -p build && cd build && \
 	cmake .. && \
-	make glucosep
+	make glucose-syrup
 
 all:
 	@echo "Building solver for algorithm: IAQ..."
