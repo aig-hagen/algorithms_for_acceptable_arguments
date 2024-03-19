@@ -7,6 +7,7 @@ ALGORITHM	?= IAQ
 BUILD_DIR 	:= ./build
 SRC_DIRS 	:= ./src
 INC_DIRS 	:= ./include
+
 INC_DIRS	+= ./lib
 
 ifeq ($(SAT_SOLVER), external)
@@ -35,9 +36,6 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 # These files will have .d instead of .o as the output.
 CPPFLAGS := $(INC_FLAGS) -MMD -MP
 
-CPPFLAGS	+= -D REL
-CPPFLAGS	+= -D SAT_EVALMAXSAT
-
 ##################################################################################################
 ###### CUSTOM ####################################################################################
 ##################################################################################################
@@ -49,6 +47,9 @@ ifeq ($(SAT_SOLVER), cryptominisat)
 else ifeq ($(SAT_SOLVER), cadical)
 	CPPFLAGS	+= -D SAT_CADICAL
 	LDFLAGS		+= lib/cadical/build/libcadical.a
+else ifeq ($(SAT_SOLVER), glucose)
+	CPPFLAGS	+= -D SAT_GLUCOSE
+	LDFLAGS		+= lib/cadical/build/libcadical.a
 else ifeq ($(SAT_SOLVER), external)
 	CPPFLAGS    += -D SAT_EXTERNAL
 endif
@@ -56,6 +57,7 @@ ifeq ($(MAXSAT), evalmaxsat)
 	LDFLAGS		+= /usr/local/lib/libEvalMaxSAT.a
 	LDFLAGS		+= ./lib/EvalMaxSAT/build/lib/cadical/libcadical.a
 	LDFLAGS		+= -lz
+	CPPFLAGS	+= -D SAT_EVALMAXSAT
 endif
 
 ifeq ($(ALGORITHM), IAQ)
