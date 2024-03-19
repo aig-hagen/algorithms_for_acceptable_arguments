@@ -6,10 +6,6 @@ Supports the following problems: [`EC-CO`,`EC-PR`,`EC-ST`,`ES-PR`,`ES-ST`]
 
 Supports TGF and i23 format for abstract argumentation frameworks.
 
-## Dependencies
-- libboost
-- cryptominisat-5.11.04
-
 
 ## Installation
 
