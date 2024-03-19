@@ -34,10 +34,8 @@ using namespace Glucose;
 
 GlucoseSatSolver::GlucoseSatSolver(int32_t n_vars, int32_t n_args) {
 	solver = new Solver();
-#if defined(INCREMENTAL)
 	solver->setIncrementalMode();
 	solver->initNbInitialVars(n_args);
-#endif
 	decision_vars = n_args;
 }
 

@@ -1,6 +1,8 @@
-method for solving without parsing witness
+- simplify assumptions: only assume OR solve(assumptions)
 
-Implement MEthod for complement clause
+- method for solving without parsing witness
+
+- Implement MEthod for complement clause
 ```
 while(true) {
     lbool ret = solver->solve();

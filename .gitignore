@@ -44,3 +44,4 @@ lib/glucose-4.2.1/Makefile
 lib/glucose-4.2.1/simp/*mk
 lib/glucose-4.2.1/*.a
 lib/glucose-4.2.1/*make
+lib/glucose-4.2.1/simp/glucose
