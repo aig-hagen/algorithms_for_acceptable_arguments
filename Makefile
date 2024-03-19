@@ -4,6 +4,10 @@ TARGET_EXEC	:= solver
 SAT_SOLVER	?= cryptominisat
 ALGORITHM	?= IAQ
 
+GLUCOSE_DIR	= lib/glucose-4.2.1
+CADICAL_DIR	= lib/cadical-1.9.5
+CMSAT_DIR	= lib/cryptominisat-5.11.4
+
 BUILD_DIR 	:= ./build
 SRC_DIRS 	:= ./src
 INC_DIRS 	:= ./include
@@ -12,10 +16,10 @@ INC_DIRS 	:= ./include
 ifeq ($(SAT_SOLVER), cryptominisat)
 	INC_DIRS	+= ./lib
 else ifeq ($(SAT_SOLVER), cadical)
-	INC_DIRS	+= ./lib/cadical-1.9.5/src
+	INC_DIRS	+= ./$(CADICAL_DIR)/src
 else ifeq ($(SAT_SOLVER), glucose)
-	INC_DIRS	+= ./lib/glucose-4.2.1/core
-	INC_DIRS	+= ./lib/glucose-4.2.1/
+	INC_DIRS	+= ./$(GLUCOSE_DIR)/
+	INC_DIRS	+= ./$(GLUCOSE_DIR)/core
 else ifeq ($(SAT_SOLVER), evalmaxsat)
 	INC_DIRS	+= ./lib/EvalMaxSAT/lib/EvalMaxSAT/src
 	INC_DIRS	+= ./lib/EvalMaxSAT/lib/MaLib/src
@@ -53,10 +57,10 @@ ifeq ($(SAT_SOLVER), cryptominisat)
 	LDFLAGS  	+= -lcryptominisat5
 else ifeq ($(SAT_SOLVER), cadical)
 	CPPFLAGS	+= -D SAT_CADICAL
-	LDFLAGS		+= lib/cadical-1.9.5/build/libcadical.a
+	LDFLAGS		+= $(CADICAL_DIR)/build/libcadical.a
 else ifeq ($(SAT_SOLVER), glucose)
 	CPPFLAGS	+= -D SAT_GLUCOSE
-	LDFLAGS  	+= lib/glucose-4.2.1/build/libglucosep.a -lz
+	LDFLAGS  	+= $(GLUCOSE_DIR)/build/libglucosep.a -lz
 else ifeq ($(SAT_SOLVER), external)
 	CPPFLAGS    += -D SAT_EXTERNAL
 endif
@@ -107,22 +111,22 @@ $(BUILD_DIR)/%.cpp.o: %.cpp
 #.ONESHELL:
 cmsat:
 	@echo "Compiling CryptoMiniSat..."
-	cd lib/cryptominisat-5.11.4 && \
+	cd $(CMSAT_DIR) && \
 	mkdir -p build && cd build && \
 	cmake .. && \
 	make
 
 cadical:
 	@echo "Compiling CaDiCal..."
-	cd lib/cadical-1.9.5 && \
+	cd $(CADICAL_DIR) && \
 	./configure && make
 
 glucose:
 	@echo "Compiling Glucose..."
-	cd lib/glucose-4.2.1 && \
+	cd $(GLUCOSE_DIR) && \
 	mkdir -p build && cd build && \
 	cmake .. && \
-	make glucose-syrup
+	make glucosep
 
 all:
 	@echo "Building solver for algorithm: IAQ..."
