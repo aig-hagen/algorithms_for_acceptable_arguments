@@ -37,3 +37,10 @@ lib/cryptominisat-5.11.4/CMakeCache.txt
 check_log.py
 src/algorithms_for_acceptable_arguments.code-workspace
 lib/cadical/makefile
+
+lib/glucose-4.2.1/CMakeFiles/
+lib/glucose-4.2.1/CMakeCache.txt
+lib/glucose-4.2.1/Makefile
+lib/glucose-4.2.1/simp/*mk
+lib/glucose-4.2.1/*.a
+lib/glucose-4.2.1/*make

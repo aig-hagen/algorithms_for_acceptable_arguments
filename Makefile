@@ -48,8 +48,8 @@ else ifeq ($(SAT_SOLVER), cadical)
 	CPPFLAGS	+= -D SAT_CADICAL
 	LDFLAGS		+= lib/cadical/build/libcadical.a
 else ifeq ($(SAT_SOLVER), glucose)
-	CPPFLAGS	+= -D SAT_GLUCOSE
-	LDFLAGS		+= lib/cadical/build/libcadical.a
+	CPPFLAGS	+= -D SAT_GLUCOSE -D INCREMENTAL
+	LDFLAGS  	+= lib/glucose-4.2.1/libglucose.a -lz
 else ifeq ($(SAT_SOLVER), external)
 	CPPFLAGS    += -D SAT_EXTERNAL
 endif

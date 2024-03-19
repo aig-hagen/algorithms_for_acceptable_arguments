@@ -28,22 +28,46 @@
 
 #ifdef SAT_GLUCOSE
 
-#include <glucose-4.2.1/core/Solver.h>
-#include <vector>
+#include "GlucoseSatSolver.h"
 
-class GlucoseSatSolver {
+using namespace Glucose;
 
-private:
-	Glucose::Solver * solver;
-	Glucose::vec<Glucose::Lit> assumptions;
-	int32_t decision_vars;
+GlucoseSatSolver::GlucoseSatSolver(int32_t n_vars, int32_t n_args) {
+	solver = new Solver();
+#if defined(INCREMENTAL)
+	solver->setIncrementalMode();
+	solver->initNbInitialVars(n_args);
+#endif
+	decision_vars = n_args;
+}
 
-public:
-	GlucoseSatSolver(int32_t n_vars, int32_t n_args);
-	~GlucoseSatSolver() { delete solver; };
-	void add_clause(const std::vector<int32_t> & clause);
-	void assume(int32_t lit);
-	int solve();
-	std::vector<bool> model;
-};
+void GlucoseSatSolver::add_clause(const std::vector<int32_t> & clause) {
+	vec<Lit> lits(clause.size());
+	for (uint32_t i = 0; i < clause.size(); i++) {
+		int32_t var = abs(clause[i])-1;
+		while (var >= solver->nVars())
+			solver->newVar();
+		lits[i] = (clause[i] > 0) ? mkLit(var) : ~mkLit(var);
+	}
+	solver->addClause_(lits);
+}
+
+void GlucoseSatSolver::assume(int32_t lit) {
+	int32_t var = abs(lit)-1;
+	while (var >= solver->nVars())
+		solver->newVar();
+	assumptions.push((lit > 0) ? mkLit(var) : ~mkLit(var));
+}
+
+int GlucoseSatSolver::solve() {
+	int sat = solver->solve(assumptions) ? 10 : 20;
+	if (sat == 10) {
+		model.clear();
+		for (int32_t i = 0; i < decision_vars; i++) {
+			model[i] = solver->modelValue(i) == l_True ? 1 : 0;
+		}
+	}
+	assumptions.clear();
+	return sat;
+}
 #endif
