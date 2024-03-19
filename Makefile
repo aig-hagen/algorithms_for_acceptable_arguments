@@ -12,7 +12,7 @@ INC_DIRS 	:= ./include
 ifeq ($(SAT_SOLVER), cryptominisat)
 	INC_DIRS	+= ./lib
 else ifeq ($(SAT_SOLVER), cadical)
-	INC_DIRS	+= ./lib/cadical/src
+	INC_DIRS	+= ./lib/cadical-1.9.5/src
 else ifeq ($(SAT_SOLVER), glucose)
 	INC_DIRS	+= ./lib/glucose-4.2.1/core
 	INC_DIRS	+= ./lib/glucose-4.2.1/
@@ -53,7 +53,7 @@ ifeq ($(SAT_SOLVER), cryptominisat)
 	LDFLAGS  	+= -lcryptominisat5
 else ifeq ($(SAT_SOLVER), cadical)
 	CPPFLAGS	+= -D SAT_CADICAL
-	LDFLAGS		+= lib/cadical/build/libcadical.a
+	LDFLAGS		+= lib/cadical-1.9.5/build/libcadical.a
 else ifeq ($(SAT_SOLVER), glucose)
 	CPPFLAGS	+= -D SAT_GLUCOSE
 	LDFLAGS  	+= lib/glucose-4.2.1/build/libglucosep.a -lz
@@ -111,6 +111,18 @@ cmsat:
 	mkdir -p build && cd build && \
 	cmake .. && \
 	make
+
+cadical:
+	@echo "Compiling CaDiCal..."
+	cd lib/cadical-1.9.5 && \
+	./configure && make
+
+glucose:
+	@echo "Compiling Glucose..."
+	cd lib/glucose-4.2.1 && \
+	mkdir -p build && cd build && \
+	cmake .. && \
+	make glucose-syrup
 
 all:
 	@echo "Building solver for algorithm: IAQ..."

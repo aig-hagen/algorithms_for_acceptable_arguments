@@ -13,22 +13,41 @@ Supports TGF and i23 format for abstract argumentation frameworks.
 
 ## Installation
 
-### Build and Install Cryptominsat5
-Cryptominisat requires `cmake`
+### Building SAT Solvers
+This solver supports multiple integrated SAT Solvers, namely `CaDiCal`, `Glucose` and `CryptoMiniSat`.
+The relevant source files are included and the solvers can be built as follows
+
+#### CaDiCal
+```
+  make cadical
+```
+
+#### Glucose
+Glucose requires `cmake`
 ```
   sudo apt-get install build-essential cmake
 ```
+Building Glucose
+```
+  make glucose
+```
 
+### CryptoMiniSat
+CryptoMiniSat requires `cmake`
+```
+  sudo apt-get install build-essential cmake
+```
 Install Boost libraries and other prerequisites
 ```
 sudo apt-get install zlib1g-dev libboost-program-options-dev libsqlite3-dev
 ```
 
-Building cryptominisat
+Building CryptoMiniSat
 ```
   make cmsat
 ```
-Cryptominisat must be installed
+
+CryptoMiniSat must also be installed
 ```
   cd lib/cryptominisat-5.11.04/build
   sudo make install
@@ -48,6 +67,21 @@ Alternatively, build only for a specific algorithm via
 or 
 ```
     make ALGORITHM=<iaq|eee|see|seem|fudge>
+```
+
+The SAT solver to be used can be specified as follows
+```
+  make <iaq|eee|see|seem|fudge> SAT_SOLVER=<cadical|glucose|cryptominisat>
+```
+
+#### Example
+To build only the solver based on the IAQ algorithm using the CaDiCal SAT Solver
+```
+  make iaq SAT_SOLVER=cadical
+```
+Or, to build the solver for all algorithms using Glucose
+```
+  make all SAT_SOLVER=glucose
 ```
 
 ## Command-line usage
