@@ -16,7 +16,7 @@ typedef GlucoseSatSolver SAT_Solver;
 #include "ExternalSatSolver.h"
 typedef ExternalSatSolver SAT_Solver;
 #else
-#error "No SAT Solver defined
+#error "No SAT Solver defined"
 #endif
 
 namespace Encodings {

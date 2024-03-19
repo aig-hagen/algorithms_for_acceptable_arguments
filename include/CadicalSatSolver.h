@@ -12,7 +12,7 @@ private:
 
 public:
 	CadicalSatSolver(int32_t n_vars, int32_t n_args);
-	~CadicalSatSolver() {};
+	~CadicalSatSolver() { delete solver; };
 	void add_clause(const std::vector<int32_t> & clause);
 	void assume(int32_t lit);
 	int solve();
