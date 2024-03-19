@@ -44,3 +44,8 @@ lib/glucose-4.2.1/Makefile
 lib/glucose-4.2.1/simp/*mk
 lib/glucose-4.2.1/*make
 lib/glucose-4.2.1/simp/glucose
+
+# pstreams build files
+lib/pstreams-1.0.3/test_minimum
+lib/pstreams-1.0.3/test_pstreams
+lib/pstreams-1.0.3/pstreams.wout
