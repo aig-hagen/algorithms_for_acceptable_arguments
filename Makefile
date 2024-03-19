@@ -8,13 +8,20 @@ BUILD_DIR 	:= ./build
 SRC_DIRS 	:= ./src
 INC_DIRS 	:= ./include
 
-INC_DIRS	+= ./lib
 
-ifeq ($(SAT_SOLVER), external)
-	INC_DIRS	+= ./lib/pstreams-1.0.3
-else ifeq ($(MAXSAT), evalmaxsat)
+ifeq ($(SAT_SOLVER), cryptominisat)
+	INC_DIRS	+= ./lib
+else ifeq ($(SAT_SOLVER), cadical)
+	INC_DIRS	+= ./lib/cadical/src
+else ifeq ($(SAT_SOLVER), glucose)
+	INC_DIRS	+= ./lib/glucose-4.2.1/core
+	INC_DIRS	+= ./lib/glucose-4.2.1/
+else ifeq ($(SAT_SOLVER), evalmaxsat)
+	INC_DIRS	+= ./lib/EvalMaxSAT/lib/EvalMaxSAT/src
 	INC_DIRS	+= ./lib/EvalMaxSAT/lib/MaLib/src
 	INC_DIRS	+= ./lib/EvalMaxSAT/lib/cadical/src
+else ifeq ($(SAT_SOLVER), external)
+	INC_DIRS	+= ./lib/pstreams-1.0.3
 endif
 
 # Find all the C and C++ files we want to compile
@@ -53,9 +60,10 @@ else ifeq ($(SAT_SOLVER), glucose)
 else ifeq ($(SAT_SOLVER), external)
 	CPPFLAGS    += -D SAT_EXTERNAL
 endif
-ifeq ($(MAXSAT), evalmaxsat)
+ifeq ($(SAT_SOLVER), evalmaxsat)
 	LDFLAGS		+= /usr/local/lib/libEvalMaxSAT.a
 	LDFLAGS		+= ./lib/EvalMaxSAT/build/lib/cadical/libcadical.a
+	LDFLAGS		+= ./lib/EvalMaxSAT/build/lib/MaLib/libMaLib.a
 	LDFLAGS		+= -lz
 	CPPFLAGS	+= -D SAT_EVALMAXSAT
 endif
@@ -106,11 +114,9 @@ cmsat:
 
 all:
 	@echo "Building solver for algorithm: IAQ..."
-	$(MAKE) ALGORITHM=IAQ
+	$(MAKE) iaq
 	$(MAKE) eee
 	$(MAKE) see
-	$(MAKE) seem
-	$(MAKE) fudge
 
 iaq:
 	$(MAKE) clean-src

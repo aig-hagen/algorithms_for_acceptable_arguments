@@ -26,7 +26,7 @@
  * THE SOFTWARE.
  */
 
-#if defined(SAT_CMSAT)
+#ifdef SAT_CMSAT
 
 #include "CryptoMiniSatSolver.h"
 

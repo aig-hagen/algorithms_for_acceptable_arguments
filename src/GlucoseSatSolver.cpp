@@ -70,4 +70,12 @@ int GlucoseSatSolver::solve() {
 	assumptions.clear();
 	return sat;
 }
+
+int GlucoseSatSolver::solve(const std::vector<int32_t> assumptions) {
+	for (auto const& ass: assumptions) {
+		assume(ass);
+	}
+	return solve();
+}
+
 #endif

@@ -28,7 +28,7 @@
 
 #ifdef SAT_GLUCOSE
 
-#include <glucose-4.2.1/core/Solver.h>
+#include <Solver.h>
 #include <vector>
 
 class GlucoseSatSolver {
@@ -44,6 +44,7 @@ public:
 	void add_clause(const std::vector<int32_t> & clause);
 	void assume(int32_t lit);
 	int solve();
+	int solve(const std::vector<int32_t> assumptions);
 	std::vector<bool> model;
 };
 #endif
