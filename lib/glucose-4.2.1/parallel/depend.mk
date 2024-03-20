@@ -1,0 +1,149 @@
+/home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/ClausesBuffer.o /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/ClausesBuffer.or /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/ClausesBuffer.od /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/ClausesBuffer.op: \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/ClausesBuffer.cc \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/ClausesBuffer.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Vec.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/IntTypes.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/XAlloc.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/SolverTypes.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Alg.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Map.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Alloc.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/Solver.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Heap.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../utils/Options.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../utils/ParseUtils.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/BoundedQueue.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/Constants.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Clone.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/SolverStats.h
+/home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/Main.o /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/Main.or /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/Main.od /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/Main.op: \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/Main.cc \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../utils/System.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/IntTypes.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../utils/ParseUtils.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../utils/Options.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Vec.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/XAlloc.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/Dimacs.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/SolverTypes.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Alg.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Map.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Alloc.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../simp/SimpSolver.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Queue.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/Solver.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Heap.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/BoundedQueue.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/Constants.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Clone.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/SolverStats.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/ParallelSolver.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/SharedCompanion.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/SolverCompanion.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/ClausesBuffer.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/MultiSolvers.h
+/home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/MultiSolvers.o /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/MultiSolvers.or /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/MultiSolvers.od /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/MultiSolvers.op: \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/MultiSolvers.cc \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/MultiSolvers.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/ParallelSolver.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/SolverTypes.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/IntTypes.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Alg.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Vec.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/XAlloc.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Map.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Alloc.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/Solver.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Heap.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../utils/Options.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../utils/ParseUtils.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/BoundedQueue.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/Constants.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Clone.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/SolverStats.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../simp/SimpSolver.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Queue.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/SharedCompanion.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/SolverCompanion.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/ClausesBuffer.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Sort.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../utils/System.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/SolverConfiguration.h
+/home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/ParallelSolver.o /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/ParallelSolver.or /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/ParallelSolver.od /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/ParallelSolver.op: \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/ParallelSolver.cc \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/ParallelSolver.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/SolverTypes.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/IntTypes.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Alg.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Vec.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/XAlloc.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Map.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Alloc.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/Solver.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Heap.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../utils/Options.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../utils/ParseUtils.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/BoundedQueue.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/Constants.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Clone.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/SolverStats.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../simp/SimpSolver.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Queue.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/SharedCompanion.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/SolverCompanion.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/ClausesBuffer.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Sort.h
+/home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/SharedCompanion.o /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/SharedCompanion.or /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/SharedCompanion.od /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/SharedCompanion.op: \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/SharedCompanion.cc \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/Solver.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Heap.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Vec.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/IntTypes.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/XAlloc.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Alg.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../utils/Options.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../utils/ParseUtils.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/SolverTypes.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Map.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Alloc.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/BoundedQueue.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/Constants.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Clone.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/SolverStats.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/ParallelSolver.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../simp/SimpSolver.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Queue.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/SharedCompanion.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/SolverCompanion.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/ClausesBuffer.h
+/home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/SolverCompanion.o /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/SolverCompanion.or /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/SolverCompanion.od /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/SolverCompanion.op: \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/SolverCompanion.cc \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/SolverCompanion.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Vec.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/IntTypes.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/XAlloc.h
+/home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/SolverConfiguration.o /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/SolverConfiguration.or /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/SolverConfiguration.od /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/SolverConfiguration.op: \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/SolverConfiguration.cc \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/MultiSolvers.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/ParallelSolver.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/SolverTypes.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/IntTypes.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Alg.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Vec.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/XAlloc.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Map.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Alloc.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/Solver.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Heap.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../utils/Options.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../utils/ParseUtils.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/BoundedQueue.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/Constants.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Clone.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../core/SolverStats.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../simp/SimpSolver.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../mtl/Queue.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/SharedCompanion.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/SolverCompanion.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/ClausesBuffer.h \
+ /home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/parallel/../parallel/SolverConfiguration.h
