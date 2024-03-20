@@ -51,7 +51,7 @@ CPPFLAGS := $(INC_FLAGS) -MMD -MP
 ##################################################################################################
 ###### CUSTOM ####################################################################################
 ##################################################################################################
-CPPFLAGS += -Wall -Wno-parentheses -Wno-sign-compare
+CPPFLAGS += -Wall -Wno-parentheses -Wno-sign-compare -std=c++20
 
 ifeq ($(SAT_SOLVER), cryptominisat)
 	CPPFLAGS    += -D SAT_CMSAT

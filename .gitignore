@@ -49,3 +49,4 @@ lib/glucose-4.2.1/simp/glucose
 lib/pstreams-1.0.3/test_minimum
 lib/pstreams-1.0.3/test_pstreams
 lib/pstreams-1.0.3/pstreams.wout
+.vscode/launch.json
