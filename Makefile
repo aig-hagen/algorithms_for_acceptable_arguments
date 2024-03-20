@@ -8,7 +8,7 @@ ALGORITHM	?= IAQ
 
 GLUCOSE_DIR	= lib/glucose-4.2.1
 CADICAL_DIR	= lib/cadical-1.9.5
-CMSAT_DIR	= lib/cryptominisat-5.11.4
+CMSAT_DIR	= lib/cryptominisat-5.11.21
 
 BUILD_DIR 	:= ./build
 SRC_DIRS 	:= ./src
@@ -55,13 +55,14 @@ CPPFLAGS += -Wall -Wno-parentheses -Wno-sign-compare -std=c++20
 
 ifeq ($(SAT_SOLVER), cryptominisat)
 	CPPFLAGS    += -D SAT_CMSAT
-	LDFLAGS  	+= $(CMSAT_DIR)/build/lib/libcryptominisat5.so
+	LDFLAGS  	+= -lcryptominisat5
 else ifeq ($(SAT_SOLVER), cadical)
 	CPPFLAGS	+= -D SAT_CADICAL
 	LDFLAGS		+= $(CADICAL_DIR)/build/libcadical.a
 else ifeq ($(SAT_SOLVER), glucose)
 	CPPFLAGS	+= -D SAT_GLUCOSE -D INCREMENTAL
-	LDFLAGS  	+= $(GLUCOSE_DIR)/build/libglucosep.a -lz
+	LDFLAGS  	+= $(GLUCOSE_DIR)/libglucose.a -lz
+#	LDFLAGS  += -L$(GLUCOSE_DIR)/build/dynamic/lib -lglucose    ????
 else ifeq ($(SAT_SOLVER), external)
 	CPPFLAGS    += -D SAT_EXTERNAL
 else ifeq ($(SAT_SOLVER), evalmaxsat)
@@ -98,17 +99,17 @@ CXXFLAGS	+= -g3
 
 # The final build step.
 $(OUTPUT_DIR)/$(TARGET_EXEC): $(OBJS)
-	mkdir -p $(dir $@)
+	@mkdir -p $(dir $@)
 	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
 
 # Build step for C source
 $(BUILD_DIR)/%.c.o: %.c
-	mkdir -p $(dir $@)
+	@mkdir -p $(dir $@)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 # Build step for C++ source
 $(BUILD_DIR)/%.cpp.o: %.cpp
-	mkdir -p $(dir $@)
+	@mkdir -p $(dir $@)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
 #.ONESHELL:

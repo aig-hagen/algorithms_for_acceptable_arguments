@@ -25,11 +25,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+#ifndef GLUCOSESATSOLVER_H
+#define GLUCOSESATSOLVER_H
 
 #ifdef SAT_GLUCOSE
 
 #include <core/Solver.h>
 #include <vector>
+#include <cstdint>
 
 class GlucoseSatSolver {
 
@@ -47,4 +50,5 @@ public:
 	int solve(const std::vector<int32_t> assumptions);
 	std::vector<bool> model;
 };
+#endif
 #endif
