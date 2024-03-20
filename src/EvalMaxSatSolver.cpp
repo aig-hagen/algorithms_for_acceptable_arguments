@@ -1,6 +1,3 @@
-#ifndef EVALMAXSATSOLVER_H
-#define EVALMAXSATSOLVER_H
-
 #ifdef SAT_EVALMAXSAT
 
 #include "EvalMaxSatSolver.h"
@@ -19,7 +16,7 @@ void EvalMaxSatSolver::add_clause(const std::vector<int32_t> & clause) {
 }
 
 void EvalMaxSatSolver::add_soft_clause(const std::vector<int32_t> & clause) {
-	solver.addClause(clause, 1);
+	solver.addClause(clause, 10);
 }
 
 int EvalMaxSatSolver::solve() {
@@ -29,9 +26,8 @@ int EvalMaxSatSolver::solve() {
     } else {
         model.clear();
 		for (int32_t i = 0; i < decision_vars; i++)
-			model[i] = solver.getValue(i+1);
+			model.push_back(solver.getValue(i+1));
 	}
-	return sat;
+	return 10;
 }
-#endif
 #endif

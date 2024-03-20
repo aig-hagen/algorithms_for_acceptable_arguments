@@ -1,3 +1,6 @@
+#ifndef CADICAL_H
+#define CADICAL_H
+
 #ifdef SAT_CADICAL
 
 #include <cadical.hpp>
@@ -19,4 +22,5 @@ public:
 	int solve(const std::vector<int32_t> assumptions);
 	std::vector<bool> model;
 };
+#endif
 #endif

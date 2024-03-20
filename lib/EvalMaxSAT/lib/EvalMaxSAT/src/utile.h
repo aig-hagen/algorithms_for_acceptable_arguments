@@ -10,7 +10,7 @@
 #include "ParseUtils.h"
 
 
-std::string savePourTest_file;
+inline std::string savePourTest_file;
 
 typedef unsigned long long int t_weight;
 
@@ -126,7 +126,7 @@ public:
 
 /// POUR DEBUG ////
 template<class B>
-static void readClause(B& in, std::vector<int>& lits) {
+inline static void readClause(B& in, std::vector<int>& lits) {
     int parsed_lit;
     lits.clear();
     for (;;){
@@ -137,7 +137,7 @@ static void readClause(B& in, std::vector<int>& lits) {
 }
 
 /// POUR DEBUG ////
-t_weight calculateCost(const std::string & file, std::vector<bool> &result) {
+inline t_weight calculateCost(const std::string & file, std::vector<bool> &result) {
     t_weight cost = 0;
     auto in_ = gzopen(file.c_str(), "rb");
     t_weight weightForHardClause = -1;
@@ -215,7 +215,7 @@ t_weight calculateCost(const std::string & file, std::vector<bool> &result) {
 
 
 template<class MAXSAT_SOLVER>
-std::vector<int> readClause(StreamBuffer &in, MAXSAT_SOLVER* solveur) {
+inline std::vector<int> readClause(StreamBuffer &in, MAXSAT_SOLVER* solveur) {
     std::vector<int> clause;
 
     for (;;) {
@@ -233,7 +233,7 @@ std::vector<int> readClause(StreamBuffer &in, MAXSAT_SOLVER* solveur) {
 }
 
 template<class MAXSAT_SOLVER>
-bool parse(const std::string& filePath, MAXSAT_SOLVER* solveur) {
+inline bool parse(const std::string& filePath, MAXSAT_SOLVER* solveur) {
     savePourTest_file = filePath;
     auto gz = gzopen( filePath.c_str(), "rb");
 
@@ -294,7 +294,7 @@ bool parse(const std::string& filePath, MAXSAT_SOLVER* solveur) {
  }
 
 
-std::vector<int> readClause(StreamBuffer &in) {
+inline std::vector<int> readClause(StreamBuffer &in) {
     std::vector<int> clause;
 
     for (;;) {

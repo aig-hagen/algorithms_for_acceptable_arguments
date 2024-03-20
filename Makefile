@@ -1,6 +1,8 @@
 # Thanks to Job Vranish (https://spin.atomicobject.com/2016/08/26/makefile-c-projects/)
 TARGET_EXEC	:= solver
 
+#shell = /bin/sh
+
 SAT_SOLVER	?= cryptominisat
 ALGORITHM	?= IAQ
 
@@ -20,9 +22,9 @@ else ifeq ($(SAT_SOLVER), cadical)
 else ifeq ($(SAT_SOLVER), glucose)
 	INC_DIRS	+= ./$(GLUCOSE_DIR)/
 else ifeq ($(SAT_SOLVER), evalmaxsat)
-	INC_DIRS	+= ./lib/EvalMaxSAT/lib/EvalMaxSAT/src
+	INC_DIRS	+= ./lib/EvalMaxSAT/
 	INC_DIRS	+= ./lib/EvalMaxSAT/lib/MaLib/src
-	INC_DIRS	+= ./lib/EvalMaxSAT/lib/cadical/src
+#	INC_DIRS	+= ./lib/EvalMaxSAT/lib/cadical/src
 else ifeq ($(SAT_SOLVER), external)
 	INC_DIRS	+= ./lib/pstreams-1.0.3
 endif
@@ -62,13 +64,12 @@ else ifeq ($(SAT_SOLVER), glucose)
 	LDFLAGS  	+= $(GLUCOSE_DIR)/build/libglucosep.a -lz
 else ifeq ($(SAT_SOLVER), external)
 	CPPFLAGS    += -D SAT_EXTERNAL
-endif
-ifeq ($(SAT_SOLVER), evalmaxsat)
-	LDFLAGS		+= /usr/local/lib/libEvalMaxSAT.a
+else ifeq ($(SAT_SOLVER), evalmaxsat)
+	LDFLAGS		+= ./lib/EvalMaxSAT/build/lib/EvalMaxSAT/libEvalMaxSAT.a
 	LDFLAGS		+= ./lib/EvalMaxSAT/build/lib/cadical/libcadical.a
 	LDFLAGS		+= ./lib/EvalMaxSAT/build/lib/MaLib/libMaLib.a
 	LDFLAGS		+= -lz
-	CPPFLAGS	+= -D SAT_EVALMAXSAT
+	CPPFLAGS	+= -D SAT_EVALMAXSAT -D NDEBUG
 endif
 
 ifeq ($(ALGORITHM), IAQ)
@@ -89,6 +90,9 @@ else ifeq ($(ALGORITHM), FUDGE)
 else
 	$(error No algorithm specified.)
 endif
+
+# debug
+CXXFLAGS	+= -g3
 
 ###################################################################################################
 

@@ -6,7 +6,10 @@
 
 namespace Algorithms {
 
-#if defined(EEE)
+#if defined(IAQ)
+std::vector<std::string> iaq_cred(const AF & af, semantics sem);
+std::vector<std::string> iaq_skep(const AF & af, semantics sem); 
+#elif defined(EEE)
 // EEE
 std::vector<std::string> eee_cred(const AF & af, semantics sem);
 std::vector<std::string> eee_skep(const AF & af, semantics sem);
@@ -22,9 +25,7 @@ std::vector<std::string> seem_skep(const AF & af, semantics sem);
 // fudge
 std::vector<std::string> fudge_skep(const AF & af);
 #else
-// IAQ
-std::vector<std::string> iaq_cred(const AF & af, semantics sem);
-std::vector<std::string> iaq_skep(const AF & af, semantics sem); 
+#error "undefined"
 #endif
 
 // helper methods

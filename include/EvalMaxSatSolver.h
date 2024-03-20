@@ -1,6 +1,12 @@
+#ifndef EVALMAXSAT_H
+#define EVALMAXSAT_H
+
 #ifdef SAT_EVALMAXSAT
 
-#include "EvalMaxSAT.h"
+#ifndef EMS_H
+#define EMS_H
+#include <lib/EvalMaxSAT/src/EvalMaxSAT.h>
+#endif
 
 
 class EvalMaxSatSolver {
@@ -18,4 +24,6 @@ public:
 	std::vector<bool> model;
 
 };
+
+#endif
 #endif
