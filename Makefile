@@ -55,13 +55,14 @@ CPPFLAGS += -Wall -Wno-parentheses -Wno-sign-compare
 
 ifeq ($(SAT_SOLVER), cryptominisat)
 	CPPFLAGS    += -D SAT_CMSAT
-	LDFLAGS  	+= -L$(CMSAT_DIR)/build/lib -lcryptominisat5
+	LDFLAGS  	+= -lcryptominisat5
 else ifeq ($(SAT_SOLVER), cadical)
 	CPPFLAGS	+= -D SAT_CADICAL
 	LDFLAGS		+= $(CADICAL_DIR)/build/libcadical.a
 else ifeq ($(SAT_SOLVER), glucose)
 	CPPFLAGS	+= -D SAT_GLUCOSE -D INCREMENTAL
-	LDFLAGS  	+= $(GLUCOSE_DIR)/build/libglucosep.a -lz
+	LDFLAGS  	+= $(GLUCOSE_DIR)/libglucose.a -lz
+#	LDFLAGS  += -L$(GLUCOSE_DIR)/build/dynamic/lib -lglucose    ????
 else ifeq ($(SAT_SOLVER), external)
 	CPPFLAGS    += -D SAT_EXTERNAL
 else ifeq ($(SAT_SOLVER), evalmaxsat)
