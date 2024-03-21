@@ -1,1 +1,0 @@
-/usr/bin/c++ -std=c++11 -rdynamic "CMakeFiles/glucose-syrup.dir/parallel/Main.cc.o" -o glucose-syrup  -lz libglucosep.a -lz 

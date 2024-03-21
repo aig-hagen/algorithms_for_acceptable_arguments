@@ -62,7 +62,7 @@ int GlucoseSatSolver::solve() {
 	if (sat == 10) {
 		model.clear();
 		for (int32_t i = 0; i < decision_vars; i++) {
-			model[i] = solver->modelValue(i) == l_True ? 1 : 0;
+			model.push_back(solver->modelValue(i) == l_True ? 1 : 0);
 		}
 	}
 	assumptions.clear();

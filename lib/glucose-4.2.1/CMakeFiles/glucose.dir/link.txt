@@ -1,2 +1,0 @@
-/usr/bin/ar qc libglucose.a CMakeFiles/glucose.dir/core/Solver.cc.o CMakeFiles/glucose.dir/core/lcm.cc.o CMakeFiles/glucose.dir/simp/SimpSolver.cc.o CMakeFiles/glucose.dir/utils/Options.cc.o CMakeFiles/glucose.dir/utils/System.cc.o
-/usr/bin/ranlib libglucose.a

@@ -1,6 +1,0 @@
-/home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/CMakeFiles/glucose.dir
-/home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/CMakeFiles/glucose-simp.dir
-/home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/CMakeFiles/glucosep.dir
-/home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/CMakeFiles/glucose-syrup.dir
-/home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/CMakeFiles/edit_cache.dir
-/home/lars/GitHub/algorithms_for_acceptable_arguments/lib/glucose-4.2.1/CMakeFiles/rebuild_cache.dir
