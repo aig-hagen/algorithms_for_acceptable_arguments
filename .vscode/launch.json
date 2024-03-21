@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/home/lars/algorithms_for_acceptable_arguments/build/bin/seem/solver",
+            "program": "/home/lars/algorithms_for_acceptable_arguments/build/bin/iaq/solver",
             "args": ["-p", "EC-PR", "-fo", "tgf", "-f", "example.tgf"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

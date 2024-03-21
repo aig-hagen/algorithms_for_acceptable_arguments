@@ -10,7 +10,7 @@ Supports TGF and i23 format for abstract argumentation frameworks.
 ## Installation
 
 ### Building SAT Solvers
-This solver supports multiple integrated SAT Solvers, namely [CaDiCal](https://github.com/arminbiere/cadical) (version 1.9.5), [Glucose](https://github.com/audemard/glucose) (version 4.2.1) and [CryptoMiniSat](https://github.com/msoos/cryptominisat) (version 5.11.4).
+This solver supports multiple integrated SAT Solvers, namely [CaDiCal](https://github.com/arminbiere/cadical) (version 1.9.5), [Glucose](https://github.com/audemard/glucose) (version 4.1) and [CryptoMiniSat](https://github.com/msoos/cryptominisat) (version 5.11.21).
 The relevant source files are included and the solvers can easily be built as follows
 
 #### CaDiCal
@@ -19,11 +19,6 @@ The relevant source files are included and the solvers can easily be built as fo
 ```
 
 #### Glucose
-Glucose requires `cmake`
-```
-  sudo apt-get install build-essential cmake
-```
-Building Glucose
 ```
   make glucose
 ```

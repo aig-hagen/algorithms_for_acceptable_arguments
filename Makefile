@@ -1,32 +1,38 @@
 # Thanks to Job Vranish (https://spin.atomicobject.com/2016/08/26/makefile-c-projects/)
-TARGET_EXEC	:= solver
 
-#shell = /bin/sh
-
-SAT_SOLVER	?= cryptominisat
+# Default values for the chosen SAT Solver and Algorithm
+SOLVER		?= cryptominisat
 ALGORITHM	?= IAQ
 
-GLUCOSE_DIR	= lib/glucose-4.2.1
+# Directories for the source of the SAT Solvers
+GLUCOSE_DIR	= lib/glucose-syrup-4.1
 CADICAL_DIR	= lib/cadical-1.9.5
 CMSAT_DIR	= lib/cryptominisat-5.11.21
 
+
+# main directories of this project
 BUILD_DIR 	:= ./build
 SRC_DIRS 	:= ./src
 INC_DIRS 	:= ./include
 
 
-ifeq ($(SAT_SOLVER), cryptominisat)
+# include source of the chosen SAT Solver and set target executable name
+ifeq ($(SOLVER), cryptominisat)
 	INC_DIRS	+= ./$(CMSAT_DIR)/src
-else ifeq ($(SAT_SOLVER), cadical)
+	TARGET_EXEC	:= solver_$(ALGORITHM)_cmsat
+else ifeq ($(SOLVER), cadical)
 	INC_DIRS	+= ./$(CADICAL_DIR)/src
-else ifeq ($(SAT_SOLVER), glucose)
+	TARGET_EXEC	:= solver_$(ALGORITHM)_cadical
+else ifeq ($(SOLVER), glucose)
 	INC_DIRS	+= ./$(GLUCOSE_DIR)/
-else ifeq ($(SAT_SOLVER), evalmaxsat)
+	TARGET_EXEC	:= solver_$(ALGORITHM)_glucose
+else ifeq ($(SOLVER), evalmaxsat)
 	INC_DIRS	+= ./lib/EvalMaxSAT/
 	INC_DIRS	+= ./lib/EvalMaxSAT/lib/MaLib/src
-#	INC_DIRS	+= ./lib/EvalMaxSAT/lib/cadical/src
-else ifeq ($(SAT_SOLVER), external)
+	TARGET_EXEC	:= solver_$(ALGORITHM)_emsat
+else ifeq ($(SOLVER), external)
 	INC_DIRS	+= ./lib/pstreams-1.0.3
+	TARGET_EXEC	:= solver_$(ALGORITHM)_ext
 endif
 
 # Find all the C and C++ files we want to compile
@@ -53,19 +59,18 @@ CPPFLAGS := $(INC_FLAGS) -MMD -MP
 ##################################################################################################
 CPPFLAGS += -Wall -Wno-parentheses -Wno-sign-compare -std=c++20
 
-ifeq ($(SAT_SOLVER), cryptominisat)
+ifeq ($(SOLVER), cryptominisat)
 	CPPFLAGS    += -D SAT_CMSAT
 	LDFLAGS  	+= -lcryptominisat5
-else ifeq ($(SAT_SOLVER), cadical)
+else ifeq ($(SOLVER), cadical)
 	CPPFLAGS	+= -D SAT_CADICAL
 	LDFLAGS		+= $(CADICAL_DIR)/build/libcadical.a
-else ifeq ($(SAT_SOLVER), glucose)
+else ifeq ($(SOLVER), glucose)
 	CPPFLAGS	+= -D SAT_GLUCOSE -D INCREMENTAL
-	LDFLAGS  	+= $(GLUCOSE_DIR)/libglucose.a -lz
-#	LDFLAGS  += -L$(GLUCOSE_DIR)/build/dynamic/lib -lglucose    ????
-else ifeq ($(SAT_SOLVER), external)
+	LDFLAGS  	+= -L$(GLUCOSE_DIR)/build/dynamic/lib -lglucose
+else ifeq ($(SOLVER), external)
 	CPPFLAGS    += -D SAT_EXTERNAL
-else ifeq ($(SAT_SOLVER), evalmaxsat)
+else ifeq ($(SOLVER), evalmaxsat)
 	LDFLAGS		+= ./lib/EvalMaxSAT/build/lib/EvalMaxSAT/libEvalMaxSAT.a
 	LDFLAGS		+= ./lib/EvalMaxSAT/build/lib/cadical/libcadical.a
 	LDFLAGS		+= ./lib/EvalMaxSAT/build/lib/MaLib/libMaLib.a
@@ -75,25 +80,22 @@ endif
 
 ifeq ($(ALGORITHM), IAQ)
 	CPPFLAGS    += -D IAQ
-	OUTPUT_DIR	:= ./build/bin/iaq
 else ifeq ($(ALGORITHM), EEE)
 	CPPFLAGS    += -D EEE
-	OUTPUT_DIR	:= ./build/bin/eee
 else ifeq ($(ALGORITHM), SEE)
 	CPPFLAGS    += -D SEE
-	OUTPUT_DIR	:= ./build/bin/see
 else ifeq ($(ALGORITHM), SEEM)
 	CPPFLAGS    += -D SEEM
-	OUTPUT_DIR	:= ./build/bin/seem
 else ifeq ($(ALGORITHM), FUDGE)
 	CPPFLAGS    += -D FUDGE
-	OUTPUT_DIR	:= ./build/bin/fudge
 else
 	$(error No algorithm specified.)
 endif
 
 # debug
 CXXFLAGS	+= -g3
+
+OUTPUT_DIR	:= ./build/bin
 
 ###################################################################################################
 
@@ -118,7 +120,9 @@ cmsat:
 	cd $(CMSAT_DIR) && \
 	mkdir -p build && cd build && \
 	cmake .. && \
-	make
+	make && \
+	sudo make install && \
+	sudo ldconfig
 
 cadical:
 	@echo "Compiling CaDiCal..."
@@ -128,9 +132,12 @@ cadical:
 glucose:
 	@echo "Compiling Glucose..."
 	cd $(GLUCOSE_DIR) && \
-	mkdir -p build && cd build && \
-	cmake .. && \
-	make glucose-syrup
+	make
+
+full:
+	$(MAKE) all SOLVER=cryptominisat
+	$(MAKE) all SOLVER=cadical
+	$(MAKE) all SOLVER=glucose
 
 all:
 	@echo "Building solver for algorithm: IAQ..."
