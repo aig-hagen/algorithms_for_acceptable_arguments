@@ -28,10 +28,7 @@ namespace Algorithms {
                 }
             }
 
-            int sat = solver.solve();
-            if (sat == UNSAT_V) break;
-
-            if (solver.optimal_cost >= max_weight) break;
+            if (solver.solve() == UNSAT_V || solver.get_optimal_cost() >= max_weight) break;
 
             for (uint32_t i = 0; i < af.args; i++) {
                 if (unvisited[i]) {
@@ -47,6 +44,41 @@ namespace Algorithms {
 
     std::vector<std::string> seem_skep(const AF & af, semantics sem) {
         std::vector<std::string> result;
+        std::vector<bool> included(af.args, true);
+        uint64_t max_weight;
+
+        if (sem != ST) {
+            std::cerr << sem << ": Unsupported semantics\n";
+            exit(1);
+        }
+
+        SAT_Solver solver = SAT_Solver(af.count, af.args);
+        Encodings::stable(af, solver);
+
+        while (true) {
+            max_weight = 0;
+            for (uint32_t i = 0; i < af.args; i++) {
+                if (included[i]) {
+                    solver.add_soft_constraint(-af.rejected_var[i]);
+                    max_weight++;
+                } else {
+                    solver.disable_soft_constraint(-af.rejected_var[i]);
+                }
+            }
+
+            if (solver.solve() == UNSAT_V || solver.get_optimal_cost() >= max_weight) break;
+
+            for (uint32_t i = 0; i < af.args; i++) {
+                included[i] = included[i] && solver.model[i];
+            }
+        }
+
+        for (uint32_t i = 0; i < af.args; i++) {
+            if (included[i]) {
+                result.push_back(af.int_to_arg[i]);
+            }
+        }
+
         return result;
     }
 }

@@ -18,6 +18,7 @@ private:
 	CGSS2 * solver;
 	std::vector<int32_t> assumptions;
 	int32_t decision_vars;
+	uint64_t cost;
 
 public:
 	Cgss2MaxSatSolver(int32_t n_vars, int32_t n_args);

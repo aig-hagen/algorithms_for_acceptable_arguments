@@ -20,7 +20,7 @@ namespace Algorithms {
         unvisited_clause.reserve(af.args);
         while (true) {
             int sat = solver.solve();
-            if (sat == 20) break;
+            if (sat == UNSAT_V) break;
 
             unvisited_clause.clear();
             for (uint32_t i = 0; i < af.args; i++) {
@@ -42,29 +42,28 @@ namespace Algorithms {
         std::vector<std::string> result;
         std::vector<bool> included(af.args, true);
 
-        SAT_Solver solver = SAT_Solver(af.count, af.args);
-        if (sem == ST) {
-            Encodings::stable(af, solver);
-            
-            std::vector<int32_t> complement_clause;
-            while (true) {
-                int sat = solver.solve();
-                if (sat == 20) break;
-
-                complement_clause.clear();
-                for (uint32_t i = 0; i < af.args; i++) {
-                    included[i] = included[i] && solver.model[i];
-
-                    if (included[i]) {
-                        complement_clause.push_back(af.rejected_var[i]);
-                    }
-                }
-                solver.add_clause(complement_clause);
-            }
-
-        } else {
+        if (sem != ST) {
             std::cerr << sem << ": Unsupported semantics\n";
             exit(1);
+        }
+
+        SAT_Solver solver = SAT_Solver(af.count, af.args);
+        Encodings::stable(af, solver);
+        
+        std::vector<int32_t> complement_clause;
+        while (true) {
+            int sat = solver.solve();
+            if (sat == UNSAT_V) break;
+
+            complement_clause.clear();
+            for (uint32_t i = 0; i < af.args; i++) {
+                included[i] = included[i] && solver.model[i];
+
+                if (included[i]) {
+                    complement_clause.push_back(af.rejected_var[i]);
+                }
+            }
+            solver.add_clause(complement_clause);
         }
 
         for (uint32_t i = 0; i < af.args; i++) {
