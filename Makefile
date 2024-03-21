@@ -48,16 +48,18 @@ OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
 # Add a prefix to INC_DIRS. So moduleA would become -ImoduleA. GCC understands this -I flag
-INC_FLAGS := $(addprefix -I,$(INC_DIRS))
+INC_FLAGS	:= $(addprefix -I,$(INC_DIRS))
 
 # The -MMD and -MP flags together generate Makefiles for us!
 # These files will have .d instead of .o as the output.
-CPPFLAGS := $(INC_FLAGS) -MMD -MP
+CPPFLAGS	:= $(INC_FLAGS) -MMD -MP
 
 ##################################################################################################
 ###### CUSTOM ####################################################################################
 ##################################################################################################
-CPPFLAGS += -Wall -Wno-parentheses -Wno-sign-compare -std=c++20
+CPPFLAGS	+= -Wall -Wno-parentheses -Wno-sign-compare -std=c++20
+
+#CPPFLAGS	+= -D PERF_ENC
 
 ifeq ($(SOLVER), cryptominisat)
 	CPPFLAGS    += -D SAT_CMSAT
