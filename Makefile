@@ -27,10 +27,6 @@ else ifeq ($(SOLVER), cadical)
 else ifeq ($(SOLVER), glucose)
 	INC_DIRS	+= ./$(GLUCOSE_DIR)/
 	TARGET_EXEC	:= solver_$(ALGORITHM)_glucose
-else ifeq ($(SOLVER), evalmaxsat)
-	INC_DIRS	+= ./lib/EvalMaxSAT/
-	INC_DIRS	+= ./lib/EvalMaxSAT/lib/MaLib/src
-	TARGET_EXEC	:= solver_$(ALGORITHM)_emsat
 else ifeq ($(SOLVER), external)
 	INC_DIRS	+= ./lib/pstreams-1.0.3
 	TARGET_EXEC	:= solver_$(ALGORITHM)_ext
@@ -70,19 +66,13 @@ else ifeq ($(SOLVER), cadical)
 	CPPFLAGS	+= -D SAT_CADICAL
 	LDFLAGS		+= $(CADICAL_DIR)/build/libcadical.a
 else ifeq ($(SOLVER), glucose)
-	CPPFLAGS	+= -D SAT_GLUCOSE -D INCREMENTAL
+	CPPFLAGS	+= -D SAT_GLUCOSE
 	LDFLAGS  	+= -L$(GLUCOSE_DIR)/build/dynamic/lib -lglucose
 else ifeq ($(SOLVER), external)
 	CPPFLAGS    += -D SAT_EXTERNAL
 else ifeq ($(SOLVER), cgss2)
 	CPPFLAGS	+= -D SAT_CGSS2
 	LDFLAGS		+= $(CGSS2_DIR)/src/lib/libcgss2.a
-else ifeq ($(SOLVER), evalmaxsat)
-	LDFLAGS		+= ./lib/EvalMaxSAT/build/lib/EvalMaxSAT/libEvalMaxSAT.a
-	LDFLAGS		+= ./lib/EvalMaxSAT/build/lib/cadical/libcadical.a
-	LDFLAGS		+= ./lib/EvalMaxSAT/build/lib/MaLib/libMaLib.a
-	LDFLAGS		+= -lz
-	CPPFLAGS	+= -D SAT_EVALMAXSAT -D NDEBUG
 endif
 
 ifeq ($(ALGORITHM), IAQ)

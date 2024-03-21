@@ -43,7 +43,6 @@ int Cgss2MaxSatSolver::solve() {
         for (int32_t i = 1; i <= decision_vars; i++) {
 		    model[i-1] = solver->ipamir_val_lit(i)>0 ? true: false;
         }
-        optimal_cost = solver->ipamir_val_obj();
 	}
 	return sat;
 }
@@ -53,5 +52,9 @@ int Cgss2MaxSatSolver::solve(const std::vector<int32_t> assumptions) {
 		assume(ass);
 	}
 	return solve();
+}
+
+uint64_t Cgss2MaxSatSolver::get_optimal_cost() {
+    return solver->ipamir_val_obj();
 }
 #endif

@@ -28,8 +28,8 @@ public:
 	void assume(int32_t lit);
 	int solve();
 	int solve(const std::vector<int32_t> assumptions);
+	uint64_t get_optimal_cost();
 	std::vector<bool> model;
-    uint64_t optimal_cost;
 };
 #endif
 #endif

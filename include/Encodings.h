@@ -30,5 +30,4 @@ namespace Encodings {
     void add_admissible(const AF & af, SAT_Solver & solver);
     void add_complete(const AF & af, SAT_Solver & solver);
 }
-
 #endif

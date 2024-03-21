@@ -2,7 +2,7 @@
 
 - method for solving without parsing witness
 
-- Implement MEthod for complement clause
+- Implement Method for complement clause
 ```
 while(true) {
     lbool ret = solver->solve();
