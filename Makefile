@@ -141,37 +141,44 @@ glucose:
 	cd $(GLUCOSE_DIR) && \
 	make
 
+cgss2:
+	@echo "Compiling CGSS2..."
+	cd $(CGSS2_DIR)/cadical && ./configure && \
+	cd .. && make && \
+	make lib
+
 full:
-	$(MAKE) all SOLVER=cryptominisat
-	$(MAKE) all SOLVER=cadical
-	$(MAKE) all SOLVER=glucose
+	@$(MAKE) all SOLVER=cryptominisat
+	@$(MAKE) all SOLVER=cadical
+	@$(MAKE) all SOLVER=glucose
+	@$(MAKE) all SOLVER=cgss2
+	@$(MAKE) seem SOLVER=cgss2
 
 all:
-	@echo "Building solver for algorithm: IAQ..."
-	$(MAKE) iaq
-	$(MAKE) eee
-	$(MAKE) see
+	@$(MAKE) iaq
+	@$(MAKE) eee
+	@$(MAKE) see
 
 iaq:
-	$(MAKE) clean-src
+	@$(MAKE) clean-src
 	@echo "Building solver for algorithm: IAQ..."
-	$(MAKE) ALGORITHM=IAQ
+	@$(MAKE) ALGORITHM=IAQ
 eee:
 	$(MAKE) clean-src
 	@echo "Building solver for algorithm: EEE..."
-	$(MAKE) ALGORITHM=EEE
+	@$(MAKE) ALGORITHM=EEE
 see:
 	$(MAKE) clean-src
 	@echo "Building solver for algorithm: SEE..."
-	$(MAKE) ALGORITHM=SEE
+	@$(MAKE) ALGORITHM=SEE
 seem:
 	$(MAKE) clean-src
 	@echo "Building solver for algorithm: SEEM..."
-	$(MAKE) ALGORITHM=SEEM
+	@$(MAKE) ALGORITHM=SEEM
 fudge:
 	$(MAKE) clean-src
 	@echo "Building solver for algorithm: Fudge..."
-	$(MAKE) ALGORITHM=FUDGE
+	@$(MAKE) ALGORITHM=FUDGE
 
 clean-src:
 	@if [ -d "build/src" ]; then \

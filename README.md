@@ -11,6 +11,7 @@ Supports TGF and i23 format for abstract argumentation frameworks.
 
 ### Building SAT Solvers
 This solver supports multiple integrated SAT Solvers, namely [CaDiCal](https://github.com/arminbiere/cadical) (version 1.9.5), [Glucose](https://github.com/audemard/glucose) (version 4.1) and [CryptoMiniSat](https://github.com/msoos/cryptominisat) (version 5.11.21).
+For the SEEM approach an integrated MaxSAT Solver [CGSS2](https://bitbucket.org/coreo-group/cgss2/src/master/).
 The relevant source files are included and the solvers can easily be built as follows
 
 #### CaDiCal
@@ -45,7 +46,23 @@ CryptoMiniSat must also be installed
   sudo ldconfig
 ```
 
-### Compile and Build Solver
+### CGSS2
+Install prerequisites
+```
+  apt-get install libgmp3-dev
+  apt-get install libboost-iostreams-dev
+```
+Building CGSS2
+```
+  make cgss2
+```
+
+## Compile and Build Solver
+To compile and build all possible combinations of solvers and algorithms use
+```
+  make full
+```
+
 To compile and build solver for all algorithms use
 ```
     make all
@@ -62,17 +79,17 @@ or
 
 The SAT solver to be used can be specified as follows
 ```
-  make <iaq|eee|see|seem|fudge> SAT_SOLVER=<cadical|glucose|cryptominisat>
+  make <iaq|eee|see|seem|fudge> SOLVER=<cadical|glucose|cryptominisat|cgss2>
 ```
 
-#### Example
+### Example
 To build only the solver based on the IAQ algorithm using the CaDiCal SAT Solver
 ```
-  make iaq SAT_SOLVER=cadical
+  make iaq SOLVER=cadical
 ```
 Or, to build the solver for all algorithms using Glucose
 ```
-  make all SAT_SOLVER=glucose
+  make all SOLVER=glucose
 ```
 
 ## Command-line usage
