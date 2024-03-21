@@ -8,6 +8,7 @@ ALGORITHM	?= IAQ
 GLUCOSE_DIR	= lib/glucose-syrup-4.1
 CADICAL_DIR	= lib/cadical-1.9.5
 CMSAT_DIR	= lib/cryptominisat-5.11.21
+CGSS2_DIR	= lib/cgss2
 
 
 # main directories of this project
@@ -33,6 +34,9 @@ else ifeq ($(SOLVER), evalmaxsat)
 else ifeq ($(SOLVER), external)
 	INC_DIRS	+= ./lib/pstreams-1.0.3
 	TARGET_EXEC	:= solver_$(ALGORITHM)_ext
+else ifeq ($(SOLVER), cgss2)
+	INC_DIRS	+= $(CGSS2_DIR)/src/
+	TARGET_EXEC	:= solver_$(ALGORITHM)_cgss2
 endif
 
 # Find all the C and C++ files we want to compile
@@ -70,6 +74,9 @@ else ifeq ($(SOLVER), glucose)
 	LDFLAGS  	+= -L$(GLUCOSE_DIR)/build/dynamic/lib -lglucose
 else ifeq ($(SOLVER), external)
 	CPPFLAGS    += -D SAT_EXTERNAL
+else ifeq ($(SOLVER), cgss2)
+	CPPFLAGS	+= -D SAT_CGSS2
+	LDFLAGS		+= $(CGSS2_DIR)/src/lib/libcgss2.a
 else ifeq ($(SOLVER), evalmaxsat)
 	LDFLAGS		+= ./lib/EvalMaxSAT/build/lib/EvalMaxSAT/libEvalMaxSAT.a
 	LDFLAGS		+= ./lib/EvalMaxSAT/build/lib/cadical/libcadical.a

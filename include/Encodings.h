@@ -12,9 +12,9 @@ typedef CadicalSatSolver SAT_Solver;
 #elif defined(SAT_GLUCOSE)
 #include "GlucoseSatSolver.h"
 typedef GlucoseSatSolver SAT_Solver;
-#elif defined(SAT_EVALMAXSAT)
-#include "EvalMaxSatSolver.h"
-typedef EvalMaxSatSolver SAT_Solver;
+#elif defined(SAT_CGSS2)
+#include "Cgss2MaxSatSolver.h"
+typedef Cgss2MaxSatSolver SAT_Solver;
 #elif defined(SAT_EXTERNAL)
 #include "ExternalSatSolver.h"
 typedef ExternalSatSolver SAT_Solver;
