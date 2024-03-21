@@ -80,29 +80,4 @@ int CryptoMiniSatSolver::solve(const std::vector<int32_t> assumptions) {
 	}
 	return solve();
 }
-
-bool CryptoMiniSatSolver::propagate(vector<int32_t> & out_lits) {
-	solver.set_no_bve();
-	vector<Lit> zero_lits = solver.get_zero_assigned_lits();
-	vector<Lit> implied_lits;
-	bool sat = solver.implied_by(assumptions, implied_lits);
-	assert(sat);
-	for (const Lit & lit : zero_lits) {
-		int32_t var = lit.var()+1;
-		if (var > decision_vars) continue;
-		out_lits.push_back(lit.sign() ? -var : var);
-	}
-	for (const Lit & lit : implied_lits) {
-		int32_t var = lit.var()+1;
-		if (var > decision_vars) continue;
-		out_lits.push_back(lit.sign() ? -var : var);
-	}
-	return sat;
-}
-
-bool CryptoMiniSatSolver::get_value(int32_t lit) {
-	int32_t var = abs(lit)-1;
-	lbool val = solver.get_model()[var];
-	return (lit > 0) ? val == l_True : val == l_False;
-}
 #endif

@@ -19,8 +19,7 @@ namespace Algorithms {
         std::vector<int32_t> unvisited_clause;
         unvisited_clause.reserve(af.args);
         while (true) {
-            int sat = solver.solve();
-            if (sat == UNSAT_V) break;
+            if (solver.solve() == UNSAT_V) break;
 
             unvisited_clause.clear();
             for (uint32_t i = 0; i < af.args; i++) {
@@ -52,8 +51,7 @@ namespace Algorithms {
         
         std::vector<int32_t> complement_clause;
         while (true) {
-            int sat = solver.solve();
-            if (sat == UNSAT_V) break;
+            if (solver.solve() == UNSAT_V) break;
 
             complement_clause.clear();
             for (uint32_t i = 0; i < af.args; i++) {

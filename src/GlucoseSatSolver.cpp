@@ -1,4 +1,7 @@
 /*!
+ * The following code has been adapted from the mu-toksia project 
+ * which is subject of the following license 
+ *
  * Copyright (c) <2023> <Andreas Niskanen, University of Helsinki>
  * 
  * 

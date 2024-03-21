@@ -30,7 +30,7 @@ namespace Algorithms {
         
         if (sem == PR) {
             for (uint32_t i = 0; i < af.args; i++) {
-                if (ds_preferred(af, i)) {
+                if (is_skeptically_preferred(af, i)) {
                     result.push_back(af.int_to_arg[i]);
                 }
             }
@@ -50,7 +50,7 @@ namespace Algorithms {
         return result;
     }
 
-    bool ds_preferred(const AF & af, int arg) {
+    bool is_skeptically_preferred(const AF & af, uint32_t arg) {
         SAT_Solver solver = SAT_Solver(af.count, af.args);
         Encodings::complete(af, solver);
 
@@ -92,4 +92,5 @@ namespace Algorithms {
         return true;
     }
 }
+
 #endif

@@ -4,7 +4,7 @@
 namespace Algorithms {
     std::vector<std::string> eee_cred(const AF & af, semantics sem) {
         std::vector<std::string> result;
-        std::vector<bool> included(af.args);
+        std::vector<bool> included(af.args, false);
         SAT_Solver solver = SAT_Solver(af.count, af.args);
 
         if (sem == CO || sem == PR) {
@@ -16,27 +16,24 @@ namespace Algorithms {
             exit(1);
         }
 
-        std::vector<int> complement_clause;
-        complement_clause.reserve(af.args);
+        std::vector<int> complement_clause(af.args);
         while (true) {
-            complement_clause.clear();
-            int sat = solver.solve();
-            if (sat == UNSAT_V) break;
+            if (solver.solve() == UNSAT_V) break;
 
+            complement_clause.clear();
             for (uint32_t i = 0; i < af.args; i++) {
                 if (solver.model[i]) {
                     if (!included[i]) {
                         included[i] = true;
                         result.push_back(af.int_to_arg[i]);
                     }
+                    complement_clause.push_back(-af.accepted_var[i]);
                 } else {
-                    // TODO check correctness
                     complement_clause.push_back(af.accepted_var[i]);
                 }
             }
             solver.add_clause(complement_clause);
         }
-
         return result;
     }
 
@@ -52,8 +49,7 @@ namespace Algorithms {
             assumptions.reserve(af.args);
             complement_clause.reserve(af.args);
             while (true) {
-                int sat = solver.solve();
-                if (sat == UNSAT_V) break;
+                if (solver.solve() == UNSAT_V) break;
 
                 assumptions.clear();
                 std::vector<bool> visited(af.args);
@@ -83,21 +79,17 @@ namespace Algorithms {
             std::vector<int32_t> complement_clause;
             complement_clause.reserve(af.count);
             while (true) {
-                int sat = solver.solve();
-                if (sat == UNSAT_V) break;
+                if (solver.solve() == UNSAT_V) break;
 
-                for (uint32_t i = 1; i <= af.count; i++) {
-                    if (i <= af.args) {
-                        included[i-1] = included[i-1] && solver.model[i-1];
-                    }
-                    if (solver.model[i-1]) {
-                        complement_clause.push_back(-i);
-                    } else {
-                        complement_clause.push_back(i);
+                complement_clause.clear();
+                for (uint32_t i = 0; i < af.args; i++) {
+                    included[i] = included[i] && solver.model[i];
+                    if (solver.model[i]) {
+                        complement_clause.push_back(-af.accepted_var[i]);
                     }
                 }
                 solver.add_clause(complement_clause);
-                complement_clause.clear();
+                
             }
         } else {
             std::cerr << sem << ": Unsupported semantics\n";

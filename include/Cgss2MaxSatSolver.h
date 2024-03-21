@@ -3,22 +3,24 @@
 
 #ifdef SAT_CGSS2
 
+#include "SATSolver.h"
 #include <cgss2.h>
-#include <vector>
+
 
 const int ERROR_V = 0;
 const int SAT_V = 30;
 const int UNSAT_V = 20;
 
+
 using namespace cgss2;
 
-class Cgss2MaxSatSolver {
+
+class Cgss2MaxSatSolver : public SATSolver {
 
 private:
 	CGSS2 * solver;
 	std::vector<int32_t> assumptions;
 	int32_t decision_vars;
-	uint64_t cost;
 
 public:
 	Cgss2MaxSatSolver(int32_t n_vars, int32_t n_args);
