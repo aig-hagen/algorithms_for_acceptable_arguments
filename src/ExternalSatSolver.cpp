@@ -47,7 +47,7 @@ int ExternalSatSolver::solve() {
         }
         if (line.rfind("s ", 0) == 0) {
             if (line.rfind("UNSATISFIABLE") != std::string::npos) {
-                return 20;
+                return UNSAT_V;
             }
         }
         if (line.rfind("v ", 0) == 0) {
@@ -70,7 +70,7 @@ int ExternalSatSolver::solve() {
             }
         }
     }
-    return 10;
+    return SAT_V;
 }
 
 int ExternalSatSolver::solve(const std::vector<int32_t> assumptions) {

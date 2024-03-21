@@ -58,8 +58,8 @@ void GlucoseSatSolver::assume(int32_t lit) {
 }
 
 int GlucoseSatSolver::solve() {
-	int sat = solver->solve(assumptions) ? 10 : 20;
-	if (sat == 10) {
+	int sat = solver->solve(assumptions) ? SAT_V : UNSAT_V;
+	if (sat == SAT_V) {
 		model.clear();
 		for (int32_t i = 0; i < decision_vars; i++) {
 			model.push_back(solver->modelValue(i) == l_True ? 1 : 0);

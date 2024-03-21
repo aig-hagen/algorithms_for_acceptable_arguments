@@ -20,8 +20,8 @@ namespace Algorithms {
         complement_clause.reserve(af.args);
         while (true) {
             complement_clause.clear();
-            int ret = solver.solve();
-            if (ret == 20) break;
+            int sat = solver.solve();
+            if (sat == UNSAT_V) break;
 
             for (uint32_t i = 0; i < af.args; i++) {
                 if (solver.model[i]) {
@@ -53,7 +53,7 @@ namespace Algorithms {
             complement_clause.reserve(af.args);
             while (true) {
                 int sat = solver.solve();
-                if (sat == 20) break;
+                if (sat == UNSAT_V) break;
 
                 assumptions.clear();
                 std::vector<bool> visited(af.args);
@@ -71,7 +71,7 @@ namespace Algorithms {
                     }
                     solver.add_clause(complement_clause);
                     int superset_exists = solver.solve(assumptions);
-                    if (superset_exists == 20) break;
+                    if (superset_exists == UNSAT_V) break;
                 }
                 for (uint32_t i = 0; i < af.args; i++) {
                     included[i] = included[i] && solver.model[i];
@@ -84,7 +84,7 @@ namespace Algorithms {
             complement_clause.reserve(af.count);
             while (true) {
                 int sat = solver.solve();
-                if (sat == 20) break;
+                if (sat == UNSAT_V) break;
 
                 for (uint32_t i = 1; i <= af.count; i++) {
                     if (i <= af.args) {

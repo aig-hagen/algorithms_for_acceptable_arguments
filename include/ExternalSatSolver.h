@@ -3,6 +3,9 @@
 #include <string>
 #include <vector>
 
+const int SAT_V = 10;
+const int UNSAT_V = 20;
+
 /*
 Class for all kinds of pre-compiled SAT solvers, e.g. cadical, cryptominisat5
 SAT calls are answered by opening a pipe to an instance of the external solver with pstream

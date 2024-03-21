@@ -18,7 +18,7 @@ namespace Algorithms {
 
         for (uint32_t i = 0; i < af.args; i++) {
             solver.assume(af.accepted_var[i]);
-            if (solver.solve() == 10) {
+            if (solver.solve() == SAT_V) {
                 result.push_back(af.int_to_arg[i]);
             }
         }
@@ -39,7 +39,7 @@ namespace Algorithms {
             Encodings::stable(af, solver);
             for (uint32_t i = 0; i < af.args; i++) {
                 solver.assume(-af.accepted_var[i]);
-                if (solver.solve() == 20) {
+                if (solver.solve() == UNSAT_V) {
                     result.push_back(af.int_to_arg[i]);
                 }
             }
@@ -58,7 +58,7 @@ namespace Algorithms {
 
         while (true) {
             int sat = solver.solve(assumptions);
-            if (sat == 20) break;
+            if (sat == UNSAT_V) break;
 
             std::vector<int32_t> complement_clause;
             complement_clause.reserve(af.args);
@@ -80,12 +80,12 @@ namespace Algorithms {
                 }
                 solver.add_clause(complement_clause);
                 int superset_exists = solver.solve(new_assumptions);
-                if (superset_exists == 20) break;
+                if (superset_exists == UNSAT_V) break;
             }
 
             new_assumptions[0] = -new_assumptions[0];
 
-            if (solver.solve(new_assumptions) == 20) {
+            if (solver.solve(new_assumptions) == UNSAT_V) {
                 return false;
             }
         }

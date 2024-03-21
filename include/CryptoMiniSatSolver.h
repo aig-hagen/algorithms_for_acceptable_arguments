@@ -29,11 +29,13 @@
 #ifndef CM_SATSOLVER_H
 #define CM_SATSOLVER_H
 
-#if defined(SAT_CMSAT)
+#ifdef SAT_CMSAT
 
 #include "SATSolver.h"
 #include <cryptominisat.h>
 
+const int SAT_V = 10;
+const int UNSAT_V = 20;
 
 class CryptoMiniSatSolver : public SATSolver {
 

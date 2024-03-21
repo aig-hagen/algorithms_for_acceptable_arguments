@@ -25,16 +25,15 @@ void CadicalSatSolver::assume(int32_t lit) {
 int CadicalSatSolver::solve() {
 	int sat = solver->solve();
 
-	if ( !( (sat == 10) || (sat == 20) ) ) {
+	if ( !( (sat == SAT_V) || (sat == UNSAT_V) ) ) {
 		std::cerr << "Problem" << std::endl;
 		exit(1);
 	}
 
-	if (sat == 10) {
-		//model.clear();
-		//std::fill(model.begin(), model.end(), 0);
+	if (sat == SAT_V) {
+		model.clear();
 		for (int32_t i = 1; i <= decision_vars; i++)
-			model[i-1] = (solver->val(i) > 0 ? true : false);
+			model.push_back(solver->val(i) > 0 ? true : false);
 	}
 	return sat;
 }

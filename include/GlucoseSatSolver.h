@@ -34,6 +34,9 @@
 #include <vector>
 #include <cstdint>
 
+const int SAT_V = 10;
+const int UNSAT_V = 20;
+
 class GlucoseSatSolver {
 
 private:

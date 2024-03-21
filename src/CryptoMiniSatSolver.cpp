@@ -64,8 +64,8 @@ void CryptoMiniSatSolver::assume(int32_t lit) {
 }
 
 int CryptoMiniSatSolver::solve() {
-	int sat = solver.solve(&assumptions) == l_True ? 10 : 20;
-	if (sat == 10) {
+	int sat = solver.solve(&assumptions) == l_True ? SAT_V : UNSAT_V;
+	if (sat == SAT_V) {
 		model.clear();
 		for (int32_t i = 0; i < decision_vars; i++)
 			model[i] = (solver.get_model()[i] == l_True ? 1 : 0);
