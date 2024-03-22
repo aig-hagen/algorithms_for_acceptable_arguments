@@ -131,13 +131,15 @@ cadical:
 glucose:
 	@echo "Compiling Glucose..."
 	cd $(GLUCOSE_DIR) && \
-	make
+	make && \
+	sudo make install && \
+	sudo ldconfig
 
 cgss2:
 	@echo "Compiling CGSS2..."
 	cd $(CGSS2_DIR)/cadical && ./configure && \
-	cd .. && make && \
-	make lib
+	cd ..  && mkdir -p src/solvers/lib && mkdir -p src/lib && \
+	make && make lib
 
 full:
 	@$(MAKE) all SOLVER=cryptominisat

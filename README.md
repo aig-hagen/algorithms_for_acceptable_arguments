@@ -20,6 +20,7 @@ The relevant source files are included and the solvers can easily be built as fo
 ```
 
 #### Glucose
+To use Glucose `g++-11` needs to be installed
 ```
   make glucose
 ```
@@ -34,17 +35,11 @@ Install Boost libraries and other prerequisites
 sudo apt-get install zlib1g-dev libboost-program-options-dev libsqlite3-dev
 ```
 
-Building CryptoMiniSat
+Building and installing CryptoMiniSat
 ```
   make cmsat
 ```
 
-CryptoMiniSat must also be installed
-```
-  cd lib/cryptominisat-5.11.04/build
-  sudo make install
-  sudo ldconfig
-```
 
 ### CGSS2
 Install prerequisites
