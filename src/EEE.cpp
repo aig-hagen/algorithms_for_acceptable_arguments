@@ -30,7 +30,7 @@ namespace Algorithms {
                         included[i] = true;
                         result.push_back(af.int_to_arg[i]);
                     }
-                    complement_clause.push_back(-af.accepted_var[i]);
+                    //complement_clause.push_back(-af.accepted_var[i]);
                 } else {
                     complement_clause.push_back(af.accepted_var[i]);
                 }
