@@ -10,7 +10,12 @@ ExternalSatSolver::ExternalSatSolver(int32_t n_vars, int32_t n_args) {
     number_of_vars = n_vars;
     model = std::vector<bool>(n_vars);
     clauses = std::vector<std::vector<int>>();
-    solver = "./lib/cadical/build/cadical";
+    //solver = "./lib/cryptominisat-5.11.21/build/cryptominisat5";
+    //solver = "./lib/cadical-1.9.5/build/cadical";
+}
+
+void ExternalSatSolver::set_solver(std::string path) {
+    solver = path;
 }
 
 void ExternalSatSolver::assume(int32_t lit) {

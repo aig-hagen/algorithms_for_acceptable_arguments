@@ -8,6 +8,9 @@ namespace Algorithms {
         uint64_t max_weight;
 
         SAT_Solver solver = SAT_Solver(af.count, af.args);
+        #ifdef SAT_EXTERNAL
+        solver.set_solver(af.solver_path);
+        #endif
         if (sem == CO || sem == PR) {
             Encodings::complete(af, solver);
         } else if (sem == ST) {
@@ -53,6 +56,9 @@ namespace Algorithms {
         }
 
         SAT_Solver solver = SAT_Solver(af.count, af.args);
+        #ifdef SAT_EXTERNAL
+        solver.set_solver(af.solver_path);
+        #endif
         Encodings::stable(af, solver);
 
         while (true) {

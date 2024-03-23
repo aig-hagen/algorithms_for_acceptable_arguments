@@ -6,6 +6,9 @@ namespace Algorithms {
         std::vector<std::string> result;
         std::vector<bool> included(af.args, false);
         SAT_Solver solver = SAT_Solver(af.count, af.args);
+        #ifdef SAT_EXTERNAL
+        solver.set_solver(af.solver_path);
+        #endif
 
         if (sem == CO || sem == PR) {
             Encodings::complete(af, solver);
@@ -41,6 +44,10 @@ namespace Algorithms {
         std::vector<std::string> result;
         std::vector<bool> included(af.args, true);
         SAT_Solver solver = SAT_Solver(af.count, af.args);
+        #ifdef SAT_EXTERNAL
+        solver.set_solver(af.solver_path);
+        #endif
+
         if (sem == PR) {
             Encodings::complete(af, solver);
 

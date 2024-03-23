@@ -24,7 +24,8 @@ public:
     void assume(int32_t lit);
     int solve();
     int solve(const std::vector<int32_t> assumptions);
-    std::vector<bool> model;    
+    std::vector<bool> model;
+    void set_solver(std::string path);
 };
 #endif
 #endif
