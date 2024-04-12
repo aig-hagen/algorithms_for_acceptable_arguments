@@ -27,6 +27,16 @@ void ExternalSatSolver::add_clause(const std::vector<int32_t> & clause) {
     clauses[clauses.size()-1].push_back(0);
 }
 
+void ExternalSatSolver::add_clause_1(int32_t lit) {
+    std::vector<int32_t> clause = { lit, 0 };
+    clauses.push_back(clause);
+}
+
+void ExternalSatSolver::add_clause_2(int32_t lit1, int32_t lit2) {
+    std::vector<int32_t> clause = { lit1, lit2, 0 };
+    clauses.push_back(clause);
+}
+
 int ExternalSatSolver::solve() {
     redi::pstream process(solver, redi::pstreams::pstdout | redi::pstreams::pstdin | redi::pstreams::pstderr);
     process << "p cnf " << number_of_vars << " " << (clauses.size()+assumptions.size()) << "\n";

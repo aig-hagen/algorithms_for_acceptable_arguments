@@ -1,6 +1,27 @@
 #include "Encodings.h"
 
 namespace Encodings {
+	void admissible(const AF & af, SAT_Solver & solver) {
+		std::vector<int32_t> clause(2);
+		for (uint32_t i = 0; i < af.args; i++) {
+			clause = { -af.accepted_var[i], -af.rejected_var[i] };
+			solver.add_clause(clause);
+			if (af.unattacked[i]) { // TODO grounded extension
+				std::vector<int32_t> unattacked_clause = { af.accepted_var[i] };
+				solver.add_clause(unattacked_clause);
+				continue;
+			} // TODO attacked by grounded
+			std::vector<int32_t> out_clause(af.attackers[i].size()+1);
+			for (uint32_t j = 0; j < af.attackers[i].size(); j++) {
+				clause = { -af.accepted_var[i], af.rejected_var[af.attackers[i][j]] };
+				solver.add_clause(clause);
+				out_clause[j] = af.accepted_var[af.attackers[i][j]];
+			}
+			out_clause[out_clause.size()-1] = -af.rejected_var[i];
+			solver.add_clause(out_clause);						
+		}
+	}
+
 	#ifndef PERF_ENC
 	void complete(const AF & af, SAT_Solver & solver) {
 		std::vector<int32_t> clause(2);

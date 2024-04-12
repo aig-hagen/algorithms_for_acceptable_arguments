@@ -53,6 +53,21 @@ void GlucoseSatSolver::add_clause(const std::vector<int32_t> & clause) {
 	solver->addClause_(lits);
 }
 
+void GlucoseSatSolver::add_clause_1(int32_t lit) {
+	int32_t var = abs(lit)-1;
+	while (var >= solver->nVars())
+			solver->newVar();
+	solver->addClause((lit > 0) ? mkLit(var) : ~mkLit(var));
+}
+
+void GlucoseSatSolver::add_clause_2(int32_t lit1, int32_t lit2) {
+	int32_t var1 = abs(lit1)-1;
+	int32_t var2 = abs(lit2)-1;
+	while (var2 >= solver->nVars())
+			solver->newVar();
+	solver->addClause((lit1 > 0) ? mkLit(var1) : ~mkLit(var1), (lit2 > 0) ? mkLit(var2) : ~mkLit(var2));
+}
+
 void GlucoseSatSolver::assume(int32_t lit) {
 	int32_t var = abs(lit)-1;
 	while (var >= solver->nVars())

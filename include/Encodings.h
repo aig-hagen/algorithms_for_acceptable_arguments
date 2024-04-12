@@ -23,6 +23,7 @@ typedef ExternalSatSolver SAT_Solver;
 #endif
 
 namespace Encodings {
+    void admissible(const AF & af, SAT_Solver & solver);
     void complete(const AF & af, SAT_Solver & solver);
     void stable(const AF & af, SAT_Solver & solver);
     void add_rejected_clauses(const AF & af, SAT_Solver & solver);

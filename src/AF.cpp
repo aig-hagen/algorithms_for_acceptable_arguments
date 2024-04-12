@@ -47,6 +47,7 @@ void AF::add_attack(std::pair<std::string,std::string> att) {
 	uint32_t source = arg_to_int[att.first];
 	uint32_t target = arg_to_int[att.second];
 	attackers[target].push_back(source);
+	attacked[source].push_back(target);
 	unattacked[target] = false;
 	if (source == target) {
 		self_attack[source] = true;
@@ -62,6 +63,7 @@ void AF::add_attack(std::pair<std::string,std::string> att) {
 
 void AF::initialize_attackers() {
 	attackers.resize(args);
+	attacked.resize(args);
 	unattacked.resize(args, true);
 	self_attack.resize(args);
 }
@@ -71,7 +73,6 @@ void AF::initialize_vars() {
 	for (uint32_t i = 0; i < args; i++) {
 		accepted_var[i] = ++count;
 	}
-
 	rejected_var.resize(args);
 	for (uint32_t i = 0; i < args; i++) {
 		rejected_var[i] = ++count;

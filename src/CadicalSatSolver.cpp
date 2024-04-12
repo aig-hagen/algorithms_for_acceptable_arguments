@@ -18,6 +18,17 @@ void CadicalSatSolver::add_clause(const std::vector<int32_t> & clause) {
 	solver->add(0);
 }
 
+void CadicalSatSolver::add_clause_1(int32_t lit) {
+	solver->add(lit);
+	solver->add(0);
+}
+
+void CadicalSatSolver::add_clause_2(int32_t lit1, int32_t lit2) {
+	solver->add(lit1);
+	solver->add(lit2);
+	solver->add(0);
+}
+
 void CadicalSatSolver::assume(int32_t lit) {
 	solver->assume(lit);
 }

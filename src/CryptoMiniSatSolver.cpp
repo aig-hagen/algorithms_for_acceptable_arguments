@@ -54,6 +54,19 @@ void CryptoMiniSatSolver::add_clause(const vector<int32_t> & clause) {
 	solver.add_clause(lits);
 }
 
+void CryptoMiniSatSolver::add_clause_1(int32_t lit) {
+	int32_t var = abs(lit)-1;
+	vector<Lit> lits = { Lit(var, lit < 0) };
+	solver.add_clause(lits);
+}
+
+void CryptoMiniSatSolver::add_clause_2(int32_t lit1, int32_t lit2) {
+	int32_t var1 = abs(lit1)-1;
+	int32_t var2 = abs(lit2)-1;
+	vector<Lit> lits = { Lit(var1, lit1 < 0), Lit(var2, lit2 < 0) };
+	solver.add_clause(lits);
+}
+
 void CryptoMiniSatSolver::assume(int32_t lit) {
 	int32_t var = abs(lit)-1;
 	assumptions.push_back(Lit(var, lit < 0));

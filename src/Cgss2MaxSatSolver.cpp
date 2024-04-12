@@ -19,6 +19,17 @@ void Cgss2MaxSatSolver::add_clause(const std::vector<int32_t> & clause) {
     solver->ipamir_add_hard(0);
 }
 
+void Cgss2MaxSatSolver::add_clause_1(int32_t lit) {
+    solver->ipamir_add_hard(lit);
+    solver->ipamir_add_hard(0);
+}
+
+void Cgss2MaxSatSolver::add_clause_2(int32_t lit1, int32_t lit2) {
+    solver->ipamir_add_hard(lit1);
+    solver->ipamir_add_hard(lit2);
+    solver->ipamir_add_hard(0);
+}
+
 void Cgss2MaxSatSolver::add_soft_constraint(int32_t lit) {
 	solver->ipamir_add_soft_lit(lit, 1);
 }
