@@ -33,7 +33,7 @@
 #include <iostream>
 #include "AF.h"
 
-AF::AF() : args(0), count(0) {}
+AF::AF() : args(0), count(0), attacks(0) {}
 
 void AF::add_argument(std::string arg) {
 	int_to_arg.push_back(arg);
@@ -49,9 +49,12 @@ void AF::add_attack(std::pair<std::string,std::string> att) {
 	attackers[target].push_back(source);
 	attacked[source].push_back(target);
 	unattacked[target] = false;
+	// TODO utilise?
 	if (source == target) {
 		self_attack[source] = true;
 	}
+	attacks++;
+	// TODO needed?
 	att_exists[std::make_pair(source, target)] = true;
 	if (att_exists.count(std::make_pair(target, source)) > 0) {
 		symmetric_attack[std::make_pair(source, target)] = true;

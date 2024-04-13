@@ -67,6 +67,7 @@ std::string solver_path;
 
 uint32_t args;
 uint32_t count;
+uint32_t attacks;
 
 std::vector<std::string> int_to_arg;
 std::unordered_map<std::string,uint32_t> arg_to_int;

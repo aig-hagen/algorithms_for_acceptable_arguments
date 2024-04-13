@@ -142,6 +142,7 @@ cgss2:
 	make && make lib
 
 full:
+	@$(MAKE) all SOLVER=external
 	@$(MAKE) all SOLVER=cryptominisat
 	@$(MAKE) all SOLVER=cadical
 	@$(MAKE) all SOLVER=glucose
@@ -152,6 +153,7 @@ all:
 	@$(MAKE) iaq
 	@$(MAKE) eee
 	@$(MAKE) see
+	@$(MAKE) fudge
 
 iaq:
 	@$(MAKE) clean-src

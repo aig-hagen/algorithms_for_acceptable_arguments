@@ -258,6 +258,8 @@ int main(int argc, char ** argv) {
 			acceptable_arguments = Algorithms::see_skep(aaf, string_to_sem(task));
 			#elif defined(SEEM)
 			acceptable_arguments = Algorithms::seem_skep(aaf, string_to_sem(task));
+			#elif defined(FUDGE)
+			acceptable_arguments = Algorithms::fudge_skep(aaf);
 			#else
 			#endif
 			break;

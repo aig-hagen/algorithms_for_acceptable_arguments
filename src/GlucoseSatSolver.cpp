@@ -63,6 +63,8 @@ void GlucoseSatSolver::add_clause_1(int32_t lit) {
 void GlucoseSatSolver::add_clause_2(int32_t lit1, int32_t lit2) {
 	int32_t var1 = abs(lit1)-1;
 	int32_t var2 = abs(lit2)-1;
+	while (var1 >= solver->nVars())
+			solver->newVar();
 	while (var2 >= solver->nVars())
 			solver->newVar();
 	solver->addClause((lit1 > 0) ? mkLit(var1) : ~mkLit(var1), (lit2 > 0) ? mkLit(var2) : ~mkLit(var2));

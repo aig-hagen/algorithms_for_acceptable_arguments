@@ -55,7 +55,7 @@ int ExternalSatSolver::solve() {
 
     process << redi::peof;
     std::string line;
-    model.clear();
+    model.resize(number_of_vars);
     while (process.peek() != EOF && std::getline(process, line)) {
         if (line.rfind("c ", 0) == 0) {
             continue;

@@ -1,25 +1,44 @@
 #include "Encodings.h"
 
 namespace Encodings {
-	void admissible(const AF & af, SAT_Solver & solver) {
+	void admissible(const AF & af, SAT_Solver & solver, bool isAttackedSet) {
+		int32_t offset = isAttackedSet ? 2*af.args: 0;
 		std::vector<int32_t> clause(2);
 		for (uint32_t i = 0; i < af.args; i++) {
-			clause = { -af.accepted_var[i], -af.rejected_var[i] };
+			clause = { -(offset+af.accepted_var[i]), -(offset+af.rejected_var[i]) };
 			solver.add_clause(clause);
 			if (af.unattacked[i]) { // TODO grounded extension
-				std::vector<int32_t> unattacked_clause = { af.accepted_var[i] };
+				std::vector<int32_t> unattacked_clause = { offset+af.accepted_var[i] };
 				solver.add_clause(unattacked_clause);
 				continue;
-			} // TODO attacked by grounded
+			} // TODO attacked by grounded/unattacked
 			std::vector<int32_t> out_clause(af.attackers[i].size()+1);
 			for (uint32_t j = 0; j < af.attackers[i].size(); j++) {
-				clause = { -af.accepted_var[i], af.rejected_var[af.attackers[i][j]] };
+				clause = { -(offset+af.accepted_var[i]), offset+af.rejected_var[af.attackers[i][j]] };
 				solver.add_clause(clause);
-				out_clause[j] = af.accepted_var[af.attackers[i][j]];
+				out_clause[j] = offset+af.accepted_var[af.attackers[i][j]];
 			}
-			out_clause[out_clause.size()-1] = -af.rejected_var[i];
-			solver.add_clause(out_clause);						
+			out_clause[out_clause.size()-1] = -(offset+af.rejected_var[i]);
+			solver.add_clause(out_clause);
 		}
+	}
+
+	void attacks(const AF & af, SAT_Solver & solver) { // TODO maybe integrate directly with admissible encoding
+		int32_t offset = 2*af.args;
+		std::vector<int32_t> attacks_clause(af.attacks);
+		uint32_t attack_idx = 0;
+		int32_t attack_var = offset + 2*af.args + 1;
+		for (uint32_t i = 0; i < af.args; i++) {
+			for (uint32_t j = 0; j < af.attackers[i].size(); j++) {
+				attacks_clause[attack_idx++] = attack_var;
+				solver.add_clause_2(-attack_var, af.accepted_var[af.attackers[i][j]]);
+				solver.add_clause_2(-attack_var, offset+af.accepted_var[i]);
+				std::vector<int32_t> clause = { attack_var, -(offset+af.accepted_var[i]), -af.accepted_var[af.attackers[i][j]] };
+				solver.add_clause(clause);
+				attack_var++;
+			}
+		}
+		solver.add_clause(attacks_clause);
 	}
 
 	#ifndef PERF_ENC
