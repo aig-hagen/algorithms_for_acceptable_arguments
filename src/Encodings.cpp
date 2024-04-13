@@ -127,34 +127,47 @@ namespace Encodings {
 			}	
 		}
 	}
-	#endif
+	void stable(const AF & af, SAT_Solver & solver) {
+		for (uint32_t i = 0; i < af.args; i++) {
+			if (af.unattacked[i]) {
+				// argument is unattacked
+				solver.add_clause_1(af.accepted_var[i]);
+			} // TODO grounded
 
+			if (af.attackers[i].size() > 0) {
+				std::vector<int32_t> clause(af.attackers[i].size());
+				for (uint32_t j = 0; j < af.attackers[i].size(); j++) {
+					solver.add_clause_2(-af.accepted_var[i], -af.accepted_var[af.attackers[i][j]]);
+					clause[j] = af.accepted_var[af.attackers[i][j]];
+				}
+				clause[af.attackers[i].size()] = af.accepted_var[i];
+				solver.add_clause(clause);
+			}
+		}
+	}
+	#endif
 	void stable(const AF & af, SAT_Solver & solver) { // TODO check correctness
 		for (uint32_t i = 0; i < af.args; i++) {
-			// basic clauses
-			//solver.add_clause_3(af.accepted_var[i], af.rejected_var[i], af.undecided_var[i]);
 			solver.add_clause_2(-af.accepted_var[i], -af.rejected_var[i]);
-			//solver.add_clause_2(-af.accepted_var[i], -af.undecided_var[i]);
-			//solver.add_clause_2(-af.rejected_var[i], -af.undecided_var[i]);
+			solver.add_clause_2(af.accepted_var[i], af.rejected_var[i]);
 			
 			// semantic enconding
 			if (af.unattacked[i]) {
 				// argument is unattacked
 				solver.add_clause_1(af.accepted_var[i]);
-			} else {
-				//solver.add_clause_1(-af.undecided_var[i]);
-				std::vector<int32_t> attackers_in_clause(af.attackers[i].size() + 1);
-				std::vector<int32_t> attackers_notout_clause(af.attackers[i].size() + 1);
-				for (uint32_t j = 0; j < af.attackers[i].size(); j++) {
-					attackers_in_clause[j] = af.accepted_var[af.attackers[i][j]];
-					attackers_notout_clause[j] = -af.rejected_var[af.attackers[i][j]];
-					solver.add_clause_2(-af.accepted_var[i], af.rejected_var[af.attackers[i][j]]);
-				}
-				attackers_in_clause[af.attackers[i].size()] = -af.rejected_var[i];
-				solver.add_clause(attackers_in_clause);
-				attackers_notout_clause[af.attackers[i].size()] = af.accepted_var[i];
-				solver.add_clause(attackers_notout_clause);
+				continue;
+			} // TODO grounded
+			std::vector<int32_t> attackers_in_clause(af.attackers[i].size() + 1);
+			std::vector<int32_t> attackers_notout_clause(af.attackers[i].size() + 1);
+			for (uint32_t j = 0; j < af.attackers[i].size(); j++) {
+				attackers_in_clause[j] = af.accepted_var[af.attackers[i][j]];
+				attackers_notout_clause[j] = -af.rejected_var[af.attackers[i][j]];
+				solver.add_clause_2(-af.accepted_var[i], af.rejected_var[af.attackers[i][j]]);
 			}
+			attackers_in_clause[af.attackers[i].size()] = -af.rejected_var[i];
+			solver.add_clause(attackers_in_clause);
+			attackers_notout_clause[af.attackers[i].size()] = af.accepted_var[i];
+			solver.add_clause(attackers_notout_clause);
 		}
 	}
 }

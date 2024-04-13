@@ -4,8 +4,8 @@
 namespace Algorithms {
     std::vector<std::string> see_cred(const AF & af, semantics sem) {
         std::vector<std::string> result;
-
-        SAT_Solver solver = SAT_Solver(af.count, af.args);
+        uint32_t num_vars = af.count;
+        SAT_Solver solver = SAT_Solver(num_vars, af.args);
         #ifdef SAT_EXTERNAL
         solver.set_solver(af.solver_path);
         #endif

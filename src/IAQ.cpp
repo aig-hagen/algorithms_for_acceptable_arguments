@@ -5,11 +5,12 @@
 namespace Algorithms {
     std::vector<std::string> iaq_cred(const AF & af, semantics sem) {
         std::vector<std::string> result;
-
-        SAT_Solver solver = SAT_Solver(af.count, af.args);
+        uint32_t num_vars = af.count;
+        SAT_Solver solver = SAT_Solver(num_vars, af.args);
         #ifdef SAT_EXTERNAL
         solver.set_solver(af.solver_path);
         #endif
+
         if (sem == CO || sem == PR) {
             Encodings::complete(af, solver);
         } else if (sem == ST) {
@@ -18,6 +19,7 @@ namespace Algorithms {
             std::cerr << sem << ": Unsupported semantics\n";
             exit(1);
         }
+        
 
         for (uint32_t i = 0; i < af.args; i++) {
             solver.assume(af.accepted_var[i]);

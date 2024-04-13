@@ -6,11 +6,11 @@ namespace Algorithms {
         std::vector<std::string> result;
         result.reserve(af.args);
         std::vector<bool> included(af.args, false);
-        SAT_Solver solver = SAT_Solver(af.count, af.args);
+        uint32_t num_vars = af.count;
+        SAT_Solver solver = SAT_Solver(num_vars, af.args);
         #ifdef SAT_EXTERNAL
         solver.set_solver(af.solver_path);
         #endif
-
         if (sem == CO || sem == PR) {
             Encodings::complete(af, solver);
         } else if (sem == ST) {
@@ -41,10 +41,11 @@ namespace Algorithms {
         return result;
     }
 
-    std::vector<std::string> eee_skep(const AF & af, semantics sem) {
+    std::vector<std::string> eee_skep(const AF & af, semantics sem) { // TODO some bug for ES-PR still; stable seems to work
         std::vector<std::string> result;
         std::vector<bool> included(af.args, true);
-        SAT_Solver solver = SAT_Solver(af.count, af.args);
+        uint32_t num_vars = af.count;
+        SAT_Solver solver = SAT_Solver(num_vars, af.args);
         #ifdef SAT_EXTERNAL
         solver.set_solver(af.solver_path);
         #endif
@@ -67,7 +68,7 @@ namespace Algorithms {
                                 visited[i] = true;
                             }
                             complement_clause.push_back(-af.accepted_var[i]);
-                        } else { // TODO some bug still
+                        } else {
                             complement_clause.push_back(af.accepted_var[i]);
                         }
                     }

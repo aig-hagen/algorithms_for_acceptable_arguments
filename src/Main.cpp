@@ -259,6 +259,10 @@ int main(int argc, char ** argv) {
 			#elif defined(SEEM)
 			acceptable_arguments = Algorithms::seem_skep(aaf, string_to_sem(task));
 			#elif defined(FUDGE)
+			if (string_to_sem(task)!=PR) {
+				std::cerr << string_to_sem(task) << ": Unsupported semantics\n";
+            	exit(1);
+			}
 			acceptable_arguments = Algorithms::fudge_skep(aaf);
 			#else
 			#endif

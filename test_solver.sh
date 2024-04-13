@@ -7,7 +7,7 @@ if [ -z "$1" ]; then
 fi
 
 INSTANCE=$1
-SEMANTICS=PR
+SEMANTICS=ST
 
 ARGS="-p EC-$SEMANTICS -fo tgf -f $INSTANCE"
 echo "Testing enumeration of credulously accepted arguments... "
