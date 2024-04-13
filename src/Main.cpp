@@ -249,7 +249,7 @@ int main(int argc, char ** argv) {
 			#else
 			#endif
 			break;
-		case ES:
+		case ES: // TODO what if st(F) = \emptyset
 			#if defined(IAQ)
 			acceptable_arguments = Algorithms::iaq_skep(aaf, string_to_sem(task));
 			#elif defined(EEE)
