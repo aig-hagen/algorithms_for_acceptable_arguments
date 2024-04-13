@@ -57,7 +57,7 @@ CPPFLAGS	:= $(INC_FLAGS) -MMD -MP
 ##################################################################################################
 ###### CUSTOM ####################################################################################
 ##################################################################################################
-CPPFLAGS	+= -Wall -Wno-parentheses -Wno-sign-compare -std=c++20
+CPPFLAGS	+= -Wall -Wno-parentheses -Wno-sign-compare -std=c++20 -D PERF_ENC
 
 #CPPFLAGS	+= -D PERF_ENC
 
@@ -142,6 +142,7 @@ cgss2:
 	make && make lib
 
 full:
+	@$(MAKE) clean
 	@$(MAKE) all SOLVER=external
 	@$(MAKE) all SOLVER=cryptominisat
 	@$(MAKE) all SOLVER=cadical

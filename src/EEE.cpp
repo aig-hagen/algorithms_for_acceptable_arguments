@@ -4,6 +4,7 @@
 namespace Algorithms {
     std::vector<std::string> eee_cred(const AF & af, semantics sem) {
         std::vector<std::string> result;
+        result.reserve(af.args);
         std::vector<bool> included(af.args, false);
         SAT_Solver solver = SAT_Solver(af.count, af.args);
         #ifdef SAT_EXTERNAL
@@ -31,6 +32,8 @@ namespace Algorithms {
                         result.push_back(af.int_to_arg[i]);
                     }
                     complement_clause.push_back(-af.accepted_var[i]);
+                } else {
+                    complement_clause.push_back(af.accepted_var[i]);
                 }
             }
             solver.add_clause(complement_clause);
@@ -49,30 +52,27 @@ namespace Algorithms {
         if (sem == PR) {
             Encodings::complete(af, solver);
 
-            std::vector<int32_t> assumptions;
             std::vector<int32_t> complement_clause;
-            assumptions.reserve(af.args);
             complement_clause.reserve(af.args);
             while (true) {
                 if (solver.solve() == UNSAT_V) break;
 
-                assumptions.clear();
                 std::vector<bool> visited(af.args);
                 while (true) {
                     complement_clause.clear();
                     for (uint32_t i = 0; i < af.args; i++) {
                         if (solver.model[i]) {
                             if (!visited[i]) {
-                                assumptions.push_back(af.accepted_var[i]);
+                                solver.assume(af.accepted_var[i]);
                                 visited[i] = true;
                             }
-                        } else {
+                            complement_clause.push_back(-af.accepted_var[i]);
+                        } else { // TODO some bug still
                             complement_clause.push_back(af.accepted_var[i]);
                         }
                     }
                     solver.add_clause(complement_clause);
-                    int superset_exists = solver.solve(assumptions);
-                    if (superset_exists == UNSAT_V) break;
+                    if (solver.solve() == UNSAT_V) break;
                 }
                 for (uint32_t i = 0; i < af.args; i++) {
                     included[i] = included[i] && solver.model[i];

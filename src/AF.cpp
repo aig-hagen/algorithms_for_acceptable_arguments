@@ -47,7 +47,9 @@ void AF::add_attack(std::pair<std::string,std::string> att) {
 	uint32_t source = arg_to_int[att.first];
 	uint32_t target = arg_to_int[att.second];
 	attackers[target].push_back(source);
+	#ifdef FUDGE
 	attacked[source].push_back(target);
+	#endif
 	unattacked[target] = false;
 	// TODO utilise?
 	if (source == target) {
@@ -66,7 +68,9 @@ void AF::add_attack(std::pair<std::string,std::string> att) {
 
 void AF::initialize_attackers() {
 	attackers.resize(args);
+	#ifdef FUDGE
 	attacked.resize(args);
+	#endif
 	unattacked.resize(args, true);
 	self_attack.resize(args);
 }
@@ -80,10 +84,12 @@ void AF::initialize_vars() {
 	for (uint32_t i = 0; i < args; i++) {
 		rejected_var[i] = ++count;
 	}
+	#ifndef PERF_ENC
 	undecided_var.resize(args);
 	for (uint32_t i = 0; i < args; i++) {
 		undecided_var[i] = ++count;
 	}
+	#endif
 }
 
 void AF::set_solver_path(std::string path) {

@@ -1,4 +1,4 @@
-#if defined(FUDGE)
+#ifdef FUDGE
 #include "Algorithms.h"
 
 using namespace std;
