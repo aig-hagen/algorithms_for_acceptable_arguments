@@ -7,7 +7,7 @@
 
 CadicalSatSolver::CadicalSatSolver(int32_t n_vars, int32_t n_args) {
     solver = new CaDiCaL::Solver;
-	decision_vars = n_vars;
+	decision_vars = n_args;
 	model = std::vector<bool>(decision_vars);
 }
 
@@ -26,6 +26,13 @@ void CadicalSatSolver::add_clause_1(int32_t lit) {
 void CadicalSatSolver::add_clause_2(int32_t lit1, int32_t lit2) {
 	solver->add(lit1);
 	solver->add(lit2);
+	solver->add(0);
+}
+
+void CadicalSatSolver::add_clause_3(int32_t lit1, int32_t lit2, int32_t lit3) {
+	solver->add(lit1);
+	solver->add(lit2);
+	solver->add(lit3);
 	solver->add(0);
 }
 

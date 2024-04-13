@@ -37,12 +37,12 @@ using namespace CMSat;
 CryptoMiniSatSolver::CryptoMiniSatSolver(int32_t n_vars, int32_t n_args) {
 	solver.set_num_threads(1);
 	solver.new_vars(n_vars);
-	decision_vars = n_vars;
+	decision_vars = n_args;
 	//solver.set_no_simplify();
 	//solver.set_no_equivalent_lit_replacement();
 	//solver.set_no_bva();
 	//solver.set_no_bve();
-	model = std::vector<bool>(n_vars);
+	model = std::vector<bool>(decision_vars);
 }
 
 void CryptoMiniSatSolver::add_clause(const vector<int32_t> & clause) {
@@ -67,6 +67,14 @@ void CryptoMiniSatSolver::add_clause_2(int32_t lit1, int32_t lit2) {
 	solver.add_clause(lits);
 }
 
+void CryptoMiniSatSolver::add_clause_3(int32_t lit1, int32_t lit2, int32_t lit3) {
+	int32_t var1 = abs(lit1)-1;
+	int32_t var2 = abs(lit2)-1;
+	int32_t var3 = abs(lit3)-1;
+	vector<Lit> lits = { Lit(var1, lit1 < 0), Lit(var2, lit2 < 0),Lit(var3, lit3 < 0) };
+	solver.add_clause(lits);
+}
+
 void CryptoMiniSatSolver::assume(int32_t lit) {
 	int32_t var = abs(lit)-1;
 	assumptions.push_back(Lit(var, lit < 0));
@@ -75,7 +83,7 @@ void CryptoMiniSatSolver::assume(int32_t lit) {
 int CryptoMiniSatSolver::solve() {
 	int sat = solver.solve(&assumptions) == l_True ? SAT_V : UNSAT_V;
 	if (sat == SAT_V) {
-		model.clear();
+		//model.clear();
 		for (int32_t i = 0; i < decision_vars; i++)
 			model[i] = (solver.get_model()[i] == l_True ? 1 : 0);
 	}

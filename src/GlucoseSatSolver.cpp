@@ -38,7 +38,7 @@ using namespace Glucose;
 GlucoseSatSolver::GlucoseSatSolver(int32_t n_vars, int32_t n_args) {
 	solver = new Solver();
 	solver->setIncrementalMode();
-	solver->initNbInitialVars(n_args);
+	solver->initNbInitialVars(n_vars);
 	decision_vars = n_args;
 }
 
@@ -68,6 +68,19 @@ void GlucoseSatSolver::add_clause_2(int32_t lit1, int32_t lit2) {
 	while (var2 >= solver->nVars())
 			solver->newVar();
 	solver->addClause((lit1 > 0) ? mkLit(var1) : ~mkLit(var1), (lit2 > 0) ? mkLit(var2) : ~mkLit(var2));
+}
+
+void GlucoseSatSolver::add_clause_3(int32_t lit1, int32_t lit2, int32_t lit3) {
+	int32_t var1 = abs(lit1)-1;
+	int32_t var2 = abs(lit2)-1;
+	int32_t var3 = abs(lit3)-1;
+	while (var1 >= solver->nVars())
+		solver->newVar();
+	while (var2 >= solver->nVars())
+		solver->newVar();
+	while (var3 >= solver->nVars())
+		solver->newVar();
+	solver->addClause((lit1 > 0) ? mkLit(var1) : ~mkLit(var1), (lit2 > 0) ? mkLit(var2) : ~mkLit(var2), (lit3 > 0) ? mkLit(var3) : ~mkLit(var3));
 }
 
 void GlucoseSatSolver::assume(int32_t lit) {

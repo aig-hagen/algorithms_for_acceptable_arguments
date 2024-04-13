@@ -8,7 +8,7 @@
 
 ExternalSatSolver::ExternalSatSolver(int32_t n_vars, int32_t n_args) {
     number_of_vars = n_vars;
-    model = std::vector<bool>(n_vars);
+    model = std::vector<bool>(n_args);
     clauses = std::vector<std::vector<int>>();
     //solver = "./lib/cryptominisat-5.11.21/build/cryptominisat5";
     //solver = "./lib/cadical-1.9.5/build/cadical";
@@ -34,6 +34,11 @@ void ExternalSatSolver::add_clause_1(int32_t lit) {
 
 void ExternalSatSolver::add_clause_2(int32_t lit1, int32_t lit2) {
     std::vector<int32_t> clause = { lit1, lit2, 0 };
+    clauses.push_back(clause);
+}
+
+void ExternalSatSolver::add_clause_3(int32_t lit1, int32_t lit2, int32_t lit3) {
+    std::vector<int32_t> clause = { lit1, lit2, lit3, 0 };
     clauses.push_back(clause);
 }
 

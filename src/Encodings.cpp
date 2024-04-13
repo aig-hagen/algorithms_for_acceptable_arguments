@@ -3,19 +3,15 @@
 namespace Encodings {
 	void admissible(const AF & af, SAT_Solver & solver, bool isAttackedSet) {
 		int32_t offset = isAttackedSet ? 2*af.args: 0;
-		std::vector<int32_t> clause(2);
 		for (uint32_t i = 0; i < af.args; i++) {
-			clause = { -(offset+af.accepted_var[i]), -(offset+af.rejected_var[i]) };
-			solver.add_clause(clause);
+			solver.add_clause_2(-(offset+af.accepted_var[i]), -(offset+af.rejected_var[i]));
 			if (af.unattacked[i]) { // TODO grounded extension
-				std::vector<int32_t> unattacked_clause = { offset+af.accepted_var[i] };
-				solver.add_clause(unattacked_clause);
+				solver.add_clause_1(offset+af.accepted_var[i]);
 				continue;
 			} // TODO attacked by grounded/unattacked
 			std::vector<int32_t> out_clause(af.attackers[i].size()+1);
 			for (uint32_t j = 0; j < af.attackers[i].size(); j++) {
-				clause = { -(offset+af.accepted_var[i]), offset+af.rejected_var[af.attackers[i][j]] };
-				solver.add_clause(clause);
+				solver.add_clause_2(-(offset+af.accepted_var[i]), offset+af.rejected_var[af.attackers[i][j]]);
 				out_clause[j] = offset+af.accepted_var[af.attackers[i][j]];
 			}
 			out_clause[out_clause.size()-1] = -(offset+af.rejected_var[i]);
@@ -43,31 +39,24 @@ namespace Encodings {
 
 	#ifndef PERF_ENC
 	void complete(const AF & af, SAT_Solver & solver) {
-		std::vector<int32_t> clause(2);
 		for (uint32_t i = 0; i < af.args; i++) {
 			// basic clauses
-			clause = { af.accepted_var[i], af.rejected_var[i], af.undecided_var[i]};
-			solver.add_clause(clause);
-			clause = { -af.accepted_var[i], -af.rejected_var[i] };
-			solver.add_clause(clause);
-			clause = { -af.accepted_var[i], -af.undecided_var[i] };
-			solver.add_clause(clause);
-			clause = { -af.rejected_var[i], -af.undecided_var[i] };
-			solver.add_clause(clause);
+			solver.add_clause_3(af.accepted_var[i], af.rejected_var[i], af.undecided_var[i]);
+			solver.add_clause_2(-af.accepted_var[i], -af.rejected_var[i]);
+			solver.add_clause_2(-af.accepted_var[i], -af.undecided_var[i]);
+			solver.add_clause_2(-af.rejected_var[i], -af.undecided_var[i]);
 
 			// semantic enconding
 			if (af.unattacked[i]) {
 				// argument is unattacked
-				std::vector<int32_t> alt_clause = { af.accepted_var[i] };
-				solver.add_clause(alt_clause);
+				solver.add_clause_1(af.accepted_var[i]);
 			} else {
 				std::vector<int32_t> attackers_in_clause(af.attackers[i].size() + 1);
 				std::vector<int32_t> attackers_notout_clause(af.attackers[i].size() + 1);
 				for (uint32_t j = 0; j < af.attackers[i].size(); j++) {
 					attackers_in_clause[j] = af.accepted_var[af.attackers[i][j]];
 					attackers_notout_clause[j] = -af.rejected_var[af.attackers[i][j]];
-					clause = { -af.accepted_var[i], af.rejected_var[af.attackers[i][j]] };
-					solver.add_clause(clause);
+					solver.add_clause_2(-af.accepted_var[i], af.rejected_var[af.attackers[i][j]]);
 				}
 				attackers_in_clause[af.attackers[i].size()] = -af.rejected_var[i];
 				solver.add_clause(attackers_in_clause);
@@ -93,7 +82,7 @@ namespace Encodings {
 			// semantic enconding
 			if (af.unattacked[i]) {
 				// argument is unattacked
-				std::vector<int32_t> alt_clause = { af.accepted_var[i], -af.rejected_var[i], -af.undecided_var[i] };
+				std::vector<int32_t> alt_clause = { af.accepted_var[i], -af.rejected_var[i], -af.undecided_var[i] }; // TODO this seems wrong
 				solver.add_clause(alt_clause);
 			} else {
 				std::vector<int32_t> attackers_in_clause(af.attackers[i].size() + 1);
@@ -118,34 +107,25 @@ namespace Encodings {
 	#endif
 
 	void stable(const AF & af, SAT_Solver & solver) {
-		std::vector<int32_t> clause(2);
-		std::vector<int32_t> alt_clause(1);
 		for (uint32_t i = 0; i < af.args; i++) {
 			// basic clauses
-			clause = { af.accepted_var[i], af.rejected_var[i], af.undecided_var[i]};
-			solver.add_clause(clause);
-			clause = { -af.accepted_var[i], -af.rejected_var[i] };
-			solver.add_clause(clause);
-			clause = { -af.accepted_var[i], -af.undecided_var[i] };
-			solver.add_clause(clause);
-			clause = { -af.rejected_var[i], -af.undecided_var[i] };
-			solver.add_clause(clause);
+			solver.add_clause_3(af.accepted_var[i], af.rejected_var[i], af.undecided_var[i]);
+			solver.add_clause_2(-af.accepted_var[i], -af.rejected_var[i]);
+			solver.add_clause_2(-af.accepted_var[i], -af.undecided_var[i]);
+			solver.add_clause_2(-af.rejected_var[i], -af.undecided_var[i]);
 			
 			// semantic enconding
 			if (af.unattacked[i]) {
 				// argument is unattacked
-				alt_clause = { af.accepted_var[i] };
-				solver.add_clause(alt_clause);
+				solver.add_clause_1(af.accepted_var[i]);
 			} else {
-				alt_clause = { -af.undecided_var[i] };
-				solver.add_clause(alt_clause);
+				solver.add_clause_1(-af.undecided_var[i]);
 				std::vector<int32_t> attackers_in_clause(af.attackers[i].size() + 1);
 				std::vector<int32_t> attackers_notout_clause(af.attackers[i].size() + 1);
 				for (uint32_t j = 0; j < af.attackers[i].size(); j++) {
 					attackers_in_clause[j] = af.accepted_var[af.attackers[i][j]];
 					attackers_notout_clause[j] = -af.rejected_var[af.attackers[i][j]];
-					clause = { -af.accepted_var[i], af.rejected_var[af.attackers[i][j]] };
-					solver.add_clause(clause);
+					solver.add_clause_2(-af.accepted_var[i], af.rejected_var[af.attackers[i][j]]);
 				}
 				attackers_in_clause[af.attackers[i].size()] = -af.rejected_var[i];
 				solver.add_clause(attackers_in_clause);

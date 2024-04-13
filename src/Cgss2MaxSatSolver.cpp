@@ -8,7 +8,7 @@ Cgss2MaxSatSolver::Cgss2MaxSatSolver(int32_t n_vars, int32_t n_args) {
     solver = new CGSS2();
     solver->init_default();
     //solver->make_incremental();
-	decision_vars = n_vars;
+	decision_vars = n_args;
 	model = std::vector<bool>(decision_vars);
 }
 
@@ -27,6 +27,13 @@ void Cgss2MaxSatSolver::add_clause_1(int32_t lit) {
 void Cgss2MaxSatSolver::add_clause_2(int32_t lit1, int32_t lit2) {
     solver->ipamir_add_hard(lit1);
     solver->ipamir_add_hard(lit2);
+    solver->ipamir_add_hard(0);
+}
+
+void Cgss2MaxSatSolver::add_clause_3(int32_t lit1, int32_t lit2, int32_t lit3) {
+    solver->ipamir_add_hard(lit1);
+    solver->ipamir_add_hard(lit2);
+    solver->ipamir_add_hard(lit3);
     solver->ipamir_add_hard(0);
 }
 
