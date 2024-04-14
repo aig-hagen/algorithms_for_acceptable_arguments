@@ -7,10 +7,10 @@ if [ -z "$1" ]; then
 fi
 
 INSTANCE=$1
-SEMANTICS=ST
+SEMANTICS=PR
 
 ARGS="-p EC-$SEMANTICS -fo tgf -f $INSTANCE"
-echo "Testing enumeration of credulously accepted arguments... "
+echo "Testing enumeration of credulously accepted arguments for $SEMANTICS... "
 
 echo -n "Testing Solver for IAQ   and CrMiSat... "
 $(dirname "$0")/"build/bin/solver_IAQ_cmsat" $ARGS
@@ -44,7 +44,7 @@ $(dirname "$0")/"build/bin/solver_SEEM_cgss2" $ARGS
 
 
 ARGS="-p ES-$SEMANTICS -fo tgf -f $INSTANCE"
-echo "Testing enumeration of skeptically accepted arguments... "
+echo "Testing enumeration of skeptically accepted arguments for $SEMANTICS... "
 
 echo -n "Testing Solver for IAQ   and CrMiSat... "
 $(dirname "$0")/"build/bin/solver_IAQ_cmsat" $ARGS

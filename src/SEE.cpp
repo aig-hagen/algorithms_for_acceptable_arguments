@@ -35,7 +35,7 @@ namespace Algorithms {
                     }
                 }
             }
-            solver.add_clause(unvisited_clause);
+            solver.add_clause(unvisited_clause); // TODO this adds multiple overlapping clauses
         }
         return result;
     }
@@ -67,7 +67,7 @@ namespace Algorithms {
                     complement_clause.push_back(af.rejected_var[i]);
                 }
             }
-            solver.add_clause(complement_clause);
+            solver.add_clause(complement_clause); // TODO this adds overlapping clauses
         }
 
         for (uint32_t i = 0; i < af.args; i++) {
