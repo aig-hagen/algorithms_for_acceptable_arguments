@@ -7,6 +7,7 @@ ALGORITHM	?= IAQ
 # Directories for the source of the SAT Solvers
 GLUCOSE_DIR	= lib/glucose-syrup-4.1
 CADICAL_DIR	= lib/cadical-1.9.5
+KISSAT_DIR	= lib/kissat-3.1.1
 CMSAT_DIR	= lib/cryptominisat-5.11.21
 CGSS2_DIR	= lib/cgss2
 
@@ -24,6 +25,9 @@ ifeq ($(SOLVER), cryptominisat)
 else ifeq ($(SOLVER), cadical)
 	INC_DIRS	+= ./$(CADICAL_DIR)/src
 	TARGET_EXEC	:= solver_$(ALGORITHM)_cadical
+else ifeq ($(SOLVER), kissat)
+	INC_DIRS	+= ./$(KISSAT_DIR)/src
+	TARGET_EXEC	:= solver_$(ALGORITHM)_kissat
 else ifeq ($(SOLVER), glucose)
 	INC_DIRS	+= ./$(GLUCOSE_DIR)/
 	TARGET_EXEC	:= solver_$(ALGORITHM)_glucose
@@ -67,6 +71,9 @@ ifeq ($(SOLVER), cryptominisat)
 else ifeq ($(SOLVER), cadical)
 	CPPFLAGS	+= -D SAT_CADICAL
 	LDFLAGS		+= $(CADICAL_DIR)/build/libcadical.a
+else ifeq ($(SOLVER), kissat)
+	CPPFLAGS	+= -D SAT_KISSAT
+	LDFLAGS		+= $(KISSAT_DIR)/build/libkissat.a
 else ifeq ($(SOLVER), glucose)
 	CPPFLAGS	+= -D SAT_GLUCOSE
 	LDFLAGS  	+= -L$(GLUCOSE_DIR)/build/dynamic/lib -lglucose
@@ -128,6 +135,11 @@ cadical:
 	cd $(CADICAL_DIR) && \
 	./configure && make
 
+kissat:
+	@echo "Compiling kissat..."
+	cd $(KISSAT_DIR) && \
+	./configure && make test
+
 glucose:
 	@echo "Compiling Glucose..."
 	cd $(GLUCOSE_DIR) && \
@@ -146,6 +158,7 @@ full:
 	@$(MAKE) all SOLVER=external
 	@$(MAKE) all SOLVER=cryptominisat
 	@$(MAKE) all SOLVER=cadical
+	@$(MAKE) all SOLVER=kissat
 	@$(MAKE) all SOLVER=glucose
 	@$(MAKE) all SOLVER=cgss2
 	@$(MAKE) seem SOLVER=cgss2
