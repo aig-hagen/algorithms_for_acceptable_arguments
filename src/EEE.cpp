@@ -54,13 +54,16 @@ namespace Algorithms {
             Encodings::complete(af, solver);
 
             std::vector<int32_t> complement_clause;
+            std::vector<int32_t> maximisation_clause;
             complement_clause.reserve(af.args);
+            maximisation_clause.reserve(af.args);
             while (true) {
                 if (solver.solve() == UNSAT_V) break;
 
                 std::vector<bool> visited(af.args);
                 while (true) {
                     complement_clause.clear();
+                    maximisation_clause.clear();
                     for (uint32_t i = 0; i < af.args; i++) {
                         if (solver.model[i]) {
                             if (!visited[i]) {
@@ -69,12 +72,14 @@ namespace Algorithms {
                             }
                             complement_clause.push_back(-af.accepted_var[i]);
                         } else {
+                            maximisation_clause.push_back(af.accepted_var[i]);
                             complement_clause.push_back(af.accepted_var[i]);
                         }
                     }
-                    solver.add_clause(complement_clause);
+                    solver.add_clause(maximisation_clause);
                     if (solver.solve() == UNSAT_V) break;
                 }
+                solver.add_clause(complement_clause);
                 for (uint32_t i = 0; i < af.args; i++) {
                     included[i] = included[i] && solver.model[i];
                 }

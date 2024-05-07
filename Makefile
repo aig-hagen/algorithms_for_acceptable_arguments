@@ -1,7 +1,7 @@
 # Thanks to Job Vranish (https://spin.atomicobject.com/2016/08/26/makefile-c-projects/)
 
 # Default values for the chosen SAT Solver and Algorithm
-SOLVER		?= cryptominisat
+SOLVER		?= cadical
 ALGORITHM	?= IAQ
 
 # Directories for the source of the SAT Solvers
@@ -58,8 +58,6 @@ CPPFLAGS	:= $(INC_FLAGS) -MMD -MP
 ###### CUSTOM ####################################################################################
 ##################################################################################################
 CPPFLAGS	+= -Wall -Wno-parentheses -Wno-sign-compare -std=c++20 -D PERF_ENC
-
-#CPPFLAGS	+= -D PERF_ENC
 
 ifeq ($(SOLVER), cryptominisat)
 	CPPFLAGS    += -D SAT_CMSAT

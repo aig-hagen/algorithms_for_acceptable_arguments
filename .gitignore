@@ -30,6 +30,8 @@ hs_err_pid*
 *.out
 
 build/
+evaluation/
+results/
 
 # CryptoMiniSat build files
 lib/cryptominisat-5.11.4/build/
