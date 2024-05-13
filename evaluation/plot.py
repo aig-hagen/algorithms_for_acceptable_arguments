@@ -63,3 +63,16 @@ if __name__ == "__main__":
         plt.savefig(output_file)
     else:
         raise NameError("Unsupported Output type")
+    
+    # Create a table with one row for each group
+    table_data = []
+    for name, group in grouped_dataframe:
+        num_rows = len(group)
+        total_runtime = round(group["runtime"].sum(), 2)
+        timeouts = group["runtime"].eq(1200).sum()
+        par_10 = (group['runtime'].sum() + (9 * timeouts)) / num_rows
+        table_data.append([name, num_rows, timeouts, total_runtime, par_10])
+    table_df = pd.DataFrame(table_data, columns=["Algorithm", "N", "#TO", "RT", "PAR10"])
+    
+    # Save table to file
+    table_df.to_latex(output_file + '_table.tex', index=False)
