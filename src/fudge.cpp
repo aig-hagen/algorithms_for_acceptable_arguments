@@ -111,8 +111,10 @@ namespace Algorithms {
                     }
                     if (solver3.solve() == UNSAT_V) {
                         // C := C \setminus {a}
-                        candidate[a] = false;
-                        num_candidates--;
+                        if (candidate[a]) {
+                            candidate[a] = false;
+                            num_candidates--;
+                        }
                         break;
                     }
 
