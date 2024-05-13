@@ -30,7 +30,7 @@ hs_err_pid*
 *.out
 
 build/
-evaluation/
+benchmark/
 results/
 
 # CryptoMiniSat build files
