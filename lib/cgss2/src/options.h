@@ -1,6 +1,7 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
+#include<cstdint>
 #include <vector>
 #include <map>
 #include <string>
