@@ -53,31 +53,40 @@ namespace Algorithms {
         if (sem == PR) {
             Encodings::complete(af, solver);
 
-            std::vector<int32_t> complement_clause;
-            complement_clause.reserve(af.args);
+            std::vector<int32_t> clause;
+            std::vector<bool> extension(af.args);
+            clause.reserve(af.args);
             while (true) {
-                if (solver.solve() == UNSAT_V) break;
-
-                std::vector<bool> visited(af.args);
+                extension.clear();
+                extension.resize(af.args, false);
+                //if (solver.solve() == UNSAT_V) break;
+                bool noFurther = true;
                 while (true) {
-                    complement_clause.clear();
+                    clause.clear();
+
+                    if (solver.solve() == UNSAT_V) break;
+                    noFurther = false;
+
                     for (uint32_t i = 0; i < af.args; i++) {
                         if (solver.model[i]) {
-                            if (!visited[i]) {
-                                solver.assume(af.accepted_var[i]);
-                                visited[i] = true;
-                            }
-                            complement_clause.push_back(-af.accepted_var[i]);
+                            extension[i] = true;
+                            solver.assume(af.accepted_var[i]);
                         } else {
-                            complement_clause.push_back(af.accepted_var[i]);
+                            clause.push_back(af.accepted_var[i]);
                         }
                     }
-                    solver.add_clause(complement_clause);
-                    if (solver.solve() == UNSAT_V) break;
+                    solver.add_clause(clause);
                 }
+                if (noFurther) break;
+
+                clause.clear();
                 for (uint32_t i = 0; i < af.args; i++) {
-                    included[i] = included[i] && solver.model[i];
+                    included[i] = included[i] && extension[i];
+                    if (!extension[i]) {
+                        clause.push_back(af.accepted_var[i]);
+                    }
                 }
+                solver.add_clause(clause);
             }
 
         } else if (sem == ST) {
