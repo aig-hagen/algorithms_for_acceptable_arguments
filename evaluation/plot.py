@@ -70,7 +70,7 @@ if __name__ == "__main__":
         num_rows = len(group)
         total_runtime = round(group["runtime"].sum(), 2)
         timeouts = group["runtime"].eq(1200).sum()
-        par_10 = (group['runtime'].sum() + (9 * timeouts)) / num_rows
+        par_10 = (group['runtime'].sum() + (9 * timeouts * 1200)) / num_rows
         table_data.append([name, num_rows, timeouts, total_runtime, par_10])
     table_df = pd.DataFrame(table_data, columns=["Algorithm", "N", "#TO", "RT", "PAR10"])
     
