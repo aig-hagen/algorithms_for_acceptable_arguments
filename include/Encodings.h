@@ -9,6 +9,9 @@ typedef CryptoMiniSatSolver SAT_Solver;
 #elif defined(SAT_CADICAL)
 #include "CadicalSatSolver.h"
 typedef CadicalSatSolver SAT_Solver;
+#elif defined(SAT_KISSAT)
+#include "KissatSolver.h"
+typedef KissatSolver SAT_Solver;
 #elif defined(SAT_GLUCOSE)
 #include "GlucoseSatSolver.h"
 typedef GlucoseSatSolver SAT_Solver;
