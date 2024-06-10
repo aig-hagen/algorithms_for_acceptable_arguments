@@ -9,6 +9,7 @@ CadicalSatSolver::CadicalSatSolver(int32_t n_vars, int32_t n_args) {
     solver = new CaDiCaL::Solver;
 	decision_vars = n_args;
 	model = std::vector<bool>(decision_vars);
+	extension = std::vector<uint32_t>(decision_vars);
 }
 
 void CadicalSatSolver::add_clause(const std::vector<int32_t> & clause) {
@@ -52,6 +53,29 @@ int CadicalSatSolver::solve() {
 		model.clear();
 		for (int32_t i = 1; i <= decision_vars; i++)
 			model.push_back(solver->val(i) > 0 ? true : false);
+	}
+	return sat;
+}
+
+int CadicalSatSolver::solve_extension() {
+	int sat = solver->solve();
+
+	if ( !( (sat == SAT_V) || (sat == UNSAT_V) ) ) {
+		std::cerr << "Problem" << std::endl;
+		exit(1);
+	}
+
+	if (sat == SAT_V) {
+		model.clear();
+		extension.clear();
+		for (int32_t i = 1; i <= decision_vars; i++) {
+			if (solver->val(i) > 0) {
+				model.push_back(true);
+				extension.push_back(i);
+			} else {
+				model.push_back(false);
+			}
+		}
 	}
 	return sat;
 }
