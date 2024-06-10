@@ -71,7 +71,7 @@ int CadicalSatSolver::solve_extension() {
 		for (int32_t i = 1; i <= decision_vars; i++) {
 			if (solver->val(i) > 0) {
 				model.push_back(true);
-				extension.push_back(i);
+				extension.push_back(i-1);
 			} else {
 				model.push_back(false);
 			}
