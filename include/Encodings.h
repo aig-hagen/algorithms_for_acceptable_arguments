@@ -26,10 +26,10 @@ typedef ExternalSatSolver SAT_Solver;
 #endif
 
 namespace Encodings {
-    void admissible(const AF & af, SAT_Solver & solver, bool isAttackedSet);
-    void attacks(const AF & af, SAT_Solver & solver);
-    void complete(const AF & af, SAT_Solver & solver);
-    void stable(const AF & af, SAT_Solver & solver);
+    void admissible(const AF & af, SATSolver & solver, bool isAttackedSet);
+    void attacks(const AF & af, SATSolver & solver);
+    void complete(const AF & af, SATSolver & solver);
+    void stable(const AF & af, SATSolver & solver);
     void add_rejected_clauses(const AF & af, SAT_Solver & solver);
     void add_conflict_free(const AF & af, SAT_Solver & solver);
     void add_admissible(const AF & af, SAT_Solver & solver);

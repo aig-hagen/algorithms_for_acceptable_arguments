@@ -1,5 +1,6 @@
-#ifdef FUDGE
+//#ifdef FUDGE
 #include "Algorithms.h"
+#include "LazySatSolver.h"
 
 using namespace std;
 
@@ -9,6 +10,20 @@ namespace Algorithms {
         std::vector<bool> accepted(af.args); // T = \emptyset
         std::vector<bool> candidate(af.args, true); // C = \arguments
         int32_t num_candidates = af.args;
+
+        // AdmExt' Solver
+        LazySatSolver solver1 = LazySatSolver(2*af.args, af.args);
+        Encodings::admissible(af, solver1, false);
+
+        // AdmExtAtt Solver
+        LazySatSolver solver2 = LazySatSolver(4*af.args+af.attacks, af.args);
+        // E' is admissible
+        Encodings::admissible(af, solver2, false);
+        // S'' is admissible
+        Encodings::admissible(af, solver2, true);
+        // E' \attacks S''
+        Encodings::attacks(af, solver2);
+
 
         // AdmExt Solver
         SAT_Solver solver3 = SAT_Solver(2*af.args, af.args);
@@ -22,11 +37,6 @@ namespace Algorithms {
             if (num_candidates == 0) return result;
 
             // E := AdmExt'(af, T, C)
-            SAT_Solver solver1 = SAT_Solver(2*af.args, af.args);
-            #ifdef SAT_EXTERNAL
-            solver1.set_solver(af.solver_path);
-            #endif
-            Encodings::admissible(af, solver1, false);
             std::vector<int32_t> intersect_clause;
             intersect_clause.reserve(af.args);
             for (uint32_t i = 0; i < af.args; i++) {
@@ -37,7 +47,7 @@ namespace Algorithms {
                     solver1.assume(af.accepted_var[i]);
                 }
             }
-            solver1.add_clause(intersect_clause);
+            solver1.add_temp_clause(intersect_clause);
             if (solver1.solve() == UNSAT_V) {
                 return result;
             }
@@ -59,16 +69,6 @@ namespace Algorithms {
 
                 while (true) {
                     // E' := AdmExtAtt(af, T \cup {a}, S)
-                    SAT_Solver solver2 = SAT_Solver(4*af.args+af.attacks, af.args);
-                    #ifdef SAT_EXTERNAL
-                    solver2.set_solver(af.solver_path);
-                    #endif
-                    // E' is admissible
-                    Encodings::admissible(af, solver2, false);
-                    // S'' is admissible
-                    Encodings::admissible(af, solver2, true);
-                    // E' \attacks S''
-                    Encodings::attacks(af, solver2);
                     std::vector<int32_t> nonsubset_clause;
                     nonsubset_clause.reserve(af.args); // TODO could be precise allocation
                     for (uint32_t i = 0; i < af.args; i++) {
@@ -81,7 +81,7 @@ namespace Algorithms {
                             nonsubset_clause.push_back(af.accepted_var[i]);
                         }
                     }
-                    solver2.add_clause(nonsubset_clause);
+                    solver2.add_temp_clause(nonsubset_clause);
                     if (solver2.solve() == UNSAT_V) {
                         // T := T \cup {a}
                         accepted[a] = true;

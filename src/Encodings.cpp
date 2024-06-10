@@ -1,7 +1,7 @@
 #include "Encodings.h"
 
 namespace Encodings {
-	void admissible(const AF & af, SAT_Solver & solver, bool isAttackedSet) {
+	void admissible(const AF & af, SATSolver & solver, bool isAttackedSet) {
 		int32_t offset = isAttackedSet ? 2*af.args: 0;
 		for (uint32_t i = 0; i < af.args; i++) {
 			solver.add_clause_2(-(offset+af.accepted_var[i]), -(offset+af.rejected_var[i]));
@@ -19,7 +19,7 @@ namespace Encodings {
 		}
 	}
 
-	void attacks(const AF & af, SAT_Solver & solver) { // TODO maybe integrate directly with admissible encoding
+	void attacks(const AF & af, SATSolver & solver) { // TODO maybe integrate directly with admissible encoding
 		int32_t offset = 2*af.args;
 		std::vector<int32_t> attacks_clause(af.attacks);
 		uint32_t attack_idx = 0;
@@ -38,7 +38,7 @@ namespace Encodings {
 	}
 
 	#ifndef PERF_ENC
-	void complete(const AF & af, SAT_Solver & solver) {
+	void complete(const AF & af, SATSolver & solver) {
 		for (uint32_t i = 0; i < af.args; i++) {
 			// basic clauses
 			solver.add_clause_3(af.accepted_var[i], af.rejected_var[i], af.undecided_var[i]);
@@ -66,7 +66,7 @@ namespace Encodings {
 		}
 	}
 	#else
-	void complete(const AF & af, SAT_Solver & solver) {
+	void complete(const AF & af, SATSolver & solver) {
 		for (uint32_t i = 0; i < af.args; i++) {
 			solver.add_clause_2(-af.accepted_var[i], -af.rejected_var[i]);
 			if (af.unattacked[i]) {
@@ -89,7 +89,7 @@ namespace Encodings {
 	}
 	#endif
 	#ifdef EXPERIMENTAL
-	void complete(const AF & af, SAT_Solver & solver) {
+	void complete(const AF & af, SATSolver & solver) {
 		std::vector<int32_t> clause(2);
 		for (uint32_t i = 0; i < af.args; i++) {
 			// basic clauses
@@ -127,7 +127,7 @@ namespace Encodings {
 			}	
 		}
 	}
-	void stable(const AF & af, SAT_Solver & solver) {
+	void stable(const AF & af, SATSolver & solver) {
 		for (uint32_t i = 0; i < af.args; i++) {
 			if (af.unattacked[i]) {
 				// argument is unattacked
@@ -146,7 +146,7 @@ namespace Encodings {
 		}
 	}
 	#endif
-	void stable(const AF & af, SAT_Solver & solver) { // TODO check correctness
+	void stable(const AF & af, SATSolver & solver) { // TODO check correctness
 		for (uint32_t i = 0; i < af.args; i++) {
 			solver.add_clause_2(-af.accepted_var[i], -af.rejected_var[i]);
 			solver.add_clause_2(af.accepted_var[i], af.rejected_var[i]);
