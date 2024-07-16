@@ -41,7 +41,7 @@ namespace Algorithms {
         return result;
     }
 
-    std::vector<std::string> eee_skep(const AF & af, semantics sem) { // TODO some bug for ES-PR still; stable seems to work
+    std::vector<std::string> eee_skep(const AF & af, semantics sem) {
         std::vector<std::string> result;
         std::vector<bool> included(af.args, true);
         uint32_t num_vars = af.count;
