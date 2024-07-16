@@ -38,13 +38,12 @@ namespace Algorithms {
                 }
             }
             solver1.add_clause(intersect_clause);
-            if (solver1.solve() == UNSAT_V) {
+            if (solver1.solve_extension() == UNSAT_V) {
                 return result;
             }
 
             // C := C \setminus E+
-            for (uint32_t i = 0; i < af.args; i++) {
-                if (!solver1.model[i]) continue;
+            for (uint32_t i : solver1.extension) {
                 for (uint32_t j = 0; j < af.attacked[i].size(); j++) {
                     if (candidate[af.attacked[i][j]]) {
                         candidate[af.attacked[i][j]] = false;
@@ -53,8 +52,8 @@ namespace Algorithms {
                 }
             }
 
-            for (uint32_t a = 0; a < af.args; a++) {
-                if (!solver1.model[a] || !candidate[a]) continue;
+            for (uint32_t a : solver1.extension) {
+                if (!candidate[a]) continue;
                 std::vector<bool> included(af.args); // S = \emptyset
 
                 while (true) {
@@ -82,7 +81,7 @@ namespace Algorithms {
                         }
                     }
                     solver2.add_clause(nonsubset_clause);
-                    if (solver2.solve() == UNSAT_V) {
+                    if (solver2.solve_extension() == UNSAT_V) {
                         // T := T \cup {a}
                         accepted[a] = true;
                         result.push_back(af.int_to_arg[a]);
@@ -93,8 +92,7 @@ namespace Algorithms {
                     }
 
                     // C := C \setminus E'+
-                    for (uint32_t i = 0; i < af.args; i++) {
-                        if (!solver2.model[i]) continue;
+                    for (uint32_t i : solver2.extension) {
                         for (uint32_t j = 0; j < af.attacked[i].size(); j++) {
                             if (candidate[af.attacked[i][j]]) {
                                 candidate[af.attacked[i][j]] = false;
@@ -109,7 +107,7 @@ namespace Algorithms {
                             solver3.assume(af.accepted_var[i]);
                         }
                     }
-                    if (solver3.solve() == UNSAT_V) {
+                    if (solver3.solve_extension() == UNSAT_V) {
                         // C := C \setminus {a}
                         if (candidate[a]) {
                             candidate[a] = false;
@@ -119,8 +117,7 @@ namespace Algorithms {
                     }
 
                     // C := C \setminus E''+
-                    for (uint32_t i = 0; i < af.args; i++) {
-                        if (!solver3.model[i]) continue;
+                    for (uint32_t i : solver3.extension) {
                         for (uint32_t j = 0; j < af.attacked[i].size(); j++) {
                             if (candidate[af.attacked[i][j]]) {
                                 candidate[af.attacked[i][j]] = false;
@@ -130,8 +127,8 @@ namespace Algorithms {
                     }
 
                     // S := S \cup E''
-                    for (uint32_t i = 0; i < af.args; i++) {
-                        if (solver3.model[i] && !included[i]) {
+                    for (uint32_t i : solver3.extension) {
+                        if (!included[i]) {
                             included[i] = true;
                         }
                     }
