@@ -1,0 +1,1 @@
+{"name": "ES-PR_all_cadical", "total_tasks": 1, "finished_tasks": 0, "tasks": {"ES-PR": {"solvers": {"1": {"name": "IAQ-cadical", "version": "1.0", "solved": 192, "total": 192}, "10": {"name": "EEE-cadical", "version": "1.0", "solved": 192, "total": 192}, "14": {"name": "FUDGE-cadical", "version": "1", "solved": 192, "total": 192}}}}}

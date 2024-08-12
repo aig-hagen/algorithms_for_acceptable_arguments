@@ -1,0 +1,51 @@
+archive:
+- zip
+archive_output: null
+benchmark: all
+copy_raws: false
+exclude_task: null
+grouping:
+- tag
+- task
+- benchmark_id
+- solver_id
+name: ES-PR_all_cadical
+plot:
+- cactus
+printing: default
+raw_results_path: /home/lars/probo2/src/results/ES-PR_all_cadical/raw.csv
+repetitions: 1
+result_format: csv
+save_output: true
+save_to: /home/lars/probo2/ES-PR_all_cadical
+score: null
+significance:
+  non_parametric_post_hoc: null
+  non_parametric_test: null
+  p_adjust: null
+  parametric_post_hoc: null
+  parametric_test: null
+  plot: null
+  table_export: null
+solver:
+- 1
+- 10
+- 14
+solver_arguments: null
+statistics:
+- mean
+- solved
+- timeouts
+- coverage
+status_file_path: /home/lars/probo2/src/results/ES-PR_all_cadical/status.json
+table_export:
+- txt
+task:
+- ES-PR
+time_measurement: default
+timeout: 1200
+validation:
+  mode: null
+  plot: null
+  table_export: null
+yaml_file_name: espr.yaml

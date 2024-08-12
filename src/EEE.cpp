@@ -42,7 +42,6 @@ namespace Algorithms {
     }
 
     std::vector<std::string> eee_skep(const AF & af, semantics sem) {
-        uint64_t num_extensions = 0;
         std::vector<std::string> result;
         std::vector<bool> included(af.args, true);
         uint32_t num_vars = af.count;
