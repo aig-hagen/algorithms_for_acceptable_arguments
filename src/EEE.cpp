@@ -41,7 +41,8 @@ namespace Algorithms {
         return result;
     }
 
-    std::vector<std::string> eee_skep(const AF & af, semantics sem) { // TODO some bug for ES-PR still; stable seems to work
+    std::vector<std::string> eee_skep(const AF & af, semantics sem) {
+        uint64_t num_extensions = 0;
         std::vector<std::string> result;
         std::vector<bool> included(af.args, true);
         uint32_t num_vars = af.count;
@@ -80,6 +81,7 @@ namespace Algorithms {
                 if (noFurther) break;
 
                 clause.clear();
+                num_extensions++;
                 for (uint32_t i = 0; i < af.args; i++) {
                     included[i] = included[i] && extension[i];
                     if (!extension[i]) {
@@ -116,6 +118,7 @@ namespace Algorithms {
                 result.push_back(af.int_to_arg[i]);
             }
         }
+        std::cout << num_extensions << std::endl;
         return result;
     }
 }
