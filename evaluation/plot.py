@@ -16,14 +16,24 @@ def read_csv_to_dataframe(file_path):
 
 if __name__ == "__main__":
     # Check if file path is provided as command-line argument
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 4:
         print("Usage: python script.py <file_path> <output_file>")
         sys.exit(1)
     
     file_path = sys.argv[1]
-    output_file = sys.argv[2]
+    #output_file = sys.argv[2]
     
     dataframe = read_csv_to_dataframe(file_path)
+
+
+    benchmark = sys.argv[2] #"ICCMA19"
+    problem = sys.argv[3] #"EC-ST"
+
+    output_file = benchmark.lower() + "_" + problem.lower() + ".pgf"
+
+    dataframe = dataframe[dataframe["task"] == problem]
+    dataframe = dataframe[dataframe["benchmark_name"] == benchmark]
+
 
     # Group DataFrame by the "name" column
     grouped_dataframe = dataframe.groupby("solver_name")
@@ -68,11 +78,11 @@ if __name__ == "__main__":
     table_data = []
     for name, group in grouped_dataframe:
         num_rows = len(group)
-        total_runtime = round(group["runtime"].sum(), 2)
         timeouts = group["runtime"].eq(1200).sum()
-        par_10 = (group['runtime'].sum() + (9 * timeouts * 1200)) / num_rows
+        total_runtime = round(group["runtime"].sum() - (timeouts* 1200), 2)
+        par_10 = round((group['runtime'].sum() + (9 * timeouts * 1200)) / num_rows, 2)
         table_data.append([name, num_rows, timeouts, total_runtime, par_10])
     table_df = pd.DataFrame(table_data, columns=["Algorithm", "N", "#TO", "RT", "PAR10"])
     
     # Save table to file
-    table_df.to_latex(output_file + '_table.tex', index=False)
+    table_df.to_latex(output_file.replace('.pgf', '_table.tex').replace('.png', '_table.tex'), index=False)
