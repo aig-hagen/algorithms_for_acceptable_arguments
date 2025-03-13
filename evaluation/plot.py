@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 import sys
 
 def read_csv_to_dataframe(file_path):
@@ -24,13 +25,14 @@ if __name__ == "__main__":
     benchmark = sys.argv[2] #"ICCMA19"
     problem = sys.argv[3] #"EC-ST"
     timeout = 1200
-    X_in_parX = 10
     output_file = benchmark.lower() + "_" + problem.lower() + ".pgf"
     
     # Prepare DataFrame
     dataframe = read_csv_to_dataframe(file_path)
     dataframe = dataframe[dataframe["task"] == problem]
     dataframe = dataframe[dataframe["benchmark_name"] == benchmark]
+
+    dataframe = dataframe[dataframe["solver_name"] != "FUDGE-cadical"]
 
     # Compute Virtual Best Solver
     for instance in dataframe["instance"].unique():
@@ -80,7 +82,7 @@ if __name__ == "__main__":
     
     # Save plot to file
     if output_file.endswith(".pgf"):
-        plt.savefig(output_file, format='pgf')
+        pass#plt.savefig(output_file, format='pgf')
     else:
         raise NameError("Unsupported Output type")
     
@@ -95,11 +97,21 @@ if __name__ == "__main__":
         if name != "VBS":
             view = dataframe[dataframe["solver_name"] == "VBS"]
             vbs = view["contributor"].value_counts().get(name, 0)
+            name = "\\" + name.split("-")[0]
+            if problem.count("EC") > 0:
+                name += "$^c$"
+            else:
+                name += "$^s$"
         else:
-            vbs = "0"
+            vbs = "-"
 
+        
         table_data.append([name, num_rows, timeouts, total_runtime, par_10, vbs])
     table_df = pd.DataFrame(table_data, columns=["Algorithm", "N", "#TO", "RT", "PAR10", "#VBS"])
+    table_df.sort_values(["#TO", "RT"], inplace=True)
+    table_df.index = np.arange(1, len(table_df)+1)
+    table_df.index.name = "No."
+    table_df.reset_index(inplace=True)
     
     # Save table to file
     table_df.to_latex(output_file.replace('.pgf', '_table.tex').replace('.png', '_table.tex'), index=False, float_format="%.2f")
