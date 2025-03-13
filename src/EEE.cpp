@@ -80,7 +80,7 @@ namespace Algorithms {
                 if (noFurther) break;
 
                 clause.clear();
-                num_extensions++;
+                //num_extensions++;
                 for (uint32_t i = 0; i < af.args; i++) {
                     included[i] = included[i] && extension[i];
                     if (!extension[i]) {
@@ -117,7 +117,7 @@ namespace Algorithms {
                 result.push_back(af.int_to_arg[i]);
             }
         }
-        std::cout << num_extensions << std::endl;
+        //std::cout << num_extensions << std::endl;
         return result;
     }
 }

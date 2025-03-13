@@ -97,7 +97,7 @@ else
 endif
 
 # debug
-CXXFLAGS	+= -g3
+#CXXFLAGS	+= -g3
 
 OUTPUT_DIR	:= ./build/bin
 
@@ -165,7 +165,7 @@ all:
 	@$(MAKE) iaq
 	@$(MAKE) eee
 	@$(MAKE) see
-	@$(MAKE) fudge
+#	@$(MAKE) fudge
 
 iaq:
 	@$(MAKE) clean-src
