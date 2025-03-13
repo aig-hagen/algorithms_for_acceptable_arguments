@@ -31,7 +31,6 @@ hs_err_pid*
 
 build/
 benchmark/
-results/
 
 # CryptoMiniSat build files
 lib/cryptominisat-5.11.4/build/
