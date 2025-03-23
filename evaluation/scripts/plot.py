@@ -97,7 +97,7 @@ if __name__ == "__main__":
         if name != "VBS":
             view = dataframe[dataframe["solver_name"] == "VBS"]
             vbs = view["contributor"].value_counts().get(name, 0)
-            name = "\\" + name.split("-")[0]
+            #name = "\\" + name.split("-")[0]
             if problem.count("EC") > 0:
                 name += "$^c$"
             else:

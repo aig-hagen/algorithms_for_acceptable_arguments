@@ -12,8 +12,56 @@ def count_lines_in_tgf_files(directory, name):
     
     for root, _, files in os.walk(directory):
         for filename in files:
+            if filename.endswith(".i23"):
+                file_path = os.path.join(root, filename)
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as file:
+                        n_arguments = 0
+                        n_attacks = 0
+                        attack_mode = False
+                        arguments_deg = {}
+                        arguments_in = {}
+                        arguments_out = {}
+
+                        for line in file:
+                            if line.strip().startswith("#"):
+                                continue
+                            if not attack_mode:
+                                if line.strip().startswith("p af"):
+                                    n_arguments = int(line.strip().split(" ")[2])
+                                    for i in range(1, n_arguments+1):
+                                        arguments_in[str(i)] = 0
+                                        arguments_out[str(i)] = 0
+                                        arguments_deg[str(i)] = 0
+                                    attack_mode = True
+                            else:
+                                if line.strip() == "":
+                                    continue
+                                att1 = line.strip().split(" ")[0]
+                                att2 = line.strip().split(" ")[1]
+                                arguments_in[att2] = arguments_in[att2] + 1
+                                arguments_out[att1] = arguments_out[att1] + 1
+                                arguments_deg[att2] = arguments_deg[att2] + 1
+                                arguments_deg[att2] = arguments_deg[att2] + 1
+                                n_attacks += 1
+
+                        instance = {"Instance": filename, "#Args": n_arguments, "#Attacks": n_attacks, 
+                                    "AVG DEG": np.average(list(arguments_deg.values())),
+                                    "MED DEG": np.median(list(arguments_deg.values())),
+                                    "AVG IN": np.average(list(arguments_in.values())),
+                                    "MED IN": np.median(list(arguments_in.values())),
+                                    "AVG OUT": np.average(list(arguments_out.values())),
+                                    "MED OUT": np.median(list(arguments_out.values())),
+                                    }
+                        
+                        df = df.append(instance, ignore_index=True)
+
+                except SyntaxError as e:
+                    print(f"Error reading {filename}: {e}")
+
+
             if filename.endswith(".tgf"):
-                file_path = os.path.join(directory, filename)
+                file_path = os.path.join(root, filename)
                 try:
                     with open(file_path, 'r', encoding='utf-8') as file:
                         n_arguments = 0
@@ -51,8 +99,8 @@ def count_lines_in_tgf_files(directory, name):
                                     "MED OUT": np.median(list(arguments_out.values())),
                                     }
                         
-                        df = df._append(instance, ignore_index=True)
-                except IndexError as e:
+                        df = df.append(instance, ignore_index=True)
+                except SyntaxError as e:
                     print(f"Error reading {filename}: {e}")
 
     #print(df)
