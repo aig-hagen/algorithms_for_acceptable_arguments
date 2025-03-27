@@ -37,21 +37,22 @@ if __name__ == "__main__":
     dataframe = dataframe.astype({'runtime': 'float'})
 
     # Group by 'group' and extract the 'runtime' for each group
-    solvers = ["IAQ-cgss2", "EEE-cgss2", "SEE-cgss2", "SEEM-cgss2"]
+    solvers = dataframe["solver_name"].unique().tolist()
+    #solvers = ["IAQ-cgss2", "EEE-cgss2", "SEE-cgss2", "SEEM-cgss2"]
     new_df = pd.DataFrame()
     for slv in solvers:
         partial = dataframe[dataframe["solver_name"] == slv]
         print(partial["runtime"])
         new_df[slv] = partial["runtime"].tolist()
 
-    new_df['contributor'] = new_df.idxmin(axis=1)
-    new_df['VBS'] = new_df[["IAQ-cgss2", "EEE-cgss2", "SEE-cgss2", "SEEM-cgss2"]].min(axis=1)
+    #new_df['contributor'] = new_df.idxmin(axis=1)
+    #new_df['VBS'] = new_df[["IAQ-cgss2", "EEE-cgss2", "SEE-cgss2", "SEEM-cgss2"]].min(axis=1)
+    #new_df['VBS'] = new_df[["IAQ-cadical", "EEE-cadical"]].min(axis=1)
 
-    print(new_df)
 
     table_data = []
 
-    solvers.append("VBS")
+    #solvers.append("VBS")
 
     for name in solvers:
         num_rows = len(new_df[name])
@@ -59,8 +60,8 @@ if __name__ == "__main__":
         total_runtime = new_df[name].sum() - (timeouts* timeout)
         par_10 = (new_df[name].sum() + (9 * timeouts * timeout)) / num_rows
         if name != "VBS":
-            vbs = new_df["contributor"].value_counts().get(name, 0)
-            name = "\\" + name.split("-")[0]
+            vbs="-"#vbs = new_df["contributor"].value_counts().get(name, 0)
+            #name = "\\" + name.split("-")[0]
             if problem.count("EC") > 0:
                 name += "$^c$"
             else:
