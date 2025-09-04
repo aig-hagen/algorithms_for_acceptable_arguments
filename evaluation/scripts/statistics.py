@@ -42,7 +42,7 @@ def count_lines_in_tgf_files(directory, name):
                                 arguments_in[att2] = arguments_in[att2] + 1
                                 arguments_out[att1] = arguments_out[att1] + 1
                                 arguments_deg[att2] = arguments_deg[att2] + 1
-                                arguments_deg[att2] = arguments_deg[att2] + 1
+                                arguments_deg[att1] = arguments_deg[att1] + 1
                                 n_attacks += 1
 
                         instance = {"Instance": filename, "#Args": n_arguments, "#Attacks": n_attacks, 
@@ -87,7 +87,7 @@ def count_lines_in_tgf_files(directory, name):
                                 arguments_in[att2] = arguments_in[att2] + 1
                                 arguments_out[att1] = arguments_out[att1] + 1
                                 arguments_deg[att2] = arguments_deg[att2] + 1
-                                arguments_deg[att2] = arguments_deg[att2] + 1
+                                arguments_deg[att1] = arguments_deg[att1] + 1
                                 n_attacks += 1
 
                         instance = {"Instance": filename, "#Args": n_arguments, "#Attacks": n_attacks, 
